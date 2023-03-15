@@ -1,12 +1,14 @@
 package com.example.digikala;
 
+import java.util.UUID;
+
 abstract class Pet extends Product{
     private String isNeutered;
     private String color;
     private int age;
 
-    public Pet(String name, int price, int amount, String comment, String brand, String isNeutered, String color, int age) {
-        super(name, price, amount, comment, brand);
+    public Pet(String name, int price, int amount, String comment, String brand, UUID sellerID, String isNeutered, String color, int age) {
+        super(name, price, amount, comment, brand, sellerID);
         this.isNeutered = isNeutered;
         this.color = color;
         this.age = age;

@@ -1,18 +1,21 @@
 package com.example.digikala;
 
+import java.util.UUID;
+
 abstract class Tool extends Product{
     private String powerSupply;
     private int numberOfPeopleRequiredForUse;
     private String application;
     private boolean isPortable;
 
-    public Tool(String name, int price, int amount, String comment, String brand, String powerSupply, int numberOfPeopleRequiredForUse, String application, boolean isPortable ) {
-        super(name, price, amount, comment,brand);
+    public Tool(String name, int price, int amount, String comment, String brand, UUID sellerID, String powerSupply, int numberOfPeopleRequiredForUse, String application, boolean isPortable) {
+        super(name, price, amount, comment, brand, sellerID);
         this.powerSupply = powerSupply;
         this.numberOfPeopleRequiredForUse = numberOfPeopleRequiredForUse;
         this.application = application;
         this.isPortable = isPortable;
     }
+
     public String getPowerSupply() {
         return powerSupply;
     }

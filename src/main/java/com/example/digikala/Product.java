@@ -9,19 +9,21 @@ abstract class Product {
     private double finalPrice;
     private double price;
     private int amount;
+    private final UUID sellerID;
     private Pair<Double, Integer> rate;
     private String comment;
     private int discount;
     private String brand;
 
-    public Product(String name, int price, int amount, String comment,String brand) {
+    public Product(String name, int price, int amount, String comment,String brand,UUID sellerID) {
         this.name = name;
         uuid = UUID.randomUUID();
         this.price = price;
         this.amount = amount;
         this.comment = comment;
         this.brand=brand;
-        finalPrice = 1.1 * price;
+        finalPrice = price;
+        this.sellerID=sellerID;
     }
 
     public String getBrand() {
@@ -53,7 +55,7 @@ abstract class Product {
     }
 
     public void setPrice(double price) {
-        finalPrice=1.1*(price*(1-((double)this.discount/100)));
+        finalPrice=(price*(1-((double)this.discount/100)));
         this.price = price;
     }
 
@@ -91,7 +93,7 @@ abstract class Product {
     }
 
     public void setDiscount(int discount) {
-        this.finalPrice=1.1*(this.price*(1-((double)discount/100)));
+        this.finalPrice=(this.price*(1-((double)discount/100)));
         this.discount = discount;
     }
 

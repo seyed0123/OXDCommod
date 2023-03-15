@@ -1,6 +1,7 @@
 package com.example.digikala;
 
 import java.util.Date;
+import java.util.UUID;
 
 abstract class Eatable extends Product{
     private String RawMaterial;
@@ -8,8 +9,8 @@ abstract class Eatable extends Product{
     private Date ProductionDate;
     private boolean isManufacturedByFactory;
 
-    public Eatable(String name, int price, int amount, String comment,String brand, String rawMaterial, Date expirationDate, Date productionDate, boolean isManufacturedByFactory) {
-        super(name, price, amount, comment,brand);
+    public Eatable(String name, int price, int amount, String comment, String brand, UUID sellerID, String rawMaterial, Date expirationDate, Date productionDate, boolean isManufacturedByFactory) {
+        super(name, price, amount, comment, brand, sellerID);
         RawMaterial = rawMaterial;
         ExpirationDate = expirationDate;
         ProductionDate = productionDate;

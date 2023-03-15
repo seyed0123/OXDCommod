@@ -1,5 +1,7 @@
 package com.example.digikala;
 
+import java.util.UUID;
+
 abstract class Book extends Product{
 
     private int yearOfPublish;
@@ -7,8 +9,8 @@ abstract class Book extends Product{
     private int pages;
     private String language;
 
-    public Book(String name, int price, int amount, String comment, String brand, int yearOfPublish, String publisher, int pages, String language) {
-        super(name, price, amount, comment, brand);
+    public Book(String name, int price, int amount, String comment, String brand, UUID sellerID, int yearOfPublish, String publisher, int pages, String language) {
+        super(name, price, amount, comment, brand, sellerID);
         this.yearOfPublish = yearOfPublish;
         this.publisher = publisher;
         this.pages = pages;

@@ -1,13 +1,15 @@
 package com.example.digikala;
 
+import java.util.UUID;
+
 abstract class Household extends Product{
     private boolean isNeedsElectricity;
     private boolean isDecorative;
     private boolean isFurniture;
     private String color;
 
-    public Household(String name, int price, int amount, String comment, String brand, boolean isNeedsElectricity, boolean isDecorative, boolean isFurniture, String color) {
-        super(name, price, amount, comment, brand);
+    public Household(String name, int price, int amount, String comment, String brand, UUID sellerID, boolean isNeedsElectricity, boolean isDecorative, boolean isFurniture, String color) {
+        super(name, price, amount, comment, brand, sellerID);
         this.isNeedsElectricity = isNeedsElectricity;
         this.isDecorative = isDecorative;
         this.isFurniture = isFurniture;

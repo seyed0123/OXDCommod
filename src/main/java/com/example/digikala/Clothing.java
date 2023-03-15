@@ -1,13 +1,15 @@
 package com.example.digikala;
 
+import java.util.UUID;
+
 abstract class Clothing extends Product{
     private String color;
     private String material;
     private String size;
     private String style;
 
-    public Clothing(String name, int price, int amount, String comment, String brand, String color, String material, String size, String style) {
-        super(name, price, amount, comment, brand);
+    public Clothing(String name, int price, int amount, String comment, String brand, UUID sellerID, String color, String material, String size, String style) {
+        super(name, price, amount, comment, brand, sellerID);
         this.color = color;
         this.material = material;
         this.size = size;

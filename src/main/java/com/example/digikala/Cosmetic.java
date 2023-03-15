@@ -1,12 +1,15 @@
 package com.example.digikala;
 
+import java.util.UUID;
+
 abstract class Cosmetic extends Product{
     private String type;
     private String brandCountry;
     boolean isOrganic;
 
-    public Cosmetic(String name, int price, int amount, String comment, String brand, String type, String brandCountry, boolean isOrganic) {
-        super(name, price, amount, comment, brand);
+
+    public Cosmetic(String name, int price, int amount, String comment, String brand, UUID sellerID, String type, String brandCountry, boolean isOrganic) {
+        super(name, price, amount, comment, brand, sellerID);
         this.type = type;
         this.brandCountry = brandCountry;
         this.isOrganic = isOrganic;

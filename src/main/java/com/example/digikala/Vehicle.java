@@ -1,5 +1,7 @@
 package com.example.digikala;
 
+import java.util.UUID;
+
 abstract class Vehicle extends Product{
     private int weight;
     private int numOfWheels;
@@ -8,14 +10,14 @@ abstract class Vehicle extends Product{
     private String color;
     private int maxSpeed;
 
-    public Vehicle(String name, int price, int amount, String comment,String brand, int weight, int numOfWheels, int numOfPassenger, String fuelType, String color, int maxSpeed) {
-        super(name, price, amount, comment,brand);
+    public Vehicle(String name, int price, int amount, String comment, String brand, UUID sellerID, int weight, int numOfWheels, int numOfPassenger, String fuelType, String color, int maxSpeed) {
+        super(name, price, amount, comment, brand, sellerID);
         this.weight = weight;
         this.numOfWheels = numOfWheels;
         this.numOfPassenger = numOfPassenger;
         this.fuelType = fuelType;
         this.color = color;
-        this.maxSpeed=maxSpeed;
+        this.maxSpeed = maxSpeed;
     }
 
     public int getMaxSpeed() {
