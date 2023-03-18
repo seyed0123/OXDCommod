@@ -1,12 +1,15 @@
 package com.example.digikala;
 
+import java.util.UUID;
+
 public class Motorcycle extends Vehicle{
     private String cargoSpace;
     private String jackType;
     private String StarterType;
 
-    public Motorcycle(String name, int price, int amount, String comment, String brand, int weight, int numOfWheels, int numOfPassenger, String fuelType, String color, int maxSpeed, String cargoSpace, String jackType, String starterType) {
-        super(name, price, amount, comment, brand, weight, numOfWheels, numOfPassenger, fuelType, color, maxSpeed);
+
+    public Motorcycle(String name, int price, int amount, String comment, String brand, UUID sellerID, int weight, int numOfWheels, int numOfPassenger, String fuelType, String color, int maxSpeed, String cargoSpace, String jackType, String starterType) {
+        super(name, price, amount, comment, brand, sellerID, weight, numOfWheels, numOfPassenger, fuelType, color, maxSpeed);
         this.cargoSpace = cargoSpace;
         this.jackType = jackType;
         StarterType = starterType;

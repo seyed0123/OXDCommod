@@ -1,13 +1,15 @@
 package com.example.digikala;
 
+import java.util.UUID;
+
 public class Blender extends Household{
    private String motorPower;
    private int capacity;
    private int numberOfSpeedStings;
    private String typeOfBlade;
 
-    public Blender(String name, int price, int amount, String comment, String brand, boolean isNeedsElectricity, boolean isDecorative, boolean isFurniture, String color, String motorPower, int capacity, int numberOfSpeedStings, String typeOfBlade) {
-        super(name, price, amount, comment, brand, isNeedsElectricity, isDecorative, isFurniture, color);
+    public Blender(String name, int price, int amount, String comment, String brand, UUID sellerID, boolean isNeedsElectricity, boolean isDecorative, boolean isFurniture, String color, String motorPower, int capacity, int numberOfSpeedStings, String typeOfBlade) {
+        super(name, price, amount, comment, brand, sellerID, isNeedsElectricity, isDecorative, isFurniture, color);
         this.motorPower = motorPower;
         this.capacity = capacity;
         this.numberOfSpeedStings = numberOfSpeedStings;

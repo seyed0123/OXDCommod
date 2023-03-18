@@ -1,14 +1,15 @@
 package com.example.digikala;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class Meat extends Eatable{
     private String meatType;
     private boolean isFrozen;
     private boolean isHalfBaked;
 
-    public Meat(String name, int price, int amount, String comment, String brand, String rawMaterial, Date expirationDate, Date productionDate, boolean isManufacturedByFactory, String meatType, boolean isFrozen, boolean isHalfBaked) {
-        super(name, price, amount, comment, brand, rawMaterial, expirationDate, productionDate, isManufacturedByFactory);
+    public Meat(String name, int price, int amount, String comment, String brand, UUID sellerID, String rawMaterial, Date expirationDate, Date productionDate, boolean isManufacturedByFactory, String meatType, boolean isFrozen, boolean isHalfBaked) {
+        super(name, price, amount, comment, brand, sellerID, rawMaterial, expirationDate, productionDate, isManufacturedByFactory);
         this.meatType = meatType;
         this.isFrozen = isFrozen;
         this.isHalfBaked = isHalfBaked;

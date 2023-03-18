@@ -13,13 +13,14 @@ public class User {
     private int phoneNumber;
     private String address;
     private final HashSet<UUID> cart;
-    private UUID lastSeen;
-    private int wallet;
+    private Vector<UUID> lastSeen;
+    private double wallet;
     private final ArrayList<String> notification;
     private final ArrayList<String> oldNotification;
     private final HashSet<UUID> orders;
     private final HashSet<UUID> favorite;
-    private Date subscription;
+    private boolean subscription=false;
+    private boolean banned=false;
     private boolean waitForVerify;
 
     public User(String username, String password, int phoneNumber, String address,String email) {
@@ -34,6 +35,7 @@ public class User {
         this.orders = new HashSet<>();
         this.favorite = new HashSet<>();
         this.cart= new HashSet<>();
+        this.lastSeen=new Vector<>();
     }
     public static void setStore(Store store) {
         User.store = store;
@@ -76,6 +78,14 @@ public class User {
         this.email = email;
     }
 
+    public boolean isBanned() {
+        return banned;
+    }
+
+    public void setBanned(boolean banned) {
+        this.banned = banned;
+    }
+
     public boolean setPassword(String password , String oldPassword)
     {
         if(!Objects.equals(HashPassword(oldPassword),this.password))
@@ -88,23 +98,21 @@ public class User {
         String genPass=HashPassword(password);
         return Objects.equals(this.password, genPass);
     }
-    public void setWaitForVerify(boolean waitForVerify) {
-        this.waitForVerify = waitForVerify;
-    }
-    public UUID getLastSeen() {
+    public Vector<UUID> getLastSeen() {
         return lastSeen;
     }
-    public void setLastSeen(UUID lastSeen) {
-        this.lastSeen = lastSeen;
+    public void addLastSeen(UUID lastSeen) {
+        if(this.lastSeen.size()>3)
+        {
+            this.lastSeen.removeElementAt(2);
+        }
+        this.lastSeen.add(lastSeen);
     }
     public String getUsername() {
         return username;
     }
     public UUID getUuid() {
         return uuid;
-    }
-    public void setUsername(String username) {
-        this.username = username;
     }
     public int getPhoneNumber() {
         return phoneNumber;
@@ -118,6 +126,7 @@ public class User {
     public void setAddress(String address) {
         this.address = address;
     }
+    public boolean cartExist(UUID product){return cart.contains(product);}
     public HashSet<UUID> getCart() {
         return cart;
     }
@@ -127,10 +136,10 @@ public class User {
     public void removeCart(UUID product) {
         this.cart.remove(product);
     }
-    public int getWallet() {
+    public double getWallet() {
         return wallet;
     }
-    public void addWallet(int wallet) {
+    public void addWallet(double wallet) {
         this.wallet += wallet;
     }
     public String getNotification() {
@@ -150,6 +159,7 @@ public class User {
     public HashSet<UUID> getOrders() {
         return orders;
     }
+    public boolean favoriteExist(UUID product){return favorite.contains(product);}
     public HashSet<UUID> getFavorite() {
         return favorite;
     }
@@ -159,10 +169,10 @@ public class User {
     public void removeFavorite(UUID product) {
         this.favorite.remove(product);
     }
-    public Date getSubscription() {
+    public boolean getSubscription() {
         return subscription;
     }
-    public void setSubscription(Date subscription) {
+    public void setSubscription(boolean subscription) {
         this.subscription = subscription;
     }
     public HashSet<UUID> order()
@@ -175,7 +185,7 @@ public class User {
         this.waitForVerify=false;
         this.orders.add(order.getUuid());
         cart.clear();
-        wallet-=order.getTotalPrice();
+        wallet-=order.getTotalPrice()*1.1;
     }
     public void cancelOrder()
     {
@@ -191,14 +201,14 @@ public class User {
                 ", address='" + address + '\'' +
                 ", cart={");
                 for(UUID product : cart)
-                    ret.append(store.findProduct(product).toString).append("\n");
+                    ret.append(store.findProduct(product).toString()).append("\n");
                 ret.append("}, lastSeen=").append(lastSeen).append(", wallet=").append(wallet).append(", orders={");
                 for(UUID order:orders)
-                    ret.append(store.findOrder(order).toString).append("\n");
+                    ret.append(store.findOrder(order).toString()).append("\n");
                 ret.append("{, favorite={");
                 for(UUID favorite:this.favorite)
-                    ret.append(store.findProduct(favorite).toString).append("\n");
-                ret.append("}, subscription=").append(subscription.toString()).append('}');
+                    ret.append(store.findProduct(favorite).toString()).append("\n");
+                ret.append("}, subscription=").append(subscription).append('}');
                 return ret.toString();
     }
 }

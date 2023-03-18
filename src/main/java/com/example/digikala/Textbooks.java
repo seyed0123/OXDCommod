@@ -1,12 +1,14 @@
 package com.example.digikala;
 
+import java.util.UUID;
+
 public class Textbooks extends Book{
     private String subject;
     private String coverType;
     private String edition;
 
-    public Textbooks(String name, int price, int amount, String comment, String brand, int yearOfPublish, String publisher, int pages, String language, String subject, String coverType, String edition) {
-        super(name, price, amount, comment, brand, yearOfPublish, publisher, pages, language);
+    public Textbooks(String name, int price, int amount, String comment, String brand, UUID sellerID, int yearOfPublish, String publisher, int pages, String language, String subject, String coverType, String edition) {
+        super(name, price, amount, comment, brand, sellerID, yearOfPublish, publisher, pages, language);
         this.subject = subject;
         this.coverType = coverType;
         this.edition = edition;

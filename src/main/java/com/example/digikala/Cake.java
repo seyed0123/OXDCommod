@@ -1,14 +1,15 @@
 package com.example.digikala;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class Cake extends Eatable{
     private String taste;
     private boolean isNutCake;
     private int numberInPackage;
 
-    public Cake(String name, int price, int amount, String comment, String brand, String rawMaterial, Date expirationDate, Date productionDate, boolean isManufacturedByFactory, String taste, boolean isNutCake, int numberInPackage) {
-        super(name, price, amount, comment, brand, rawMaterial, expirationDate, productionDate, isManufacturedByFactory);
+    public Cake(String name, int price, int amount, String comment, String brand, UUID sellerID, String rawMaterial, Date expirationDate, Date productionDate, boolean isManufacturedByFactory, String taste, boolean isNutCake, int numberInPackage) {
+        super(name, price, amount, comment, brand, sellerID, rawMaterial, expirationDate, productionDate, isManufacturedByFactory);
         this.taste = taste;
         this.isNutCake = isNutCake;
         this.numberInPackage = numberInPackage;

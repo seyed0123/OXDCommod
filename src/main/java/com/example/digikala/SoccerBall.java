@@ -1,12 +1,15 @@
 package com.example.digikala;
 
+import java.util.UUID;
+
 public class SoccerBall extends SportEquip{
     private String pattern;
     private int year;
     private String placeOfUse;
 
-    public SoccerBall(String name, int price, int amount, String comment, String brand, String sportType, String material, int weight, String pattern, int year, String placeOfUse) {
-        super(name, price, amount, comment, brand, sportType, material, weight);
+
+    public SoccerBall(String name, int price, int amount, String comment, String brand, UUID sellerID, String sportType, String material, int weight, String pattern, int year, String placeOfUse) {
+        super(name, price, amount, comment, brand, sellerID, sportType, material, weight);
         this.pattern = pattern;
         this.year = year;
         this.placeOfUse = placeOfUse;

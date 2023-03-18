@@ -1,10 +1,12 @@
 package com.example.digikala;
 
+import java.util.UUID;
+
 public class Nonfiction extends Book{
     private String topic;
 
-    public Nonfiction(String name, int price, int amount, String comment, String brand, int yearOfPublish, String publisher, int pages, String language, String topic) {
-        super(name, price, amount, comment, brand, yearOfPublish, publisher, pages, language);
+    public Nonfiction(String name, int price, int amount, String comment, String brand, UUID sellerID, int yearOfPublish, String publisher, int pages, String language, String topic) {
+        super(name, price, amount, comment, brand, sellerID, yearOfPublish, publisher, pages, language);
         this.topic = topic;
     }
 

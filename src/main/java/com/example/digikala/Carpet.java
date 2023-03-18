@@ -1,12 +1,14 @@
 package com.example.digikala;
 
+import java.util.UUID;
+
 public class Carpet extends Household{
     private String typeOfWarpYarn;
     private boolean abilityWash;
     private int Density;
 
-    public Carpet(String name, int price, int amount, String comment, String brand, boolean isNeedsElectricity, boolean isDecorative, boolean isFurniture, String color, String typeOfWarpYarn, boolean abilityWash, int density) {
-        super(name, price, amount, comment, brand, isNeedsElectricity, isDecorative, isFurniture, color);
+    public Carpet(String name, int price, int amount, String comment, String brand, UUID sellerID, boolean isNeedsElectricity, boolean isDecorative, boolean isFurniture, String color, String typeOfWarpYarn, boolean abilityWash, int density) {
+        super(name, price, amount, comment, brand, sellerID, isNeedsElectricity, isDecorative, isFurniture, color);
         this.typeOfWarpYarn = typeOfWarpYarn;
         this.abilityWash = abilityWash;
         Density = density;

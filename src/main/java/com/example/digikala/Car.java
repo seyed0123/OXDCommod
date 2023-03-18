@@ -8,8 +8,8 @@ public class Car extends Vehicle{
     private String gearboxType;
     private String interiorDesignStyle;
 
-    public Car(String name, int price, int amount, String comment, String brand, int weight, int numOfWheels, int numOfPassenger, String fuelType, String color, int maxSpeed, String chassisType, String gearboxType, String interiorDesignStyle) {
-        super(name, price, amount, comment, brand, weight, numOfWheels, numOfPassenger, fuelType, color, maxSpeed);
+    public Car(String name, int price, int amount, String comment, String brand, UUID sellerID, int weight, int numOfWheels, int numOfPassenger, String fuelType, String color, int maxSpeed, String chassisType, String gearboxType, String interiorDesignStyle) {
+        super(name, price, amount, comment, brand, sellerID, weight, numOfWheels, numOfPassenger, fuelType, color, maxSpeed);
         this.chassisType = chassisType;
         this.gearboxType = gearboxType;
         this.interiorDesignStyle = interiorDesignStyle;

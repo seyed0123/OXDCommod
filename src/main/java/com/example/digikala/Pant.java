@@ -1,12 +1,14 @@
 package com.example.digikala;
 
+import java.util.UUID;
+
 public class Pant extends Clothing{
     private String style;
     private String fitType;
     private String pocketType;
 
-    public Pant(String name, int price, int amount, String comment, String brand, String color, String material, String size, String style, String style1, String fitType, String pocketType) {
-        super(name, price, amount, comment, brand, color, material, size, style);
+    public Pant(String name, int price, int amount, String comment, String brand, UUID sellerID, String color, String material, String size, String style, String style1, String fitType, String pocketType) {
+        super(name, price, amount, comment, brand, sellerID, color, material, size, style);
         this.style = style1;
         this.fitType = fitType;
         this.pocketType = pocketType;

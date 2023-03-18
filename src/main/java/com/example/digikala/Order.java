@@ -1,5 +1,6 @@
 package com.example.digikala;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -7,21 +8,23 @@ import java.util.UUID;
 
 public class Order {
     private static Store store;
-    private Date date;
+    private LocalDateTime date;
     private final UUID uuid;
-    private int totalPrice;
+    private int totalPrice=0;
     private final HashSet<UUID> products;
     private boolean isVerified;
     private UUID user;
     private String stage;
 
-    public Order(Date date, int totalPrice, HashSet<UUID> products, boolean isVerified, UUID user,Store store) {
+    public Order(LocalDateTime date, HashSet<UUID> products, UUID user,Store store) {
         this.date = date;
         this.uuid = UUID.randomUUID();
-        this.totalPrice = totalPrice;
         this.products = products;
-        this.isVerified = isVerified;
         this.user = user;
+        for(UUID product:products)
+        {
+            totalPrice+=store.findProduct(product).getFinalPrice();
+        }
     }
 
     public static void setStore(Store store) {
@@ -36,11 +39,11 @@ public class Order {
         this.stage = stage;
     }
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
@@ -59,6 +62,15 @@ public class Order {
     public boolean isVerified() {
         return isVerified;
     }
+    public void verify()
+    {
+        for (UUID product:products)
+        {
+            store.findProduct(product).setAmount(-1);
+            store.findSeller(store.findProduct(product).getSellerID()).addWallet(store.findProduct(product).getFinalPrice());
+        }
+        isVerified=true;
+    }
 
     public void setVerified(boolean verified) {
         isVerified = verified;
@@ -66,10 +78,6 @@ public class Order {
 
     public UUID getUser() {
         return user;
-    }
-
-    public void setUser(UUID user) {
-        this.user = user;
     }
 
     @Override
@@ -80,6 +88,7 @@ public class Order {
                 ", totalPrice=" + totalPrice +
                 ", isVerified=" + isVerified +
                 ", user=" + user +
+                ", user wallet= "+ store.findUser(user).getWallet()+
                 ", products={\n");
         for (UUID uuid : products) {
             ret.append(store.findProduct(uuid).toString()).append("\n");

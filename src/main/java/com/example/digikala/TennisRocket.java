@@ -1,12 +1,14 @@
 package com.example.digikala;
 
+import java.util.UUID;
+
 public class TennisRocket extends SportEquip{
     private int length;
     private int gripSize;
     private String gripType;
 
-    public TennisRocket(String name, int price, int amount, String comment, String brand, String sportType, String material, int weight, int length, int gripSize, String gripType) {
-        super(name, price, amount, comment, brand, sportType, material, weight);
+    public TennisRocket(String name, int price, int amount, String comment, String brand, UUID sellerID, String sportType, String material, int weight, int length, int gripSize, String gripType) {
+        super(name, price, amount, comment, brand, sellerID, sportType, material, weight);
         this.length = length;
         this.gripSize = gripSize;
         this.gripType = gripType;

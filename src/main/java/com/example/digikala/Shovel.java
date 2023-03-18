@@ -1,12 +1,14 @@
 package com.example.digikala;
 
+import java.util.UUID;
+
 public class Shovel extends Tool{
     private String handleType;
     private int length;
     private String MetalType;
 
-    public Shovel(String name, int price, int amount, String comment, String brand, String powerSupply, int numberOfPeopleRequiredForUse, String application, boolean isPortable, String handleType, int length, String metalType) {
-        super(name, price, amount, comment, brand, powerSupply, numberOfPeopleRequiredForUse, application, isPortable);
+    public Shovel(String name, int price, int amount, String comment, String brand, UUID sellerID, String powerSupply, int numberOfPeopleRequiredForUse, String application, boolean isPortable, String handleType, int length, String metalType) {
+        super(name, price, amount, comment, brand, sellerID, powerSupply, numberOfPeopleRequiredForUse, application, isPortable);
         this.handleType = handleType;
         this.length = length;
         MetalType = metalType;

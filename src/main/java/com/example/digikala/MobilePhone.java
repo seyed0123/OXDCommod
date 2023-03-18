@@ -1,12 +1,14 @@
 package com.example.digikala;
 
+import java.util.UUID;
+
 public class MobilePhone extends Electronics{
     private int screenSize;
     private int batteryLife;
     private int cameraResolution;
 
-    public MobilePhone(String name, int price, int amount, String comment, String brand, String batteryType, String color, String model, int screenSize, int batteryLife, int cameraResolution) {
-        super(name, price, amount, comment, brand, batteryType, color, model);
+    public MobilePhone(String name, int price, int amount, String comment, String brand, UUID sellerID, String batteryType, String color, String model, int screenSize, int batteryLife, int cameraResolution) {
+        super(name, price, amount, comment, brand, sellerID, batteryType, color, model);
         this.screenSize = screenSize;
         this.batteryLife = batteryLife;
         this.cameraResolution = cameraResolution;

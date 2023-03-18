@@ -1,12 +1,14 @@
 package com.example.digikala;
 
+import java.util.UUID;
+
 public class Pickor extends Tool{
     private int hitRate;
     private String DrillType;
     private int voltage;
 
-    public Pickor(String name, int price, int amount, String comment, String brand, String powerSupply, int numberOfPeopleRequiredForUse, String application, boolean isPortable, int hitRate, String drillType, int voltage) {
-        super(name, price, amount, comment, brand, powerSupply, numberOfPeopleRequiredForUse, application, isPortable);
+    public Pickor(String name, int price, int amount, String comment, String brand, UUID sellerID, String powerSupply, int numberOfPeopleRequiredForUse, String application, boolean isPortable, int hitRate, String drillType, int voltage) {
+        super(name, price, amount, comment, brand, sellerID, powerSupply, numberOfPeopleRequiredForUse, application, isPortable);
         this.hitRate = hitRate;
         DrillType = drillType;
         this.voltage = voltage;

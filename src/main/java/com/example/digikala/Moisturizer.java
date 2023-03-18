@@ -1,12 +1,14 @@
 package com.example.digikala;
 
+import java.util.UUID;
+
 public class Moisturizer extends Cosmetic{
     private int volume;
     private String CompatibleWith;
     private String TypeOfEnclosure;
 
-    public Moisturizer(String name, int price, int amount, String comment, String brand, String type, String brandCountry, boolean isOrganic, int volume, String compatibleWith, String typeOfEnclosure) {
-        super(name, price, amount, comment, brand, type, brandCountry, isOrganic);
+    public Moisturizer(String name, int price, int amount, String comment, String brand, UUID sellerID, String type, String brandCountry, boolean isOrganic, int volume, String compatibleWith, String typeOfEnclosure) {
+        super(name, price, amount, comment, brand, sellerID, type, brandCountry, isOrganic);
         this.volume = volume;
         CompatibleWith = compatibleWith;
         TypeOfEnclosure = typeOfEnclosure;

@@ -1,12 +1,14 @@
 package com.example.digikala;
 
+import java.util.UUID;
+
 public class Sunglass extends Clothing{
     private String lensType;
     private int Prescription;
     private String lensMaterial;
 
-    public Sunglass(String name, int price, int amount, String comment, String brand, String color, String material, String size, String style, String lensType, int prescription, String lensMaterial) {
-        super(name, price, amount, comment, brand, color, material, size, style);
+    public Sunglass(String name, int price, int amount, String comment, String brand, UUID sellerID, String color, String material, String size, String style, String lensType, int prescription, String lensMaterial) {
+        super(name, price, amount, comment, brand, sellerID, color, material, size, style);
         this.lensType = lensType;
         Prescription = prescription;
         this.lensMaterial = lensMaterial;

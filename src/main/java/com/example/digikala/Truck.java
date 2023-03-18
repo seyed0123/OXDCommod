@@ -1,12 +1,14 @@
 package com.example.digikala;
 
+import java.util.UUID;
+
 public class Truck extends Vehicle{
     private int LoadCarryingCapacity;
     private int NumberAxis;
     private String gearboxType;
 
-    public Truck(String name, int price, int amount, String comment, String brand, int weight, int numOfWheels, int numOfPassenger, String fuelType, String color, int maxSpeed, int loadCarryingCapacity, int numberAxis, String gearboxType) {
-        super(name, price, amount, comment, brand, weight, numOfWheels, numOfPassenger, fuelType, color, maxSpeed);
+    public Truck(String name, int price, int amount, String comment, String brand, UUID sellerID, int weight, int numOfWheels, int numOfPassenger, String fuelType, String color, int maxSpeed, int loadCarryingCapacity, int numberAxis, String gearboxType) {
+        super(name, price, amount, comment, brand, sellerID, weight, numOfWheels, numOfPassenger, fuelType, color, maxSpeed);
         LoadCarryingCapacity = loadCarryingCapacity;
         NumberAxis = numberAxis;
         this.gearboxType = gearboxType;

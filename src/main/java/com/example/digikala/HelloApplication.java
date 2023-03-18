@@ -19,8 +19,6 @@ public class HelloApplication extends Application {
     }
 
     public static void main(String[] args) {
-        Pair<Integer , String> p1 = new Pair<>(10 , "123");
-        System.out.println(p1);
-        //launch();
+        launch();
     }
 }

@@ -2,10 +2,7 @@ package com.example.digikala;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 public class Seller {
     private static Store store;
@@ -15,9 +12,11 @@ public class Seller {
     private final UUID uuid;
     private String companyName;
     private final HashSet<UUID> products;
-    private int wallet;
+    private double wallet;
     private final ArrayList<String> notification;
     private final ArrayList<String> oldNotification;
+    private final HashMap<UUID ,Product> waitForConfirm;
+    private boolean banned;
 
     public Seller(String username, String password, String email, String companyName) {
         this.username = username;
@@ -28,7 +27,7 @@ public class Seller {
         this.products=new HashSet<>();
         this.notification=new ArrayList<>();
         this.oldNotification=new ArrayList<>();
-
+        this.waitForConfirm=new HashMap<>();
     }
 
     private String HashPassword(String passwordToHash)
@@ -72,6 +71,14 @@ public class Seller {
         return Objects.equals(this.password, genPass);
     }
 
+    public boolean isBanned() {
+        return banned;
+    }
+
+    public void setBanned(boolean banned) {
+        this.banned = banned;
+    }
+
     public static void setStore(Store store) {
         Seller.store = store;
     }
@@ -82,10 +89,6 @@ public class Seller {
 
     public String getUsername() {
         return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getEmail() {
@@ -121,17 +124,26 @@ public class Seller {
     public HashSet<UUID> getProduct() {
         return products;
     }
+    public Product getWaitProduct(UUID product)
+    {
+        return waitForConfirm.get(product);
+    }
     public void addProduct(UUID product) {
         this.products.add(product);
     }
+    public void addWait(Product product)
+    {
+        waitForConfirm.put(product.getUuid(),product);
+    }
+    public boolean haveProduct(UUID product){return this.products.contains(product); }
     public void removeProduct(UUID product) {
         store.removeProduct(product);
         this.products.remove(product);
     }
-    public int getWallet() {
+    public double getWallet() {
         return wallet;
     }
-    public void addWallet(int wallet) {
+    public void addWallet(double wallet) {
         this.wallet += wallet;
     }
     public void makeDiscount(int discount,UUID product)
@@ -152,7 +164,7 @@ public class Seller {
                 ", companyName='" + companyName + '\'' +
                 ", products={");
                 for(UUID product : products)
-                    ret.append(store.findProduct(product).toString).append("\n");
+                    ret.append(store.findProduct(product).toString()).append("\n");
                 ret.append("}, wallet=").append(wallet).append('}');
         return ret.toString();
     }

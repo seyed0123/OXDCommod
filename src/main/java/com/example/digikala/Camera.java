@@ -1,12 +1,14 @@
 package com.example.digikala;
 
+import java.util.UUID;
+
 public class Camera extends Electronics{
     private String lensType;
     private String sensorType;
     private String  zoomRange;
 
-    public Camera(String name, int price, int amount, String comment, String brand, String batteryType, String color, String model, String lensType, String sensorType, String zoomRange) {
-        super(name, price, amount, comment, brand, batteryType, color, model);
+    public Camera(String name, int price, int amount, String comment, String brand, UUID sellerID, String batteryType, String color, String model, String lensType, String sensorType, String zoomRange) {
+        super(name, price, amount, comment, brand, sellerID, batteryType, color, model);
         this.lensType = lensType;
         this.sensorType = sensorType;
         this.zoomRange = zoomRange;

@@ -1,13 +1,15 @@
 package com.example.digikala;
 
+import java.util.UUID;
+
 public class SafeBox extends Tool{
     private int weight;
     private int NumberOfLocks;
     private String type;
     private int volume;
 
-    public SafeBox(String name, int price, int amount, String comment, String brand, String powerSupply, int numberOfPeopleRequiredForUse, String application, boolean isPortable, int weight, int numberOfLocks, String type, int volume) {
-        super(name, price, amount, comment, brand, powerSupply, numberOfPeopleRequiredForUse, application, isPortable);
+    public SafeBox(String name, int price, int amount, String comment, String brand, UUID sellerID, String powerSupply, int numberOfPeopleRequiredForUse, String application, boolean isPortable, int weight, int numberOfLocks, String type, int volume) {
+        super(name, price, amount, comment, brand, sellerID, powerSupply, numberOfPeopleRequiredForUse, application, isPortable);
         this.weight = weight;
         NumberOfLocks = numberOfLocks;
         this.type = type;

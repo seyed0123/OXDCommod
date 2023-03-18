@@ -1,12 +1,14 @@
 package com.example.digikala;
 
+import java.util.UUID;
+
 public class Ski extends SportEquip{
     private String length;
     private String color;
     private String brandCountry;
 
-    public Ski(String name, int price, int amount, String comment, String brand, String sportType, String material, int weight, String length, String color, String brandCountry) {
-        super(name, price, amount, comment, brand, sportType, material, weight);
+    public Ski(String name, int price, int amount, String comment, String brand, UUID sellerID, String sportType, String material, int weight, String length, String color, String brandCountry) {
+        super(name, price, amount, comment, brand, sellerID, sportType, material, weight);
         this.length = length;
         this.color = color;
         this.brandCountry = brandCountry;
