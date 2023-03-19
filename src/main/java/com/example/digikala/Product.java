@@ -17,7 +17,7 @@ abstract class Product {
     private String comment;
     private int discount;
     private String brand;
-    private HashMap<UUID,Double> ratedUser;
+    private final HashMap<UUID,Double> ratedUser;
 
     public Product(String name, int price, int amount, String comment,String brand,UUID sellerID) {
         this.name = name;

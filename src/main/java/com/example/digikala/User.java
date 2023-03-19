@@ -12,7 +12,7 @@ public class User {
     private final UUID uuid;
     private int phoneNumber;
     private String address;
-    private final HashSet<UUID> cart;
+    private final HashMap<UUID, Integer> cart;
     private Vector<UUID> lastSeen;
     private double wallet;
     private final ArrayList<String> notification;
@@ -34,7 +34,7 @@ public class User {
         this.oldNotification= new ArrayList<>();
         this.orders = new HashSet<>();
         this.favorite = new HashSet<>();
-        this.cart= new HashSet<>();
+        this.cart= new HashMap<>();
         this.lastSeen=new Vector<>();
     }
     public static void setStore(Store store) {
@@ -126,12 +126,15 @@ public class User {
     public void setAddress(String address) {
         this.address = address;
     }
-    public boolean cartExist(UUID product){return cart.contains(product);}
-    public HashSet<UUID> getCart() {
+    public boolean cartExist(UUID product){return cart.containsKey(product);}
+    public HashMap<UUID,Integer> getCart() {
         return cart;
     }
     public void addCart(UUID product) {
-        this.cart.add(product);
+        if(cartExist(product))
+            this.cart.put(product,cart.get(product)+1);
+        else
+            this.cart.put(product,1);
     }
     public void removeCart(UUID product) {
         this.cart.remove(product);
@@ -175,10 +178,20 @@ public class User {
     public void setSubscription(boolean subscription) {
         this.subscription = subscription;
     }
+    public String isOrderOK()
+    {
+        StringBuilder ret = new StringBuilder();
+        for (UUID product : cart.keySet())
+        {
+            if(store.findProduct(product).getAmount()<=cart.get(product))
+                ret.append(product.toString()).append("\n");
+        }
+        return ret.toString();
+    }
     public HashSet<UUID> order()
     {
         waitForVerify=true;
-        return this.cart;
+        return new HashSet<>(cart.keySet());
     }
     public void verifyOrder(Order order)
     {
@@ -200,7 +213,7 @@ public class User {
                 ", phoneNumber=" + phoneNumber +
                 ", address='" + address + '\'' +
                 ", cart={");
-                for(UUID product : cart)
+                for(UUID product : cart.keySet())
                     ret.append(store.findProduct(product).toString()).append("\n");
                 ret.append("}, lastSeen=").append(lastSeen).append(", wallet=").append(wallet).append(", orders={");
                 for(UUID order:orders)
