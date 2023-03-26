@@ -51,7 +51,7 @@ abstract class Eatable extends Product{
 
     @Override
     public String toString() {
-        return super.toString()+
+        return
                 "Eatable{" +
                 "RawMaterial='" + RawMaterial + '\'' +
                 ", ExpirationDate=" + ExpirationDate +

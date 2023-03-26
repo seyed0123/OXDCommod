@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.digikala.SeeProduct">
+   <children>
+      <Button fx:id="signButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#signButton" prefHeight="25.0" prefWidth="103.0" text="sign in | sign up" />
+      <Label fx:id="name" alignment="CENTER" layoutX="500.0" layoutY="39.0" prefHeight="69.0" prefWidth="400.0" text="name">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+      <Label fx:id="brand" alignment="CENTER" layoutX="323.0" layoutY="140.0" prefHeight="50.0" prefWidth="400.0" text="brand">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="rate" alignment="CENTER" layoutX="753.0" layoutY="140.0" prefHeight="50.0" prefWidth="193.0" text="rate">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="comment" alignment="TOP_CENTER" layoutX="417.0" layoutY="239.0" prefHeight="61.0" prefWidth="566.0" text="comment" />
+      <Label fx:id="another" alignment="TOP_CENTER" layoutX="417.0" layoutY="309.0" prefHeight="41.0" prefWidth="566.0" text="another" />
+      <Label fx:id="totalPrice" alignment="CENTER_RIGHT" layoutX="159.0" layoutY="492.0" prefHeight="41.0" prefWidth="303.0" text="totalPrise">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="dis" layoutX="619.0" layoutY="488.0" prefHeight="50.0" prefWidth="358.0" text="dis+prise" textFill="#fc0000">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="addToCart" layoutX="55.0" layoutY="500.0" mnemonicParsing="false" onAction="#addToCart" text="add to cart" />
+      <ImageView fx:id="person" fitHeight="25.0" fitWidth="37.0" layoutX="146.0" layoutY="14.0" onMouseClicked="#personPanel" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@person.png" />
+         </image></ImageView>
+      <Button fx:id="Backbutton" layoutX="14.0" layoutY="561.0" mnemonicParsing="false" onAction="#back" text="Back" />
+      <Label fx:id="userLogIn" layoutX="188.0" layoutY="18.0" prefHeight="17.0" prefWidth="123.0" />
+   </children>
+</AnchorPane>

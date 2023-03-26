@@ -70,7 +70,7 @@ abstract class Vehicle extends Product{
 
     @Override
     public String toString() {
-        return super.toString()+
+        return
                 "vehicle{" +
                 "weight=" + weight +
                 ", numOfWheels=" + numOfWheels +

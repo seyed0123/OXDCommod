@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.digikala.MainMenu">
+   <children>
+      <ImageView fitHeight="45.0" fitWidth="70.0" layoutX="941.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@OXDCommod.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="signButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#singButton" prefHeight="25.0" prefWidth="103.0" text="sign in | sign up" />
+      <Separator layoutX="14.0" layoutY="54.0" prefHeight="4.0" prefWidth="988.0" />
+      <TextField fx:id="searchBar" layoutX="399.0" layoutY="14.0" prefHeight="25.0" prefWidth="516.0" />
+      <Button fx:id="searchButton" layoutX="338.0" layoutY="14.0" mnemonicParsing="false" onAction="#searchButton" text="search" textFill="#0c0c0c" />
+      <ListView fx:id="offers" layoutX="73.0" layoutY="100.0" prefHeight="249.0" prefWidth="877.0" />
+      <ImageView fx:id="person" fitHeight="34.0" fitWidth="34.0" layoutX="134.0" layoutY="8.0" onMouseClicked="#personPanel" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@person.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="67.0" fitWidth="125.0" layoutX="73.0" layoutY="349.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@electronics.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="67.0" fitWidth="103.0" layoutX="82.0" layoutY="464.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@househods.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="67.0" fitWidth="125.0" layoutX="265.0" layoutY="349.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@sport.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="67.0" fitWidth="125.0" layoutX="265.0" layoutY="464.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@vehicles.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="67.0" fitWidth="125.0" layoutX="455.0" layoutY="349.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@clothing.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="67.0" fitWidth="125.0" layoutX="644.0" layoutY="349.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@comestic.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="67.0" fitWidth="125.0" layoutX="825.0" layoutY="349.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@pets.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="67.0" fitWidth="125.0" layoutX="455.0" layoutY="464.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@tools.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="67.0" fitWidth="125.0" layoutX="644.0" layoutY="464.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@book.gif" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="67.0" fitWidth="125.0" layoutX="854.0" layoutY="464.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@eatable.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="userLogIn" layoutX="188.0" layoutY="18.0" prefHeight="17.0" prefWidth="119.0" />
+   </children>
+</AnchorPane>

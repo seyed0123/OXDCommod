@@ -40,7 +40,7 @@ abstract class SportEquip extends Product{
 
     @Override
     public String toString() {
-        return super.toString()+
+        return
                 "SportEquip{" +
                 "SportType='" + SportType + '\'' +
                 ", material='" + material + '\'' +

@@ -13,7 +13,7 @@ abstract class Product {
     private double price;
     private int amount;
     private final UUID sellerID;
-    private Pair<Double, Integer> rate;
+    private Pair<Double , Integer> rate;
     private String comment;
     private int discount;
     private String brand;
@@ -67,7 +67,7 @@ abstract class Product {
         finalPrice=(price*(1-((double)this.discount/100)));
         this.price = price;
     }
-
+    public double getPrice(){return price;}
     public int getAmount() {
         return amount;
     }
@@ -79,7 +79,7 @@ abstract class Product {
 
     public double getRate() {
         if(rate == null)
-            return -10;
+            return 0;
         return rate.getKey();
     }
     public void changeRate(double rate,UUID user)
@@ -116,7 +116,9 @@ abstract class Product {
     }
 
     @Override
-    public String toString() {
+    abstract public String toString() ;
+    public String TOString()
+    {
         return "Product{" +
                 "name='" + name + '\'' +
                 ", uuid=" + uuid +

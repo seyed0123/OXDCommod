@@ -126,15 +126,24 @@ public class User {
     public void setAddress(String address) {
         this.address = address;
     }
-    public boolean cartExist(UUID product){return cart.containsKey(product);}
+    public int cartExist(UUID product){
+        return cart.getOrDefault(product, 0);
+    }
     public HashMap<UUID,Integer> getCart() {
         return cart;
     }
     public void addCart(UUID product) {
-        if(cartExist(product))
+        if(cartExist(product)!=0)
             this.cart.put(product,cart.get(product)+1);
         else
             this.cart.put(product,1);
+    }
+    public void reduceCart(UUID product)
+    {
+        if(cartExist(product)==1)
+            removeCart(product);
+        else
+            cart.put(product,cart.get(product)-1);
     }
     public void removeCart(UUID product) {
         this.cart.remove(product);

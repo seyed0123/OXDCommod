@@ -51,7 +51,7 @@ abstract class Book extends Product{
 
     @Override
     public String toString() {
-        return super.toString()+
+        return
                 "Book{" +
                 "yearOfPublish=" + yearOfPublish +
                 ", publisher='" + publisher + '\'' +

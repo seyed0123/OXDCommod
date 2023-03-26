@@ -40,7 +40,7 @@ abstract class Electronics extends Product{
 
     @Override
     public String toString() {
-        return super.toString()+
+        return
                 "Electronics{" +
                 "batteryType='" + batteryType + '\'' +
                 ", color='" + color + '\'' +

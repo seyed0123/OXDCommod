@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.digikala.SearchTab">
+   <children>
+       <Button fx:id="signButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#singButton" prefHeight="25.0" prefWidth="103.0" text="sign in | sign up" />
+       <Separator layoutX="14.0" layoutY="54.0" prefHeight="4.0" prefWidth="988.0" />
+       <ImageView fx:id="person" fitHeight="34.0" fitWidth="34.0" layoutX="134.0" layoutY="8.0" onMouseClicked="#personPanel" pickOnBounds="true" preserveRatio="true">
+           <image>
+               <Image url="@person.png" />
+           </image>
+       </ImageView>
+       <ListView fx:id="searched" layoutX="73.0" layoutY="100.0" prefHeight="450.0" prefWidth="877.0" />
+      <Button fx:id="back" layoutX="14.0" layoutY="561.0" mnemonicParsing="false" onAction="#back" text="back" />
+       <Label fx:id="userLogIn" layoutX="188.0" layoutY="18.0" prefHeight="17.0" prefWidth="124.0" />
+   </children>
+</AnchorPane>

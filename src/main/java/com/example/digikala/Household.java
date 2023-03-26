@@ -50,7 +50,7 @@ abstract class Household extends Product{
 
     @Override
     public String toString() {
-        return super.toString()+
+        return
                 "Household{" +
                 "isNeedsElectricity=" + isNeedsElectricity +
                 ", isDecorative=" + isDecorative +

@@ -27,10 +27,11 @@ public class Admin {
         this.email = email;
         uuid=UUID.randomUUID();
     }
-    public static void setStatics()
+    public static void setStatics(Store store)
     {
         if(!firstTime)
             return;
+        Admin.store = store;
         notification=new ArrayList<>();
         oldNotification=new ArrayList<>();
         orders=new ArrayList<>();

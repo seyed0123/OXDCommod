@@ -1,7 +1,7 @@
 package com.example.digikala;
 
 import javafx.util.Pair;
-
+import java.util.Map.Entry;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -13,10 +13,11 @@ public class Store {
     private final HashMap<UUID,Order> orders;
     private final HashMap<UUID,Product> products;
     private final HashMap<String,UUID> usernames;
+    private final HashSet<UUID> ban;
     private double profit;
     private String webAddress;
     private int supportNumber;
-    private HashSet<String> log;
+    private final HashSet<String> log;
     private String owner;
 
     public Store(String webAddress, int supportNumber, String owner) {
@@ -29,9 +30,10 @@ public class Store {
         this.orders= new HashMap<>();
         this.products= new HashMap<>();
         this.usernames=new HashMap<>();
-        Admin.setStatics();
+        this.ban=new HashSet<>();
+        this.log=new HashSet<>();
     }
-    public void setStore(Store store){this.store=store;}
+    public void setStore(Store store){this.store=store; Admin.setStatics(store); Seller.setStore(store);User.setStore(store);}
     public void addUser(String username, String password , int phoneNumber , String address , String email)
     {
         User temp = new User(username, password,phoneNumber,address,email);
@@ -80,7 +82,7 @@ public class Store {
                 return new Pair<String,UUID>("admin",person);
             }
         }
-            return new Pair<>("",null);
+            return null;
     }
     public boolean isUserExist(UUID user)
     {
@@ -211,6 +213,7 @@ public class Store {
             sellers.get(person).setBanned(true);
             sellers.get(person).addNotification("You have been suspended by digiEye :)");
         }
+        ban.add(person);
         log.add(person +" have been suspended by digiEye in"+LocalDateTime.now()+".");
     }
     public void permit(UUID person)
@@ -224,6 +227,7 @@ public class Store {
             sellers.get(person).setBanned(false);
             sellers.get(person).addNotification("Your charges have been cleared.");
         }
+        ban.remove(person);
         log.add("The charges of "+person +" have been cleared.");
     }
     public User findUserByInfo(String username)
@@ -234,16 +238,10 @@ public class Store {
     {
         return findSeller(usernames.get(username));
     }
-    private int numberOfMatch(String str,UUID product)
+    private int numberOfMatch(ArrayList<String> substr,Product product)
     {
         int ret=0;
-        ArrayList<String> substr = new ArrayList<>();
-        for (int i = 0; i < str.length(); i++) {
-            for (int j = i+1; j <= str.length(); j++) {
-                substr.add(str.substring(i,j));
-            }
-        }
-        String productName=findProduct(product).getName();
+        String productName=product.getName();
         for(String temp :substr)
         {
             if(productName.contains(temp))
@@ -251,44 +249,57 @@ public class Store {
         }
         return ret;
     }
-    public HashSet<UUID> findProductByInfo(String name)
+    public ArrayList<UUID> findProductByInfo(String str)
     {
+        ArrayList<String> substr = new ArrayList<>();
+        for (int i = 0; i < str.length(); i++) {
+            for (int j = i+1; j <= str.length(); j++) {
+                substr.add(str.substring(i,j));
+            }
+        }
         int max1=Integer.MIN_VALUE,max2=Integer.MIN_VALUE,max3=Integer.MIN_VALUE;
-        HashSet<UUID> ret = new HashSet<>();
-        HashMap<Integer, UUID> nums = new HashMap<>();
+        HashMap<UUID, Integer> nums = new HashMap<>();
         for(Product product: products.values())
         {
-            int num=numberOfMatch(name,product.getUuid());
-            if(max1<num) {
-                if(max2<num) {
-                    max1=max2;
-                    if(max3<num) {
-                        max2=max3;
-                        max3=num;
-                    }else {
-                        max2=num;
-                    }
-                }else {
-                    max1 = num;
-                }
-            }
-            nums.put(num,product.getUuid());
+            int num=numberOfMatch(substr,product);
+            nums.put(product.getUuid(),num);
         }
-        if(max1!=Integer.MIN_VALUE)
-            ret.add(nums.get(max1));
-        if(max2!=Integer.MIN_VALUE)
-            ret.add(nums.get(max2));
-        if(max3!=Integer.MIN_VALUE)
-            ret.add(nums.get(max3));
-        return ret;
+        List<Entry<UUID,Integer>> list = new ArrayList<>(nums.entrySet());
+        Collections.sort(list, new Comparator<Entry<UUID,Integer>>(){
+            public int compare(Entry<UUID,Integer> o1 , Entry<UUID , Integer> o2)
+            {
+                return o2.getValue().compareTo(o1.getValue());
+            }
+        });
+        ArrayList<UUID> sorted = new ArrayList<>();
+        for(Entry<UUID,Integer> entry :list)
+            sorted.add(entry.getKey());
+        return sorted;
     }
-    public HashSet<UUID> recommend(UUID user)
+    public HashMap<Integer,UUID> recommend(UUID user)
     {
         Vector<UUID> last=findUser(user).getLastSeen();
-        HashSet<UUID> ret = new HashSet<>();
+        HashMap<Integer,UUID> ret = new HashMap<>();
+        int counter =1;
         for(UUID product:last)
         {
-            ret.addAll(findProductByInfo(findProduct(product).getName()));
+            ret.put(counter++,product);
+        }
+        return ret;
+    }
+    public ArrayList<UUID> offers()
+    {
+        ArrayList <UUID> ret=  new ArrayList<>();
+        int counter = 0 ;
+        for(Product product : products.values())
+        {
+            if(counter>=10)
+                break;
+            if(product.getDiscount()>0)
+            {
+                counter++;
+                ret.add(product.getUuid());
+            }
         }
         return ret;
     }

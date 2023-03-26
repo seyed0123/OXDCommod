@@ -41,7 +41,7 @@ abstract class Cosmetic extends Product{
 
     @Override
     public String toString() {
-        return super.toString() +
+        return
                 "Cosmetic{" +
                 "type='" + type + '\'' +
                 ", brandCountry='" + brandCountry + '\'' +

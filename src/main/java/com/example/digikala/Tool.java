@@ -50,7 +50,7 @@ abstract class Tool extends Product{
 
     @Override
     public String toString() {
-        return super.toString()+
+        return
                 "Tool{" +
                 "powerSupply='" + powerSupply + '\'' +
                 ", numberOfPeopleRequiredForUse=" + numberOfPeopleRequiredForUse +

@@ -40,7 +40,7 @@ abstract class Pet extends Product{
 
     @Override
     public String toString() {
-        return super.toString()+
+        return
                 "Pet{" +
                 "isNeutered='" + isNeutered + '\'' +
                 ", color='" + color + '\'' +

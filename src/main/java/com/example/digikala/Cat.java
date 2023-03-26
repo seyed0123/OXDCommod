@@ -1,10 +1,13 @@
 package com.example.digikala;
 
-public class Cat {
+import java.util.UUID;
+
+public class Cat extends Pet{
     private String favoriteFood;
     private String breed;
 
-    public Cat(String favoriteFood, String breed) {
+    public Cat(String name, int price, int amount, String comment, String brand, UUID sellerID, String isNeutered, String color, int age, String favoriteFood, String breed) {
+        super(name, price, amount, comment, brand, sellerID, isNeutered, color, age);
         this.favoriteFood = favoriteFood;
         this.breed = breed;
     }
