@@ -55,9 +55,6 @@ abstract class Product {
         return uuid;
     }
 
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
-    }
 
     public double getFinalPrice() {
         return finalPrice;

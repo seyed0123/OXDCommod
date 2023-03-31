@@ -64,13 +64,13 @@ public class Store {
         UUID person=usernames.get(username);
         if(users.containsKey(person))
         {
-            if(users.get(person).checkPassword(password))
+            if(users.get(person).checkPassword(password) && !users.get(person).isBanned())
             {
                 return new Pair<String,UUID>("user",person);
             }
         }else if(sellers.containsKey(person))
         {
-            if(sellers.get(person).checkPassword(password))
+            if(sellers.get(person).checkPassword(password) && !sellers.get(person).isBanned())
             {
                 return new Pair<String,UUID>("seller",person);
             }
@@ -275,17 +275,6 @@ public class Store {
         for(Entry<UUID,Integer> entry :list)
             sorted.add(entry.getKey());
         return sorted;
-    }
-    public HashMap<Integer,UUID> recommend(UUID user)
-    {
-        Vector<UUID> last=findUser(user).getLastSeen();
-        HashMap<Integer,UUID> ret = new HashMap<>();
-        int counter =1;
-        for(UUID product:last)
-        {
-            ret.put(counter++,product);
-        }
-        return ret;
     }
     public ArrayList<UUID> offers()
     {

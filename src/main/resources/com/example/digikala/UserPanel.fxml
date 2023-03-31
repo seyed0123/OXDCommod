@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.digikala.UserPanel">
+  <tabs>
+    <Tab text="personal info">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                 <TextField fx:id="usernameBar" editable="false" layoutX="38.0" layoutY="45.0" prefHeight="25.0" prefWidth="266.0" promptText="username" />
+                 <PasswordField fx:id="passwordBar" layoutX="38.0" layoutY="82.0" prefHeight="25.0" prefWidth="264.0" promptText="password" visible="false" />
+                 <PasswordField fx:id="conPasswordBar" layoutX="38.0" layoutY="124.0" prefHeight="25.0" prefWidth="264.0" promptText="confirm password" visible="false" />
+                 <TextField fx:id="emailBar" editable="false" layoutX="38.0" layoutY="162.0" prefHeight="25.0" prefWidth="265.0" promptText="email" />
+                 <TextField fx:id="addressBar" editable="false" layoutX="38.0" layoutY="200.0" prefHeight="25.0" prefWidth="264.0" promptText="address" />
+                 <TextField fx:id="numberBar" editable="false" layoutX="38.0" layoutY="242.0" prefHeight="25.0" prefWidth="263.0" promptText="phone number" />
+                 <Button fx:id="change" cancelButton="true" layoutX="133.0" layoutY="285.0" mnemonicParsing="false" onAction="#change" text="change">
+                   <font>
+                     <Font name="System Bold" size="16.0" />
+                   </font>
+                 </Button>
+                 <Label fx:id="conPassLabel" layoutX="336.0" layoutY="128.0" prefHeight="17.0" prefWidth="253.0" />
+                 <Label fx:id="numberLabel" layoutX="329.0" layoutY="246.0" prefHeight="17.0" prefWidth="263.0" />
+                 <PasswordField fx:id="oldPasswordBar" layoutX="336.0" layoutY="82.0" prefHeight="25.0" prefWidth="249.0" promptText="old password" visible="false" />
+                  <Label fx:id="walletLabel" layoutX="696.0" layoutY="49.0" prefHeight="17.0" prefWidth="253.0" />
+                  <TextField fx:id="walletBar" layoutX="652.0" layoutY="82.0" prefHeight="25.0" prefWidth="180.0" promptText="Enter the amount you want" />
+                  <Button fx:id="walletButton" layoutX="841.0" layoutY="82.0" mnemonicParsing="false" onAction="#addWallet" prefHeight="25.0" prefWidth="147.0" text="add walet" />
+                  <Button fx:id="logoutButton" layoutX="28.0" layoutY="522.0" mnemonicParsing="false" onAction="#logout" text="logout" />
+                  <Button fx:id="back" layoutX="157.0" layoutY="522.0" mnemonicParsing="false" onAction="#back" text="back" />
+                  <Label fx:id="waitForAccept" layoutX="444.0" layoutY="165.0" prefHeight="60.0" prefWidth="543.0" textFill="#2bff00">
+                     <font>
+                        <Font size="29.0" />
+                     </font>
+                  </Label>
+                  <ListView fx:id="recommendList" layoutX="346.0" layoutY="271.0" prefHeight="286.0" prefWidth="629.0" />
+                  <Label layoutX="621.0" layoutY="246.0" text="recommends" textFill="#5086eb">
+                     <font>
+                        <Font name="System Bold Italic" size="19.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="sendOrder" layoutX="360.0" layoutY="186.0" mnemonicParsing="false" onAction="#sendOrder" text="send order" />
+               </children></AnchorPane>
+      </content>
+    </Tab>
+    <Tab text="notification">
+    <content>
+      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="notifLabel" alignment="TOP_CENTER" layoutX="35.0" layoutY="45.0" prefHeight="107.0" prefWidth="936.0" wrapText="true" />
+                  <Button fx:id="nextNotifButton" layoutX="421.0" layoutY="175.0" mnemonicParsing="false" onAction="#nextNotif" prefHeight="25.0" prefWidth="122.0" text="next" />
+                  <ListView fx:id="notifList" layoutX="33.0" layoutY="214.0" prefHeight="339.0" prefWidth="933.0" />
+               </children></AnchorPane>
+    </content>
+  </Tab>
+    <Tab fx:id="cartTab" text="cart">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <ListView fx:id="cartList" layoutX="14.0" layoutY="14.0" prefHeight="540.0" prefWidth="973.0" />
+               </children></AnchorPane>
+      </content>
+    </Tab>
+    <Tab text="orders">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <ListView fx:id="ordersList" layoutX="19.0" layoutY="14.0" prefHeight="543.0" prefWidth="966.0" />
+               </children></AnchorPane>
+      </content>
+    </Tab>
+    <Tab text="favorite">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <ListView fx:id="favoriteList" layoutX="31.0" layoutY="17.0" prefHeight="530.0" prefWidth="952.0" />
+               </children></AnchorPane>
+      </content>
+    </Tab>
+  </tabs>
+</TabPane>

@@ -13,7 +13,7 @@ public class User {
     private int phoneNumber;
     private String address;
     private final HashMap<UUID, Integer> cart;
-    private Vector<UUID> lastSeen;
+    private final TreeSet<UUID> lastSeen;
     private double wallet;
     private final ArrayList<String> notification;
     private final ArrayList<String> oldNotification;
@@ -35,7 +35,7 @@ public class User {
         this.orders = new HashSet<>();
         this.favorite = new HashSet<>();
         this.cart= new HashMap<>();
-        this.lastSeen=new Vector<>();
+        this.lastSeen=new TreeSet<>();
     }
     public static void setStore(Store store) {
         User.store = store;
@@ -98,13 +98,13 @@ public class User {
         String genPass=HashPassword(password);
         return Objects.equals(this.password, genPass);
     }
-    public Vector<UUID> getLastSeen() {
+    public TreeSet<UUID> getLastSeen() {
         return lastSeen;
     }
     public void addLastSeen(UUID lastSeen) {
-        if(this.lastSeen.size()>3)
+        if(this.lastSeen.size()>6)
         {
-            this.lastSeen.removeElementAt(2);
+            this.lastSeen.pollLast();
         }
         this.lastSeen.add(lastSeen);
     }
@@ -126,6 +126,7 @@ public class User {
     public void setAddress(String address) {
         this.address = address;
     }
+    public boolean getWait(){return waitForVerify;}
     public int cartExist(UUID product){
         return cart.getOrDefault(product, 0);
     }
@@ -156,7 +157,7 @@ public class User {
     }
     public String getNotification() {
         if(notification.size()==0)
-            return null;
+            return "";
         String ret = this.notification.get(0);
         this.notification.remove(0);
         this.oldNotification.add(ret);
@@ -181,6 +182,7 @@ public class User {
     public void removeFavorite(UUID product) {
         this.favorite.remove(product);
     }
+    public boolean isInFavorite(UUID product){return this.favorite.contains(product);}
     public boolean getSubscription() {
         return subscription;
     }
@@ -197,10 +199,10 @@ public class User {
         }
         return ret.toString();
     }
-    public HashSet<UUID> order()
+    public HashMap<UUID,Integer> order()
     {
         waitForVerify=true;
-        return new HashSet<>(cart.keySet());
+        return new HashMap<>(cart);
     }
     public void verifyOrder(Order order)
     {

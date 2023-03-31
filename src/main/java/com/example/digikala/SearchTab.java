@@ -3,6 +3,8 @@ package com.example.digikala;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -80,6 +82,26 @@ public class SearchTab implements Initializable {
                 seeProductStage.show();
             }
         });
+        person.setPickOnBounds(true);
+        person.setOnMouseClicked(new EventHandler() {
+            @Override
+            public void handle(Event event) {
+                UserPanel.setStatus(store,user);
+                Stage UserPanel= new Stage();
+                Parent root = null;
+                try {
+                    root = FXMLLoader.load(getClass().getResource("UserPanel.fxml"));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                UserPanel.setTitle("OXDCommod!!");
+                Scene scene  =new Scene(root);
+                //scene.getProperties().put("name","UserPanel");
+                UserPanel.getIcons().add(new Image("G:\\code\\java\\OXDCommod\\src\\main\\resources\\com\\example\\digikala\\OXDCommod.png"));
+                UserPanel.setScene(scene);
+                UserPanel.show();
+            }
+        });
     }
 
     public static void setUser(User user) {
@@ -102,10 +124,6 @@ public class SearchTab implements Initializable {
         SignPanel.getIcons().add(new Image("G:\\code\\java\\OXDCommod\\src\\main\\resources\\com\\example\\digikala\\OXDCommod.png"));
         SignPanel.setScene(scene);
         SignPanel.show();
-    }
-    public void personPanel(ActionEvent e)
-    {
-
     }
     public void back(ActionEvent e)
     {

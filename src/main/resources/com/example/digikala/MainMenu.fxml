@@ -16,7 +16,7 @@
       <TextField fx:id="searchBar" layoutX="399.0" layoutY="14.0" prefHeight="25.0" prefWidth="516.0" />
       <Button fx:id="searchButton" layoutX="338.0" layoutY="14.0" mnemonicParsing="false" onAction="#searchButton" text="search" textFill="#0c0c0c" />
       <ListView fx:id="offers" layoutX="73.0" layoutY="100.0" prefHeight="249.0" prefWidth="877.0" />
-      <ImageView fx:id="person" fitHeight="34.0" fitWidth="34.0" layoutX="134.0" layoutY="8.0" onMouseClicked="#personPanel" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="person" fitHeight="34.0" fitWidth="34.0" layoutX="134.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@person.png" />
          </image>

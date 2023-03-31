@@ -8,7 +8,7 @@
    <children>
        <Button fx:id="signButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#singButton" prefHeight="25.0" prefWidth="103.0" text="sign in | sign up" />
        <Separator layoutX="14.0" layoutY="54.0" prefHeight="4.0" prefWidth="988.0" />
-       <ImageView fx:id="person" fitHeight="34.0" fitWidth="34.0" layoutX="134.0" layoutY="8.0" onMouseClicked="#personPanel" pickOnBounds="true" preserveRatio="true">
+       <ImageView fx:id="person" fitHeight="34.0" fitWidth="34.0" layoutX="134.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
            <image>
                <Image url="@person.png" />
            </image>

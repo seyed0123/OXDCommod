@@ -23,8 +23,8 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="comment" alignment="TOP_CENTER" layoutX="417.0" layoutY="239.0" prefHeight="61.0" prefWidth="566.0" text="comment" />
-      <Label fx:id="another" alignment="TOP_CENTER" layoutX="417.0" layoutY="309.0" prefHeight="41.0" prefWidth="566.0" text="another" />
+      <Label fx:id="comment" alignment="TOP_CENTER" layoutX="417.0" layoutY="239.0" prefHeight="61.0" prefWidth="566.0" text="comment" wrapText="true" />
+      <Label fx:id="another" alignment="TOP_CENTER" layoutX="417.0" layoutY="309.0" prefHeight="41.0" prefWidth="566.0" text="another" wrapText="true" />
       <Label fx:id="totalPrice" alignment="CENTER_RIGHT" layoutX="159.0" layoutY="492.0" prefHeight="41.0" prefWidth="303.0" text="totalPrise">
          <font>
             <Font size="20.0" />
@@ -35,12 +35,16 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Button fx:id="addToCart" layoutX="55.0" layoutY="500.0" mnemonicParsing="false" onAction="#addToCart" text="add to cart" />
-      <ImageView fx:id="person" fitHeight="25.0" fitWidth="37.0" layoutX="146.0" layoutY="14.0" onMouseClicked="#personPanel" pickOnBounds="true" preserveRatio="true">
+      <Button fx:id="addToCart" layoutX="80.0" layoutY="500.0" mnemonicParsing="false" onAction="#addToCart" text="add to cart" />
+      <ImageView fx:id="person" fitHeight="25.0" fitWidth="37.0" layoutX="146.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@person.png" />
          </image></ImageView>
       <Button fx:id="Backbutton" layoutX="14.0" layoutY="561.0" mnemonicParsing="false" onAction="#back" text="Back" />
       <Label fx:id="userLogIn" layoutX="188.0" layoutY="18.0" prefHeight="17.0" prefWidth="123.0" />
+      <Label fx:id="favoriteLabel" layoutX="200.0" layoutY="545.0" prefHeight="17.0" prefWidth="117.0" />
+      <Button fx:id="favorite" layoutX="70.0" layoutY="540.0" mnemonicParsing="false" onAction="#addFavorite" text="add to favorite" />
+      <TextField fx:id="rateBar" alignment="CENTER" layoutX="42.0" layoutY="443.0" onAction="#rate" prefHeight="25.0" prefWidth="163.0" promptText="rate it 0-10" visible="false" />
+      <Label fx:id="rateLabel" alignment="CENTER" layoutX="15.0" layoutY="412.0" prefHeight="17.0" prefWidth="226.0" />
    </children>
 </AnchorPane>

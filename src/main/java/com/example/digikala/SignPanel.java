@@ -48,7 +48,8 @@ public class SignPanel {
                 SearchTab.setUser(user);
                 MainMenu.setUser(user);
                 SeeProduct.setUser(user);
-                this.result.setText("hello again.you have been logged in as a USER named "+user.getUsername());
+                this.result.setTextFill(Color.GREEN);
+                this.result.setText("hello "+user.getUsername()+".you have been logged in as a USER.");
                 ObservableList<Window> openWindow=Window.getWindows();
                 for(Window window :openWindow)
                 {
@@ -60,8 +61,6 @@ public class SignPanel {
                         }
                     }
                 }
-                this.result.setTextFill(Color.GREEN);
-                Thread.sleep(2000);
                 Stage currentStage = (Stage) ((Node) e.getSource()).getScene().getWindow();
                 currentStage.close();
                 Stage stage = new Stage();
@@ -72,6 +71,12 @@ public class SignPanel {
                 stage.setTitle("OXDCommod!!");
                 stage.setScene(scene);
                 stage.show();
+            }else if(Objects.equals(result.getKey(),"seller"))
+            {
+
+            }else
+            {
+
             }
         }else
         {

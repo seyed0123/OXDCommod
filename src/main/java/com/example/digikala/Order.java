@@ -1,29 +1,26 @@
 package com.example.digikala;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.UUID;
+import java.util.*;
 
 public class Order {
     private static Store store;
     private LocalDateTime date;
     private final UUID uuid;
     private int totalPrice=0;
-    private final HashSet<UUID> products;
+    private final HashMap<UUID,Integer> products;
     private boolean isVerified;
     private UUID user;
     private String stage;
 
-    public Order(LocalDateTime date, HashSet<UUID> products, UUID user,Store store) {
+    public Order(LocalDateTime date, HashMap<UUID,Integer> products, UUID user,Store store) {
         this.date = date;
         this.uuid = UUID.randomUUID();
         this.products = products;
         this.user = user;
-        for(UUID product:products)
+        for(UUID product:products.keySet())
         {
-            totalPrice+=store.findProduct(product).getFinalPrice();
+            totalPrice+= store.findProduct(product).getFinalPrice() * products.get(product);
         }
     }
 
@@ -64,10 +61,10 @@ public class Order {
     }
     public void verify()
     {
-        for (UUID product:products)
+        for (UUID product:products.keySet())
         {
-            store.findProduct(product).setAmount(-1);
-            store.findSeller(store.findProduct(product).getSellerID()).addWallet(store.findProduct(product).getFinalPrice());
+            store.findProduct(product).setAmount(-1*products.get(product));
+            store.findSeller(store.findProduct(product).getSellerID()).addWallet(store.findProduct(product).getFinalPrice()*products.get(product));
         }
         isVerified=true;
     }
@@ -90,8 +87,8 @@ public class Order {
                 ", user=" + user +
                 ", user wallet= "+ store.findUser(user).getWallet()+
                 ", products={\n");
-        for (UUID uuid : products) {
-            ret.append(store.findProduct(uuid).toString()).append("\n");
+        for (UUID uuid : products.keySet()) {
+            ret.append(store.findProduct(uuid).toString()).append(" * ").append(products.get(uuid)).append("\n");
         }
         ret.append("} }");
         return ret.toString();
