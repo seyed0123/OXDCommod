@@ -179,6 +179,7 @@ public class Store {
         this.products.put(sellers.get(request.getKey()).getWaitProduct(request.getValue()).getUuid(),sellers.get(request.getKey()).getWaitProduct(request.getValue()));
         this.sellers.get(request.getKey()).addNotification("Your order request for add " +sellers.get(request.getKey()).getWaitProduct(request.getValue()).getUuid() +" was approved");
         log.add("the order request for add " +sellers.get(request.getKey()).getWaitProduct(request.getValue()).getUuid() +" was approved in "+LocalDateTime.now()+".");
+        this.sellers.get(request.getKey()).removeWaitProduct(request.getValue());
     }
     public void cancelSellerReq(Pair<UUID,UUID> request)
     {

@@ -8,7 +8,8 @@ public class Meat extends Eatable{
     private boolean isFrozen;
     private boolean isHalfBaked;
 
-    public Meat(String name, int price, int amount, String comment, String brand, UUID sellerID, String rawMaterial, Date expirationDate, Date productionDate, boolean isManufacturedByFactory, String meatType, boolean isFrozen, boolean isHalfBaked) {
+
+    public Meat(String name, int price, int amount, String comment, String brand, UUID sellerID, String rawMaterial, String expirationDate, String productionDate, boolean isManufacturedByFactory, String meatType, boolean isFrozen, boolean isHalfBaked) {
         super(name, price, amount, comment, brand, sellerID, rawMaterial, expirationDate, productionDate, isManufacturedByFactory);
         this.meatType = meatType;
         this.isFrozen = isFrozen;

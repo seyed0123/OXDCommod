@@ -48,7 +48,10 @@
     <content>
       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="notifLabel" alignment="TOP_CENTER" layoutX="35.0" layoutY="45.0" prefHeight="107.0" prefWidth="936.0" wrapText="true" />
+                  <Label fx:id="notifLabel" alignment="TOP_CENTER" layoutX="35.0" layoutY="45.0" prefHeight="107.0" prefWidth="936.0" wrapText="true">
+                     <font>
+                        <Font name="Arial Bold Italic" size="12.0" />
+                     </font></Label>
                   <Button fx:id="nextNotifButton" layoutX="421.0" layoutY="175.0" mnemonicParsing="false" onAction="#nextNotif" prefHeight="25.0" prefWidth="122.0" text="next" />
                   <ListView fx:id="notifList" layoutX="33.0" layoutY="214.0" prefHeight="339.0" prefWidth="933.0" />
                </children></AnchorPane>
@@ -58,7 +61,7 @@
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <ListView fx:id="cartList" layoutX="14.0" layoutY="14.0" prefHeight="540.0" prefWidth="973.0" />
+                  <ListView fx:id="cartList" layoutX="19.0" layoutY="14.0" prefHeight="540.0" prefWidth="950.0" />
                </children></AnchorPane>
       </content>
     </Tab>
@@ -66,7 +69,7 @@
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <ListView fx:id="ordersList" layoutX="19.0" layoutY="14.0" prefHeight="543.0" prefWidth="966.0" />
+                  <ListView fx:id="ordersList" layoutX="19.0" layoutY="14.0" prefHeight="540.0" prefWidth="950.0" />
                </children></AnchorPane>
       </content>
     </Tab>
@@ -74,7 +77,7 @@
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <ListView fx:id="favoriteList" layoutX="31.0" layoutY="17.0" prefHeight="530.0" prefWidth="952.0" />
+                  <ListView fx:id="favoriteList" layoutX="19.0" layoutY="14.0" prefHeight="540.0" prefWidth="950.0" />
                </children></AnchorPane>
       </content>
     </Tab>

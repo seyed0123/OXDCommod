@@ -15,13 +15,14 @@ import java.util.Objects;
 
 public class Main extends Application {
     public static Store store;
+    public static final String logoAddress = "G:\\code\\java\\OXDCommod\\src\\main\\resources\\com\\example\\digikala\\OXDCommod.png";
     @Override
     public void start(Stage stage) throws Exception
     {
         Parent root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
         Scene scene = new Scene(root);
         scene.getProperties().put("name","MainMenu");
-        stage.getIcons().add(new Image("G:\\code\\java\\OXDCommod\\src\\main\\resources\\com\\example\\digikala\\OXDCommod.png"));
+        stage.getIcons().add(new Image(Main.logoAddress));
         stage.setTitle("OXDCommod!!");
         stage.setScene(scene);
         stage.show();

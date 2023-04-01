@@ -12,11 +12,11 @@ public class Seller {
     private final UUID uuid;
     private String companyName;
     private final HashSet<UUID> products;
-    private double wallet;
+    private double wallet=0;
     private final ArrayList<String> notification;
     private final ArrayList<String> oldNotification;
     private final HashMap<UUID ,Product> waitForConfirm;
-    private boolean banned;
+    private boolean banned=false;
 
     public Seller(String username, String password, String email, String companyName) {
         this.username = username;
@@ -109,7 +109,7 @@ public class Seller {
 
     public String getNotification() {
         if(notification.size()==0)
-            return null;
+            return "";
         String ret = this.notification.get(0);
         this.notification.remove(0);
         this.oldNotification.add(ret);
@@ -124,6 +124,8 @@ public class Seller {
     public HashSet<UUID> getProduct() {
         return products;
     }
+    public void removeWaitProduct(UUID product){this.waitForConfirm.remove(product);}
+    public HashMap<UUID,Product> getWaitForConfirmComplete(){return waitForConfirm;}
     public Product getWaitProduct(UUID product)
     {
         return waitForConfirm.get(product);

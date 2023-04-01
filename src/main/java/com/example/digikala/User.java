@@ -14,7 +14,7 @@ public class User {
     private String address;
     private final HashMap<UUID, Integer> cart;
     private final TreeSet<UUID> lastSeen;
-    private double wallet;
+    private double wallet = 0;
     private final ArrayList<String> notification;
     private final ArrayList<String> oldNotification;
     private final HashSet<UUID> orders;

@@ -5,11 +5,11 @@ import java.util.UUID;
 
 abstract class Eatable extends Product{
     private String RawMaterial;
-    private Date ExpirationDate;
-    private Date ProductionDate;
+    private String ExpirationDate;
+    private String ProductionDate;
     private boolean isManufacturedByFactory;
 
-    public Eatable(String name, int price, int amount, String comment, String brand, UUID sellerID, String rawMaterial, Date expirationDate, Date productionDate, boolean isManufacturedByFactory) {
+    public Eatable(String name, int price, int amount, String comment, String brand, UUID sellerID, String rawMaterial, String expirationDate, String productionDate, boolean isManufacturedByFactory) {
         super(name, price, amount, comment, brand, sellerID);
         RawMaterial = rawMaterial;
         ExpirationDate = expirationDate;
@@ -25,19 +25,19 @@ abstract class Eatable extends Product{
         RawMaterial = rawMaterial;
     }
 
-    public Date getExpirationDate() {
+    public String getExpirationDate() {
         return ExpirationDate;
     }
 
-    public void setExpirationDate(Date expirationDate) {
+    public void setExpirationDate(String expirationDate) {
         ExpirationDate = expirationDate;
     }
 
-    public Date getProductionDate() {
+    public String getProductionDate() {
         return ProductionDate;
     }
 
-    public void setProductionDate(Date productionDate) {
+    public void setProductionDate(String productionDate) {
         ProductionDate = productionDate;
     }
 

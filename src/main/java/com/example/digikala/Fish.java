@@ -1,11 +1,14 @@
 package com.example.digikala;
 
-public class Fish {
+import java.util.UUID;
+
+public class Fish extends Pet{
     private String favoriteFood;
     private String bread;
     private boolean needsOxygenPump;
 
-    public Fish(String favoriteFood, String bread, boolean needsOxygenPump) {
+    public Fish(String name, int price, int amount, String comment, String brand, UUID sellerID, String isNeutered, String color, int age, String favoriteFood, String bread, boolean needsOxygenPump) {
+        super(name, price, amount, comment, brand, sellerID, isNeutered, color, age);
         this.favoriteFood = favoriteFood;
         this.bread = bread;
         this.needsOxygenPump = needsOxygenPump;

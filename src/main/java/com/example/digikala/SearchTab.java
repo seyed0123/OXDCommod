@@ -77,7 +77,7 @@ public class SearchTab implements Initializable {
                 seeProductStage.setTitle("OXDCommod!!");
                 Scene scene  =new Scene(root);
                 scene.getProperties().put("name","SeeProduct");
-                seeProductStage.getIcons().add(new Image("G:\\code\\java\\OXDCommod\\src\\main\\resources\\com\\example\\digikala\\OXDCommod.png"));
+                seeProductStage.getIcons().add(new Image(Main.logoAddress));
                 seeProductStage.setScene(scene);
                 seeProductStage.show();
             }
@@ -97,7 +97,7 @@ public class SearchTab implements Initializable {
                 UserPanel.setTitle("OXDCommod!!");
                 Scene scene  =new Scene(root);
                 //scene.getProperties().put("name","UserPanel");
-                UserPanel.getIcons().add(new Image("G:\\code\\java\\OXDCommod\\src\\main\\resources\\com\\example\\digikala\\OXDCommod.png"));
+                UserPanel.getIcons().add(new Image(Main.logoAddress));
                 UserPanel.setScene(scene);
                 UserPanel.show();
             }
@@ -121,7 +121,7 @@ public class SearchTab implements Initializable {
         SignPanel.setTitle("OXDCommod!!");
         Scene scene  =new Scene(root);
         scene.getProperties().put("name","SignPanel");
-        SignPanel.getIcons().add(new Image("G:\\code\\java\\OXDCommod\\src\\main\\resources\\com\\example\\digikala\\OXDCommod.png"));
+        SignPanel.getIcons().add(new Image(Main.logoAddress));
         SignPanel.setScene(scene);
         SignPanel.show();
     }

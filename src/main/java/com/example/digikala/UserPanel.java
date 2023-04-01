@@ -120,7 +120,7 @@ public class UserPanel implements Initializable {
                 seeCartStage.setTitle("OXDCommod!!");
                 Scene scene  =new Scene(root);
                 scene.getProperties().put("name","SeeCart");
-                seeCartStage.getIcons().add(new Image("G:\\code\\java\\OXDCommod\\src\\main\\resources\\com\\example\\digikala\\OXDCommod.png"));
+                seeCartStage.getIcons().add(new Image(Main.logoAddress));
                 seeCartStage.setScene(scene);
                 seeCartStage.show();
                 seeCartStage.setOnHiding(event -> {
@@ -146,7 +146,7 @@ public class UserPanel implements Initializable {
                     UserPanel.setTitle("OXDCommod!!");
                     Scene scene2  =new Scene(root2);
                     scene2.getProperties().put("name","UserPanel");
-                    UserPanel.getIcons().add(new Image("G:\\code\\java\\OXDCommod\\src\\main\\resources\\com\\example\\digikala\\OXDCommod.png"));
+                    UserPanel.getIcons().add(new Image(Main.logoAddress));
                     UserPanel.setScene(scene2);
                     UserPanel.show();
                 });
@@ -175,7 +175,7 @@ public class UserPanel implements Initializable {
                 seeProductStage.setTitle("OXDCommod!!");
                 Scene scene = new Scene(root);
                 scene.getProperties().put("name", "SeeProduct");
-                seeProductStage.getIcons().add(new Image("G:\\code\\java\\OXDCommod\\src\\main\\resources\\com\\example\\digikala\\OXDCommod.png"));
+                seeProductStage.getIcons().add(new Image(Main.logoAddress));
                 seeProductStage.setScene(scene);
                 seeProductStage.show();
             }
@@ -215,6 +215,9 @@ public class UserPanel implements Initializable {
                 numberLabel.setText("phoneNumber must only contains numbers");
             else
             {
+                user.setEmail(emailBar.getText());
+                user.setAddress(addressBar.getText());
+                user.setPhoneNumber(Integer.parseInt(numberBar.getText()));
                 passwordBar.setVisible(false);
                 conPasswordBar.setVisible(false);
                 oldPasswordBar.setVisible(false);
@@ -274,7 +277,7 @@ public class UserPanel implements Initializable {
             Parent root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
             Scene scene = new Scene(root);
             scene.getProperties().put("name", "MainMenu");
-            stage.getIcons().add(new Image("G:\\code\\java\\OXDCommod\\src\\main\\resources\\com\\example\\digikala\\OXDCommod.png"));
+            stage.getIcons().add(new Image(Main.logoAddress));
             stage.setTitle("OXDCommod!!");
             stage.setScene(scene);
             stage.show();

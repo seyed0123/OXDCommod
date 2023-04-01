@@ -8,7 +8,7 @@ public class Cake extends Eatable{
     private boolean isNutCake;
     private int numberInPackage;
 
-    public Cake(String name, int price, int amount, String comment, String brand, UUID sellerID, String rawMaterial, Date expirationDate, Date productionDate, boolean isManufacturedByFactory, String taste, boolean isNutCake, int numberInPackage) {
+    public Cake(String name, int price, int amount, String comment, String brand, UUID sellerID, String rawMaterial, String expirationDate, String productionDate, boolean isManufacturedByFactory, String taste, boolean isNutCake, int numberInPackage) {
         super(name, price, amount, comment, brand, sellerID, rawMaterial, expirationDate, productionDate, isManufacturedByFactory);
         this.taste = taste;
         this.isNutCake = isNutCake;

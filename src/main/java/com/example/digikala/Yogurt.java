@@ -8,7 +8,7 @@ public class Yogurt extends Eatable{
     private String taste;
     private String fatAmount;
 
-    public Yogurt(String name, int price, int amount, String comment, String brand, UUID sellerID, String rawMaterial, Date expirationDate, Date productionDate, boolean isManufacturedByFactory, String yogurtType, String taste, String fatAmount) {
+    public Yogurt(String name, int price, int amount, String comment, String brand, UUID sellerID, String rawMaterial, String expirationDate, String productionDate, boolean isManufacturedByFactory, String yogurtType, String taste, String fatAmount) {
         super(name, price, amount, comment, brand, sellerID, rawMaterial, expirationDate, productionDate, isManufacturedByFactory);
         this.yogurtType = yogurtType;
         this.taste = taste;
