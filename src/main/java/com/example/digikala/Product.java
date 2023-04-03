@@ -2,11 +2,11 @@ package com.example.digikala;
 
 import javafx.util.Pair;
 
+import java.io.Serializable;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.UUID;
 
-abstract class Product {
+abstract class Product implements Serializable {
     private String name;
     private UUID uuid;
     private double finalPrice;
@@ -14,17 +14,17 @@ abstract class Product {
     private int amount;
     private final UUID sellerID;
     private Pair<Double , Integer> rate;
-    private String comment;
+    private String description;
     private int discount;
     private String brand;
     private final HashMap<UUID,Double> ratedUser;
 
-    public Product(String name, int price, int amount, String comment,String brand,UUID sellerID) {
+    public Product(String name, int price, int amount, String description,String brand,UUID sellerID) {
         this.name = name;
         uuid = UUID.randomUUID();
         this.price = price;
         this.amount = amount;
-        this.comment = comment;
+        this.description = description;
         this.brand=brand;
         this.finalPrice = price;
         this.sellerID=sellerID;
@@ -95,12 +95,12 @@ abstract class Product {
             this.rate=new Pair<>(rate , 1);
     }
 
-    public String getComment() {
-        return comment;
+    public String getDescription() {
+        return description;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getDiscount() {
@@ -113,7 +113,18 @@ abstract class Product {
     }
 
     @Override
-    abstract public String toString() ;
+    public String toString() {
+        return "Product{" +
+                "name='" + name + '\'' +
+                ", finalPrice=" + finalPrice +
+                ", amount=" + amount +
+                ", rate=" + rate +
+                ", description='" + description + '\'' +
+                ", discount=" + discount +
+                ", brand='" + brand + '\'' +
+                '}';
+    }
+
     public String TOString()
     {
         return "Product{" +
@@ -123,7 +134,7 @@ abstract class Product {
                 ", price=" + price +
                 ", amount=" + amount +
                 ", rate=" + rate +
-                ", comment='" + comment + '\'' +
+                ", description='" + description + '\'' +
                 ", discount=" + discount +
                 ", brand='" + brand + '\'' +
                 '}';

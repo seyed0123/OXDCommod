@@ -126,7 +126,6 @@ public class SignUpPanel {
         int number = Integer.parseInt(numberBarUser.getText());
         store.addUser(username,password,number,address,email);
         signUpUser.setText("done!");
-        Thread.sleep(2000);
         Stage currentStage = (Stage) ((Node) e.getSource()).getScene().getWindow();
         currentStage.close();
     }
@@ -137,7 +136,6 @@ public class SignUpPanel {
         String email = emailBarSeller.getText();
         store.addSeller(username,password,email,company);
         signUpUser.setText("done!");
-        Thread.sleep(2000);
         Stage currentStage = (Stage) ((Node) e.getSource()).getScene().getWindow();
         currentStage.close();
     }

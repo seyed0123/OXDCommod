@@ -54,7 +54,7 @@ public class MainMenu implements Initializable{
         for(UUID product : offer)
         {
             Product pro = store.findProduct(product);
-            list.add(pro.getName()+" with brand "+pro.getBrand()+"    RATE : "+pro.getRate()+"    Discount:  "+pro.getDiscount()+"  finalPrice :"+pro.getFinalPrice());
+            list.add(pro.toString());
         }
         offers.getItems().addAll(list);
         offers.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {

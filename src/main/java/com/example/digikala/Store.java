@@ -1,11 +1,14 @@
 package com.example.digikala;
 
 import javafx.util.Pair;
+
+import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.Map.Entry;
 import java.time.LocalDateTime;
 import java.util.*;
 
-public class Store {
+public class Store implements Serializable {
     private Store store;
     private final HashMap<UUID,User> users;
     private final HashMap<UUID,Admin> admins;
@@ -17,7 +20,7 @@ public class Store {
     private double profit;
     private String webAddress;
     private int supportNumber;
-    private final HashSet<String> log;
+    private final ArrayList<String> log;
     private String owner;
 
     public Store(String webAddress, int supportNumber, String owner) {
@@ -31,9 +34,9 @@ public class Store {
         this.products= new HashMap<>();
         this.usernames=new HashMap<>();
         this.ban=new HashSet<>();
-        this.log=new HashSet<>();
+        this.log=new ArrayList<>();
     }
-    public void setStore(Store store){this.store=store; Admin.setStatics(store); Seller.setStore(store);User.setStore(store);}
+    public void setStore(Store store){this.store=store; Admin.setStatics(store); Seller.setStore(store);User.setStore(store);Order.setStore(store);}
     public void addUser(String username, String password , int phoneNumber , String address , String email)
     {
         User temp = new User(username, password,phoneNumber,address,email);
@@ -44,6 +47,7 @@ public class Store {
     public void addSeller(String username , String password ,String email,String companyName)
     {
         Seller temp = new Seller(username ,password, email ,companyName);
+        addSellerConfirm(temp);
         sellers.put(temp.getUuid(),temp);
         usernames.put(username,temp.getUuid());
         log.add(temp.getUuid()+" created an account as Seller.");
@@ -64,13 +68,19 @@ public class Store {
         UUID person=usernames.get(username);
         if(users.containsKey(person))
         {
-            if(users.get(person).checkPassword(password) && !users.get(person).isBanned())
-            {
-                return new Pair<String,UUID>("user",person);
+            if(users.get(person).isBanned())
+                return new Pair<>("banUser",null);
+            if(users.get(person).checkPassword(password)) {
+                return new Pair<String, UUID>("user", person);
             }
         }else if(sellers.containsKey(person))
         {
-            if(sellers.get(person).checkPassword(password) && !sellers.get(person).isBanned())
+            if(sellers.get(person).isBanned())
+            {
+                return new Pair<String,UUID>("banSeller",null);
+            }if(!sellers.get(person).isVerified())
+                return new Pair<>("verifySeller",null);
+            if(sellers.get(person).checkPassword(password))
             {
                 return new Pair<String,UUID>("seller",person);
             }
@@ -84,17 +94,62 @@ public class Store {
         }
             return null;
     }
-    public boolean isUserExist(UUID user)
+    public ArrayList<String> bans()
     {
-        return users.containsKey(user);
+        ArrayList<String> ret = new ArrayList<>();
+        for(UUID uuid : ban)
+        {
+            if(isUserExist(uuid))
+                ret.add(findUser(uuid).toString());
+            else
+                ret.add(findSeller(uuid).toString());
+        }
+        return ret;
     }
-    public boolean isSellerExist(UUID Seller)
+    public ArrayList<String> users()
     {
-        return sellers.containsKey(Seller);
+        ArrayList<String> ret = new ArrayList<>();
+        for(User user : users.values())
+        {
+            ret.add(user.toString());
+        }
+        return ret;
     }
-    public boolean isProductExist(UUID Product)
+    public ArrayList<String> sellers()
     {
-        return products.containsKey(Product);
+        ArrayList<String> ret = new ArrayList<>();
+        for(Seller seller : sellers.values())
+        {
+            ret.add(seller.toString());
+        }
+        return ret;
+    }
+    public ArrayList<String> orders()
+    {
+        ArrayList<String> ret = new ArrayList<>();
+        for(Order order : orders.values())
+        {
+            if(order.isVerified())
+                ret.add(order.toString());
+        }
+        return ret;
+    }
+    public ArrayList<String> products()
+    {
+        ArrayList<String> ret = new ArrayList<>();
+        for(Product product : products.values())
+        {
+            ret.add(product.TOString());
+        }
+        return ret;
+    }
+    public ArrayList<String> log(){return log;}
+    public boolean isUserExist(UUID user){return users.containsKey(user);}
+    public boolean isSellerExist(UUID seller){return sellers.containsKey(seller);}
+    public boolean isProductExist(UUID product){return products.containsKey(product);}
+
+    public double getProfit() {
+        return profit;
     }
     public User findUser(UUID user)
     {
@@ -134,7 +189,7 @@ public class Store {
     public void sendOrder(UUID user)
     {
         User temp = users.get(user);
-        Order order= new Order(LocalDateTime.now(),temp.order(),user,store);
+        Order order= new Order(LocalDateTime.now(),temp.order(),user);
         this.orders.put(order.getUuid(),order);
         Admin.addOrder(order.getUuid());
         Admin.addNotification("an Order were received from "+temp.getUsername()+". check it.");
@@ -149,11 +204,11 @@ public class Store {
         this.users.get(temp.getUser()).addNotification("Your order request was approved");
         log.add("an order was verify by admin in"+LocalDateTime.now()+" :"+ temp.getUuid());
     }
-    public void cancelOrderUser(UUID order)
+    public void cancelOrderUser(UUID order,String reason)
     {
         this.users.get(orders.get(order).getUser()).cancelOrder();
         this.log.add("order "+orders.get(order)+" was canceled in "+LocalDateTime.now()+".");
-        this.users.get(orders.get(order).getUser()).addNotification("Your order request was not approved");
+        this.users.get(orders.get(order).getUser()).addNotification("Your order request was not approved due to"+ reason);
         this.orders.remove(order);
     }
     public void addWallet(Pair<UUID,Integer> request)
@@ -168,9 +223,9 @@ public class Store {
         this.users.get(request.getKey()).addNotification("Your request for an increase in money has been approved.");
         log.add(request.getValue()+" was added to "+users.get(request.getKey()).getUuid()+" in "+LocalDateTime.now()+".");
     }
-    public void cancelWalletReq(Pair<UUID,Integer> request)
+    public void cancelWalletReq(Pair<UUID,Integer> request,String reason)
     {
-        this.users.get(request.getKey()).addNotification("Your request for an increase in money hasn't been approved.");
+        this.users.get(request.getKey()).addNotification("Your request for an increase in money hasn't been approved due to"+ reason);
         log.add(request.getValue()+" wasn't added to "+users.get(request.getKey()).getUuid()+" in "+LocalDateTime.now()+".");
     }
     public void verifySellerReq(Pair<UUID,UUID> request)
@@ -181,10 +236,11 @@ public class Store {
         log.add("the order request for add " +sellers.get(request.getKey()).getWaitProduct(request.getValue()).getUuid() +" was approved in "+LocalDateTime.now()+".");
         this.sellers.get(request.getKey()).removeWaitProduct(request.getValue());
     }
-    public void cancelSellerReq(Pair<UUID,UUID> request)
+    public void cancelSellerReq(Pair<UUID,UUID> request,String reason)
     {
-        this.sellers.get(request.getKey()).addNotification("Your order request for add " +sellers.get(request.getKey()).getWaitProduct(request.getValue()).getUuid() +" wasn't approved");
+        this.sellers.get(request.getKey()).addNotification("Your order request for add " +sellers.get(request.getKey()).getWaitProduct(request.getValue()).getUuid() +" wasn't approved due to "+reason);
         log.add("the order request for add " +sellers.get(request.getKey()).getWaitProduct(request.getValue()).getUuid() +" wasn't approved");
+        //this.sellers.get(request.getKey()).removeWaitProduct(request.getValue());
     }
     public void verifySubscriptionReq(UUID user)
     {
@@ -192,9 +248,9 @@ public class Store {
         this.users.get(user).addNotification("Your request for subscription has been approved.");
         log.add("the request for subscription from"+this.users.get(user).getUuid() +" has been approved in "+LocalDateTime.now()+".");
     }
-    public void cancelSubscriptionReq(UUID user)
+    public void cancelSubscriptionReq(UUID user,String reason)
     {
-        this.users.get(user).addNotification("Your request for subscription hasn't been approved.");
+        this.users.get(user).addNotification("Your request for subscription hasn't been approved due to "+reason);
         log.add("the request for subscription from"+this.users.get(user).getUuid() +" hasn't been approved in "+LocalDateTime.now()+".");
     }
     public void addSubscriptions(UUID user)
@@ -203,19 +259,36 @@ public class Store {
         Admin.addNotification("a request to subscription was sent by "+ user);
         log.add("a request to subscription was sent by "+ user+" in "+LocalDateTime.now()+".");
     }
+    public void addSellerConfirm(Seller seller)
+    {
+        Admin.addSellerConfirm(seller.getUuid());
+        Admin.addNotification(seller+" wants confirmation for activity");
+        log.add("a request sent by seller for confirmation in"+LocalDateTime.now()+".");
+    }
+    public void verifySellerConfirm(UUID seller)
+    {
+        store.findSeller(seller).setVerified(true);
+        store.findSeller(seller).addNotification("now you have permission to sell products.");
+        log.add("admin allows "+seller+" to sell product in "+LocalDateTime.now()+".");
+    }
+    public void cancelSellerConfirm(UUID seller)
+    {
+        log.add("admin reject "+store.findSeller(seller)+"in "+LocalDateTime.now()+".");
+        sellers.remove(seller);
+    }
     public void ban(UUID person)
     {
         if(users.containsKey(person))
         {
             users.get(person).setBanned(true);
-            users.get(person).addNotification("You have been suspended by digiEye :)");
+            users.get(person).addNotification("You have been suspended by OXDEye :)");
         }else
         {
             sellers.get(person).setBanned(true);
-            sellers.get(person).addNotification("You have been suspended by digiEye :)");
+            sellers.get(person).addNotification("You have been suspended by OXDEye :)");
         }
         ban.add(person);
-        log.add(person +" have been suspended by digiEye in"+LocalDateTime.now()+".");
+        log.add(person +" have been suspended by OXDEye in"+LocalDateTime.now()+".");
     }
     public void permit(UUID person)
     {

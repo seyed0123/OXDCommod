@@ -61,37 +61,11 @@ public class SellerPanel implements Initializable {
     @FXML
     private TextField amount;
     @FXML
-    private TextField string1;
+    private TextField category;
     @FXML
-    private TextField string2;
+    private TextField subCategory;
     @FXML
-    private TextField string3;
-    @FXML
-    private TextField string4;
-    @FXML
-    private TextField string5;
-    @FXML
-    private TextField int1;
-    @FXML
-    private TextField int2;
-    @FXML
-    private TextField int3;
-    @FXML
-    private TextField int4;
-    @FXML
-    private TextArea comment;
-    @FXML
-    private CheckBox bool1;
-    @FXML
-    private CheckBox bool2;
-    @FXML
-    private CheckBox bool3;
-    @FXML
-    private CheckBox bool4;
-    @FXML
-    private Button addButton;
-    @FXML
-    private TextField string6;
+    private TextArea description;
     @FXML
     private ListView<String> ownProductList;
     @FXML
@@ -118,6 +92,7 @@ public class SellerPanel implements Initializable {
         addressBar.setText(seller.getCompanyName());
         notifList.getItems().addAll(seller.getOldNotification());
         notifLabel.setText(seller.getNotification());
+        walletLabel.setText(seller.getWallet()+"$ in your wallet");
         TreeItem<String> rootItem = new TreeItem<>("Products");
 
         TreeItem<String> cat1= new TreeItem<>("Book");
@@ -200,140 +175,6 @@ public class SellerPanel implements Initializable {
         newProductTree.setRoot(rootItem);
         newProductTree.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue!= null) {
-                string1.setVisible(false);string2.setVisible(false);string3.setVisible(false);string4.setVisible(false);string5.setVisible(false);string6.setVisible(false);
-                int1.setVisible(false); int2.setVisible(false); int3.setVisible(false); int4.setVisible(false);
-                bool1.setVisible(false);bool2.setVisible(false);bool3.setVisible(false);
-                if (Objects.equals(newValue.getParent().getValue(), "Book")) {
-                    string1.setVisible(true);
-                    string2.setVisible(true);
-                    int1.setVisible(true);
-                    int2.setVisible(true);
-                    string1.setPromptText("publisher");
-                    string2.setPromptText("language");
-                    int1.setPromptText("year of publish (int)");
-                    int2.setPromptText("number of pages (int) ");
-                    if (Objects.equals(newValue.getValue(), "FictionBook")) {
-                        string3.setVisible(true);
-                        string4.setVisible(true);
-                        string5.setVisible(true);
-                        string3.setPromptText("genre");
-                        string4.setPromptText("authorsCredentials");
-                        string5.setPromptText("authors");
-                    }
-                    if (Objects.equals(newValue.getValue(), "NonFictionBook")) {
-                        string3.setVisible(true);
-                        string3.setPromptText("topic");
-                    }if(Objects.equals(newValue.getValue(), "TextBook"))
-                    {
-                        string3.setVisible(true);
-                        string3.setPromptText("subject");
-                        string4.setVisible(true);
-                        string4.setPromptText("cover type");
-                        string5.setVisible(true);
-                        string5.setPromptText("edition");
-                    }
-                }else if(Objects.equals(newValue.getParent().getValue(), "Clothing"))
-                {
-                    string1.setPromptText("color");
-                    string2.setPromptText("material");
-                    string3.setPromptText("size");
-                    string4.setPromptText("style");
-                    string1.setVisible(true);
-                    string2.setVisible(true);
-                    string3.setVisible(true);
-                    string4.setVisible(true);
-                    if(Objects.equals(newValue.getValue(), "Pant"))
-                    {
-                        string5.setPromptText("fit type");
-                        string6.setPromptText("pocket type");
-                        string6.setVisible(true);
-                        string5.setVisible(true);
-                    }else if(Objects.equals(newValue.getValue(), "Shirt"))
-                    {
-                        string5.setPromptText("pattern");
-                        string6.setPromptText("neck line type");
-                        int1.setPromptText("sleeve Length (int)");
-                        string6.setVisible(true);
-                        int1.setVisible(true);
-                        string5.setVisible(true);
-                    }else if(Objects.equals(newValue.getValue(), "Sunglasses"))
-                    {
-                        string5.setPromptText("lens type");
-                        string6.setPromptText("lens material");
-                        int1.setPromptText("Prescription (int)");
-                        string5.setVisible(true);
-                        string6.setVisible(true);
-                        int1.setVisible(true);
-                    }
-                }else if(Objects.equals(newValue.getParent().getValue(), "Eatable"))
-                {
-                    string1.setPromptText("raw material");
-                    string2.setPromptText("ExpirationDate");
-                    string3.setPromptText("ProductionDate");
-                    bool1.setText("isManufacturedByFactory");
-                    string1.setVisible(true);
-                    string2.setVisible(true);
-                    string3.setVisible(true);
-                    bool1.setVisible(true);
-                    if(Objects.equals(newValue.getValue(), "Cake"))
-                    {
-                        string4.setPromptText("taste");
-                        int1.setPromptText("number in the package (int)");
-                        bool2.setText("is nut cake");
-                        string4.setVisible(true);
-                        int1.setVisible(true);
-                        bool2.setVisible(true);
-                    } else if (Objects.equals(newValue.getValue(), "Meat"))
-                    {
-                        string4.setPromptText("meat type");
-                        bool2.setText("is it frozen");
-                        bool3.setText("is it half Backed");
-                        string4.setVisible(true);
-                        bool2.setVisible(true);
-                        bool3.setVisible(true);
-                    }else if(Objects.equals(newValue.getValue(), "Yogurt"))
-                    {
-                        string4.setPromptText("Yogurt type");
-                        string5.setPromptText("taste");
-                        string6.setPromptText("fat Amount");
-                        string4.setVisible(true);
-                        string5.setVisible(true);
-                        string6.setVisible(true);
-                    }
-                }else if(Objects.equals(newValue.getParent().getValue(),"Electronics"))
-                {
-                    string1.setPromptText("battery type");
-                    string2.setPromptText("color");
-                    string3.setPromptText("model");
-                    string1.setVisible(true);
-                    string2.setVisible(true);
-                    string3.setVisible(true);
-                    if(Objects.equals(newValue.getValue(),"Camera"))
-                    {
-                        string4.setPromptText("lens type");
-                        string5.setPromptText("sensor type");
-                        string6.setPromptText("zoom range");
-                        string4.setVisible(true);
-                        string5.setVisible(true);
-                        string6.setVisible(true);
-                    }else if(Objects.equals(newValue.getValue(),"Laptop"))
-                    {
-                        string4.setPromptText("operatingSystem");
-                        int1.setPromptText("RAM (int)");
-                        int2.setPromptText("storage (int)");
-                        string4.setVisible(true);
-                        int1.setVisible(true);
-                        int2.setVisible(true);
-                    }else if(Objects.equals(newValue.getValue(),"MobilePhone"))
-                    {
-                        int1.setPromptText("screen size (int)");
-                        int2.setPromptText("battery Life (int)");
-                        int3.setPromptText("camera Resolution (int)");
-                        int1.setVisible(true);
-                        int2.setVisible(true);
-                        int3.setVisible(true);
-                    }
-                }
             }
         });
         ArrayList<String> products = new ArrayList<>();
@@ -351,79 +192,32 @@ public class SellerPanel implements Initializable {
         waitForConfirmProductList.getItems().addAll(waitProducts);
     }
     public void add(ActionEvent e) throws IOException {
-        if(!amount.getText().matches("\\d+"))
+        if(!amount.getText().matches("\\d+") || Objects.equals(amount.getText(), ""))
         {
             amount.setText("enter a valid integer");return;
         }
-        if(!price.getText().matches("\\d+"))
+        if(!price.getText().matches("\\d+") || Objects.equals(price.getText(), ""))
         {
             price.setText("enter a valid integer");return;
         }
-        if(!int1.getText().matches("\\d+") && !Objects.equals(int1.getText(), ""))
-        {
-            int1.setText("enter a valid integer");return;
+        if(Objects.equals(name.getText(), "")) {
+            name.setText("this field can't be empty.");
+            return;
         }
-        if(!int2.getText().matches("\\d+")&& !Objects.equals(int2.getText(), ""))
-        {
-            int2.setText("enter a valid integer");return;
+        if(Objects.equals(brand.getText(), "")) {
+            brand.setText("this field can't be empty.");
+            return;
         }
-        if(!int3.getText().matches("\\d+")&& !Objects.equals(int3.getText(), ""))
-        {
-            int3.setText("enter a valid integer");return;
+        if(Objects.equals(category.getText(), "")) {
+            category.setText("this field can't be empty.");
+            return;
         }
-        if(!int4.getText().matches("\\d+")&& !Objects.equals(int4.getText(), ""))
-        {
-            int4.setText("enter a valid integer");return;
+        if(Objects.equals(subCategory.getText(), "")) {
+            subCategory.setText("this field can't be empty.");
+            return;
         }
-        if(Objects.equals(string5.getPromptText(), "authors"))
-        {
-            FictionBook temp = new FictionBook(name.getText(), Integer.parseInt(price.getText()), Integer.parseInt(amount.getText()), comment.getText(), brand.getText(), seller.getUuid(), Integer.parseInt(int1.getText()), string1.getText(), Integer.parseInt(int2.getText()), string2.getText(), string3.getText(), string4.getText(), string5.getText());
-            store.sendSellerOrder(seller.getUuid(), temp);
-        }else if(Objects.equals(string3.getPromptText(), "topic"))
-        {
-            Nonfiction temp = new Nonfiction(name.getText(), Integer.parseInt(price.getText()), Integer.parseInt(amount.getText()), comment.getText(), brand.getText(), seller.getUuid(), Integer.parseInt(int1.getText()), string1.getText(), Integer.parseInt(int2.getText()), string2.getText(), string3.getText());
-            store.sendSellerOrder(seller.getUuid(), temp);
-        }else if(Objects.equals(string3.getPromptText(), "subject"))
-        {
-            Textbooks temp = new Textbooks(name.getText(), Integer.parseInt(price.getText()), Integer.parseInt(amount.getText()), comment.getText(), brand.getText(), seller.getUuid(), Integer.parseInt(int1.getText()), string1.getText(), Integer.parseInt(int2.getText()), string2.getText(),string3.getText(),string4.getText(),string5.getText());
-            store.sendSellerOrder(seller.getUuid(),temp);
-        }else if(Objects.equals(string6.getPromptText(), "pocket type"))
-        {
-            Pant temp = new Pant(name.getText(), Integer.parseInt(price.getText()), Integer.parseInt(amount.getText()), comment.getText(), brand.getText(), seller.getUuid(),string1.getText(),string2.getText(),string3.getText(),string4.getText(),string5.getText(),string6.getText());
-            store.sendSellerOrder(seller.getUuid(),temp);
-        }else if(Objects.equals(string6.getPromptText(), "neck line type"))
-        {
-            Shirt temp = new Shirt(name.getText(), Integer.parseInt(price.getText()), Integer.parseInt(amount.getText()), comment.getText(), brand.getText(), seller.getUuid(),string1.getText(),string2.getText(),string3.getText(),string4.getText(),string5.getText(),Integer.parseInt(int1.getText()),string6.getText());
-            store.sendSellerOrder(seller.getUuid(),temp);
-        }else if(Objects.equals(string6.getPromptText(), "lens material"))
-        {
-            Sunglasses temp = new Sunglasses(name.getText(), Integer.parseInt(price.getText()), Integer.parseInt(amount.getText()), comment.getText(), brand.getText(), seller.getUuid(),string1.getText(),string2.getText(),string3.getText(),string4.getText(),string5.getText(),Integer.parseInt(int1.getText()),string6.getText());
-            store.sendSellerOrder(seller.getUuid(),temp);
-        }else if(Objects.equals(bool2.getText(), "is nut cake"))
-        {
-            Cake temp = new Cake(name.getText(), Integer.parseInt(price.getText()), Integer.parseInt(amount.getText()), comment.getText(), brand.getText(), seller.getUuid(),string1.getText(),string2.getText(),string3.getText(),bool1.isSelected(),string4.getText(),bool2.isSelected(),Integer.parseInt(int1.getText()));
-            store.sendSellerOrder(seller.getUuid(),temp);
-        }else if(Objects.equals(bool3.getText(), "is it half Backed"))
-        {
-            Meat temp = new Meat(name.getText(), Integer.parseInt(price.getText()), Integer.parseInt(amount.getText()), comment.getText(), brand.getText(), seller.getUuid(),string1.getText(),string2.getText(),string3.getText(),bool1.isSelected(),string4.getText(),bool2.isSelected(),bool3.isSelected());
-            store.sendSellerOrder(seller.getUuid(),temp);
-        }else if(Objects.equals(string6.getPromptText(), "fat Amount"))
-        {
-            Yogurt temp = new Yogurt(name.getText(), Integer.parseInt(price.getText()), Integer.parseInt(amount.getText()), comment.getText(), brand.getText(), seller.getUuid(),string1.getText(),string2.getText(),string3.getText(),bool1.isSelected(),string4.getText(),string5.getText(),string6.getText());
-            store.sendSellerOrder(seller.getUuid(),temp);
-        }else if(Objects.equals(string6.getPromptText(), "zoom range"))
-        {
-            Camera temp = new Camera(name.getText(), Integer.parseInt(price.getText()), Integer.parseInt(amount.getText()), comment.getText(), brand.getText(), seller.getUuid(),string1.getText(),string2.getText(),string3.getText(),string4.getText(),string5.getText(),string6.getText());
-            store.sendSellerOrder(seller.getUuid(),temp);
-        }else if(Objects.equals(int2.getPromptText(), "storage (int)"))
-        {
-            Laptop temp = new Laptop(name.getText(), Integer.parseInt(price.getText()), Integer.parseInt(amount.getText()), comment.getText(), brand.getText(), seller.getUuid(),string1.getText(),string2.getText(),string3.getText(),Integer.parseInt(int1.getText()),Integer.parseInt(int2.getText()),string4.getText());
-            store.sendSellerOrder(seller.getUuid(),temp);
-        }else if(Objects.equals(int3.getPromptText(), "camera Resolution (int)"))
-        {
-            MobilePhone temp = new MobilePhone(name.getText(), Integer.parseInt(price.getText()), Integer.parseInt(amount.getText()), comment.getText(), brand.getText(), seller.getUuid(),string1.getText(),string2.getText(),string3.getText(),Integer.parseInt(int1.getText()),Integer.parseInt(int2.getText()),Integer.parseInt(int3.getText()));
-            store.sendSellerOrder(seller.getUuid(),temp);
-        }
+        SubCategory temp = new SubCategory(name.getText(),Integer.parseInt(price.getText()),Integer.parseInt(amount.getText()),description.getText(),brand.getText(),seller.getUuid(),category.getText(),subCategory.getText());
+        store.sendSellerOrder(seller.getUuid(),temp);
         Stage currentStage = (Stage) ((Node) e.getSource()).getScene().getWindow();
         currentStage.close();
         Stage stage = new Stage();
@@ -531,9 +325,6 @@ public class SellerPanel implements Initializable {
         alert.setHeaderText("you are about to logout!!");
         alert.setContentText("Do you sure to logout from your account?");
         if (alert.showAndWait().get() == ButtonType.OK) {
-            SearchTab.setUser(null);
-            MainMenu.setUser(null);
-            SeeProduct.setUser(null);
             ObservableList<Window> openWindow = Window.getWindows();
             for (Window window : openWindow) {
                 if (window instanceof Stage) {
@@ -544,6 +335,19 @@ public class SellerPanel implements Initializable {
             }
             Stage currentStage = (Stage) ((Node) e.getSource()).getScene().getWindow();
             currentStage.close();
+            Stage stageM = new Stage();
+            Parent rootM = null;
+            try {
+                rootM = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            Scene sceneM = new Scene(rootM);
+            sceneM.getProperties().put("name","MainMenu");
+            stageM.getIcons().add(new Image(Main.logoAddress));
+            stageM.setTitle("OXDCommod!!");
+            stageM.setScene(sceneM);
+            stageM.show();
         }
     }
 }

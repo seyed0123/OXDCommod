@@ -22,14 +22,17 @@
                  </Button>
                  <Label fx:id="conPassLabel" layoutX="336.0" layoutY="128.0" prefHeight="17.0" prefWidth="253.0" />
                  <PasswordField fx:id="oldPasswordBar" layoutX="336.0" layoutY="82.0" prefHeight="25.0" prefWidth="249.0" promptText="old password" visible="false" />
-                 <Label fx:id="walletLabel" layoutX="571.0" layoutY="49.0" prefHeight="17.0" prefWidth="253.0" />
-                 <Button fx:id="walletButton" layoutX="514.0" layoutY="82.0" mnemonicParsing="false" onAction="#claim" prefHeight="25.0" prefWidth="392.0" text="claim the money" />
+                 <Label fx:id="walletLabel" layoutX="634.0" layoutY="98.0" prefHeight="17.0" prefWidth="253.0" />
+                 <Button fx:id="walletButton" layoutX="565.0" layoutY="132.0" mnemonicParsing="false" onAction="#claim" prefHeight="25.0" prefWidth="392.0" text="claim the money" />
                   <TextField fx:id="DiscountAmountBar" layoutX="572.0" layoutY="244.0" prefHeight="25.0" prefWidth="189.0" promptText="(0,100) (int)" />
                   <Button fx:id="makeDiscountButton" layoutX="797.0" layoutY="244.0" mnemonicParsing="false" onAction="#makeDiscount" text="make discount" />
                   <TextField fx:id="cancelDiscountUUID" layoutX="571.0" layoutY="375.0" prefHeight="25.0" prefWidth="187.0" promptText="product UUID" />
                   <Button fx:id="cancelDiscountButton" layoutX="795.0" layoutY="375.0" mnemonicParsing="false" onAction="#cancelDiscount" text="cancel discount" />
                   <TextField fx:id="DiscountUUIDBar" layoutX="571.0" layoutY="285.0" prefHeight="25.0" prefWidth="190.0" promptText="product UUID" />
                    <Button fx:id="logoutButton" layoutX="28.0" layoutY="522.0" mnemonicParsing="false" onAction="#logout" text="logout" />
+                  <Separator layoutX="548.0" layoutY="-1.0" orientation="VERTICAL" prefHeight="573.0" prefWidth="6.0" />
+                  <Separator layoutX="9.0" layoutY="309.0" prefHeight="4.0" prefWidth="541.0" />
+                  <Separator layoutX="548.0" layoutY="168.0" prefHeight="0.0" prefWidth="452.0" />
                </children></AnchorPane>
       </content>
     </Tab>
@@ -55,21 +58,9 @@
                   <TextField fx:id="brand" layoutX="509.0" layoutY="32.0" prefHeight="25.0" prefWidth="173.0" promptText="brand" />
                   <TextField fx:id="price" layoutX="705.0" layoutY="32.0" prefHeight="25.0" prefWidth="127.0" promptText="price" />
                   <TextField fx:id="amount" layoutX="851.0" layoutY="32.0" prefHeight="25.0" prefWidth="125.0" promptText="amount" />
-                  <TextArea fx:id="comment" layoutX="298.0" layoutY="85.0" prefHeight="200.0" prefWidth="200.0" promptText="comment" />
-                  <TextField fx:id="string1" layoutX="521.0" layoutY="96.0" visible="false" />
-                  <TextField fx:id="string4" layoutX="694.0" layoutY="96.0" prefHeight="25.0" prefWidth="140.0" visible="false" />
-                  <TextField fx:id="int1" layoutX="850.0" layoutY="96.0" prefHeight="25.0" prefWidth="133.0" visible="false" />
-                  <TextField fx:id="string2" layoutX="521.0" layoutY="139.0" visible="false" />
-                  <TextField fx:id="string5" layoutX="694.0" layoutY="139.0" prefHeight="25.0" prefWidth="140.0" visible="false" />
-                  <TextField fx:id="int2" layoutX="851.0" layoutY="139.0" prefHeight="25.0" prefWidth="134.0" visible="false" />
-                  <TextField fx:id="string3" layoutX="521.0" layoutY="185.0" visible="false" />
-                  <TextField fx:id="int4" layoutX="694.0" layoutY="185.0" prefHeight="25.0" prefWidth="137.0" visible="false" />
-                  <TextField fx:id="int3" layoutX="850.0" layoutY="185.0" prefHeight="25.0" prefWidth="138.0" visible="false" />
-                  <CheckBox fx:id="bool1" layoutX="851.0" layoutY="223.0" mnemonicParsing="false" visible="false" />
-                  <CheckBox fx:id="bool2" layoutX="851.0" layoutY="257.0" mnemonicParsing="false" visible="false" />
-                  <CheckBox fx:id="bool3" layoutX="851.0" layoutY="285.0" mnemonicParsing="false" visible="false" />
-                  <CheckBox fx:id="bool4" layoutX="851.0" layoutY="316.0" mnemonicParsing="false" visible="false" />
-                  <TextField fx:id="string6" layoutX="522.0" layoutY="237.0" visible="false" />
+                  <TextArea fx:id="description" layoutX="298.0" layoutY="85.0" prefHeight="200.0" prefWidth="200.0" promptText="description (optional)" />
+                  <TextField fx:id="category" layoutX="521.0" layoutY="96.0" promptText="Category" />
+                  <TextField fx:id="subCategory" layoutX="521.0" layoutY="139.0" promptText="subCategory" />
                   <Button fx:id="addButton" layoutX="694.0" layoutY="433.0" mnemonicParsing="false" onAction="#add" text="add" />
                </children>
         </AnchorPane>

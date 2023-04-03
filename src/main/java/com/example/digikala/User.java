@@ -1,10 +1,11 @@
 package com.example.digikala;
 
+import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
-public class User {
+public class User implements Serializable {
     private static Store store;
     private final String username;
     private String password;
@@ -194,8 +195,8 @@ public class User {
         StringBuilder ret = new StringBuilder();
         for (UUID product : cart.keySet())
         {
-            if(store.findProduct(product).getAmount()<=cart.get(product))
-                ret.append(product.toString()).append("\n");
+            if(store.findProduct(product).getAmount()<cart.get(product))
+                ret.append(store.findProduct(product).TOString()).append("\n");
         }
         return ret.toString();
     }

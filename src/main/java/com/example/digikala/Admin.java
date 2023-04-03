@@ -1,13 +1,15 @@
 package com.example.digikala;
 
 import javafx.util.Pair;
+
+import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
 
-public class Admin {
+public class Admin implements Serializable {
     private static Store store;
     private final String  username;
     private String password;
@@ -16,6 +18,7 @@ public class Admin {
     private static ArrayList<String> notification;
     private static ArrayList<String> oldNotification;
     private static boolean firstTime=true;
+    private static ArrayList<UUID> sellerConfirm;
     private static ArrayList<UUID> orders;
     private static ArrayList<Pair<UUID,Integer>> walletRequests;
     private static ArrayList<Pair<UUID,UUID>> sellerRequests;
@@ -38,6 +41,7 @@ public class Admin {
         walletRequests=new ArrayList<>();
         sellerRequests=new ArrayList<>();
         subscriptions=new ArrayList<>();
+        sellerConfirm= new ArrayList<>();
         firstTime=false;
     }
     private String HashPassword(String passwordToHash)
@@ -80,12 +84,15 @@ public class Admin {
         String genPass=HashPassword(password);
         return Objects.equals(this.password, genPass);
     }
+    public String getUsername() {
+        return username;
+    }
     public UUID getUuid() {
         return uuid;
     }
-    public String getNotification() {
+    public static String getNotification() {
         if(notification.size()==0)
-            return null;
+            return "";
         String ret = Admin.notification.get(0);
         Admin.notification.remove(0);
         Admin.oldNotification.add(ret);
@@ -103,23 +110,35 @@ public class Admin {
     public void setEmail(String email) {
         this.email = email;
     }
+    public UUID orderRequestUUID(){return orders.get(0);}
     public String orderRequest()
     {
+        if(orders.size()==0)
+            return "";
         return store.findOrder(Admin.orders.get(0)).toString();
     }
-    public String walletRequest()
-    {
+    public Pair<UUID,Integer> walletRequestUUID(){return walletRequests.get(0);}
+    public String walletRequest() {
+        if(walletRequests.size()==0)
+            return "";
         return store.findUser(walletRequests.get(0).getKey()).getUsername()+walletRequests.get(0).getValue();
     }
+    public Pair<UUID,UUID> sellerRequestUUID(){return sellerRequests.get(0);}
     public String sellerRequest()
     {
-        return store.findSeller(sellerRequests.get(0).getKey()).getUsername()+store.findSeller(sellerRequests.get(0).getKey()).getWaitProduct(sellerRequests.get(0).getValue()).toString();
+        if(sellerRequests.size()==0)
+            return "";
+        return store.findSeller(sellerRequests.get(0).getKey()).getUsername()+"wants to add"+store.findSeller(sellerRequests.get(0).getKey()).getWaitProduct(sellerRequests.get(0).getValue()).TOString();
     }
+    public static boolean isUserSendSubs(UUID user){return subscriptions.contains(user);}
+    public UUID subscriptionRequestUUID(){return subscriptions.get(0);}
     public String subscriptionRequest()
     {
+        if(subscriptions.size()==0)
+            return "";
         return subscriptions.get(0).toString();
     }
-    public void checkOrderUser(boolean response,UUID order)
+    public void checkOrderUser(boolean response,UUID order,String reason)
     {
         Admin.orders.remove(order);
         if(response)
@@ -127,10 +146,10 @@ public class Admin {
             store.verifyOrderUser(order);
         }else
         {
-            store.cancelOrderUser(order);
+            store.cancelOrderUser(order,reason);
         }
     }
-    public void checkWalletReq(boolean response,Pair<UUID,Integer> request)
+    public void checkWalletReq(boolean response,Pair<UUID,Integer> request,String reason)
     {
         Admin.walletRequests.remove(request);
         if(response)
@@ -138,10 +157,10 @@ public class Admin {
             store.verifyWalletReq(request);
         }else
         {
-            store.cancelWalletReq(request);
+            store.cancelWalletReq(request,reason);
         }
     }
-    public void checkSellerReq(boolean response,Pair<UUID,UUID> request)
+    public void checkSellerReq(boolean response,Pair<UUID,UUID> request,String reason)
     {
         Admin.sellerRequests.remove(request);
         if(response)
@@ -149,10 +168,10 @@ public class Admin {
             store.verifySellerReq(request);
         }else
         {
-            store.cancelSellerReq(request);
+            store.cancelSellerReq(request,reason);
         }
     }
-    public void checkSubscriptionReq(boolean response,UUID user)
+    public void checkSubscriptionReq(boolean response,UUID user,String reason)
     {
         Admin.subscriptions.remove(user);
         if(response)
@@ -160,18 +179,38 @@ public class Admin {
             store.verifySubscriptionReq(user);
         }else
         {
-            store.cancelSubscriptionReq(user);
+            store.cancelSubscriptionReq(user,reason);
+        }
+    }
+    public String sellerConfirmRequest(){
+        return store.findSeller(sellerConfirm.get(0)).toString();
+    }
+    public UUID sellerConfirmRequestUUID()
+    {
+        return sellerConfirm.get(0);
+    }
+    public void sellerConfirmation(boolean response , UUID seller)
+    {
+        if(seller==null)
+            seller=Admin.sellerConfirm.get(0);
+        Admin.sellerConfirm.remove(seller);
+        if(response)
+        {
+            store.verifySellerConfirm(seller);
+        }else
+        {
+            store.cancelSellerConfirm(seller);
         }
     }
     public static void addOrder(UUID order)
     {
         Admin.orders.add(order);
     }
+    public static void addSellerConfirm(UUID seller){Admin.sellerConfirm.add(seller);}
     public static void addWalletRequest(Pair<UUID,Integer> walletRequest)
     {
         Admin.walletRequests.add(walletRequest);
     }
-
     public static void addSellerRequests(Pair<UUID,UUID> sellerRequest)
     {
         Admin.sellerRequests.add(sellerRequest);
@@ -190,10 +229,6 @@ public class Admin {
     }
     public String checkProduct(UUID product)
     {
-        return store.findProduct(product).toString();
-    }
-    public String checkOrder(UUID order)
-    {
-        return store.findOrder(order).toString();
+        return store.findProduct(product).TOString();
     }
 }

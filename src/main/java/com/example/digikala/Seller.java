@@ -1,10 +1,11 @@
 package com.example.digikala;
 
+import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
-public class Seller {
+public class Seller implements Serializable {
     private static Store store;
     private final String username;
     private String password;
@@ -17,7 +18,7 @@ public class Seller {
     private final ArrayList<String> oldNotification;
     private final HashMap<UUID ,Product> waitForConfirm;
     private boolean banned=false;
-
+    private boolean verified = false;
     public Seller(String username, String password, String email, String companyName) {
         this.username = username;
         this.password = HashPassword(password);
@@ -69,6 +70,14 @@ public class Seller {
     {
         String genPass=HashPassword(password);
         return Objects.equals(this.password, genPass);
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
     }
 
     public boolean isBanned() {
@@ -139,7 +148,6 @@ public class Seller {
     }
     public boolean haveProduct(UUID product){return this.products.contains(product); }
     public void removeProduct(UUID product) {
-        store.removeProduct(product);
         this.products.remove(product);
     }
     public double getWallet() {

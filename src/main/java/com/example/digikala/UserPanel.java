@@ -68,6 +68,8 @@ public class UserPanel implements Initializable {
     private Tab cartTab;
     @FXML
     private Button sendOrder;
+    @FXML
+    private Button sendSubs;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
@@ -84,6 +86,11 @@ public class UserPanel implements Initializable {
         walletLabel.setText(user.getWallet()+"$ in your wallet");
         notifList.getItems().addAll(user.getOldNotification());
         notifLabel.setText(user.getNotification());
+        if(Admin.isUserSendSubs(user.getUuid()))
+        {
+            sendSubs.setText("waiting for admin to accept");
+            sendSubs.setDisable(true);
+        }
         ArrayList<String> order = new ArrayList<>();
         for(UUID temp :user.getOrders())
         {
@@ -248,6 +255,12 @@ public class UserPanel implements Initializable {
             notifList.getItems().add(notifLabel.getText());
             notifLabel.setText(user.getNotification());
         }
+    }
+    public void addSubs(ActionEvent e)
+    {
+        store.addSubscriptions(user.getUuid());
+        sendSubs.setText("waiting for admin to accept");
+        sendSubs.setDisable(true);
     }
     public void back(ActionEvent e)
     {

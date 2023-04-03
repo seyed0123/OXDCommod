@@ -42,7 +42,12 @@ public class SignPanel {
         Pair <String , UUID> result = store.login(username,password);
         if(result!=null)
         {
-            if(Objects.equals(result.getKey(), "user"))
+            if(Objects.equals(result.getKey(), "banUser") || Objects.equals(result.getKey(), "banSeller"))
+            {
+                this.result.setText("you have been banned by OXDEye");
+            }else if(Objects.equals(result.getKey(), "verifySeller"))
+                this.result.setText("you haven't been verified yet.");
+            else if(Objects.equals(result.getKey(), "user"))
             {
                 User user = store.findUser(result.getValue());
                 SearchTab.setUser(user);
@@ -113,7 +118,44 @@ public class SignPanel {
                 });
             }else
             {
-
+                AdminPanel.setStatus(store,store.findAdmin(result.getValue()));
+                Stage stage = new Stage();
+                Parent root = FXMLLoader.load(getClass().getResource("AdminPanel.fxml"));
+                Scene scene = new Scene(root);
+                scene.getProperties().put("name","AdminPanel");
+                stage.getIcons().add(new Image(Main.logoAddress));
+                stage.setTitle("OXDCommod!!");
+                stage.setScene(scene);
+                stage.show();
+                stage.setOnHiding(event -> {
+                    event.consume();
+                    ObservableList<Window> openWindow=Window.getWindows();
+                    for(Window window :openWindow)
+                    {
+                        if(window instanceof Stage)
+                        {
+                            if (window.getScene().getProperties().get("name").equals("MainMenu"))
+                            {
+                                ((Stage) window).close();
+                            }
+                        }
+                    }
+                    Stage currentStage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+                    currentStage.close();
+                    Stage stageM = new Stage();
+                    Parent rootM = null;
+                    try {
+                        rootM = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                    Scene sceneM = new Scene(rootM);
+                    sceneM.getProperties().put("name","MainMenu");
+                    stageM.getIcons().add(new Image(Main.logoAddress));
+                    stageM.setTitle("OXDCommod!!");
+                    stageM.setScene(sceneM);
+                    stageM.show();
+                });
             }
         }else
         {

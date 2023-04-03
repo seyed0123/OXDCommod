@@ -108,7 +108,7 @@ public class SeeProduct implements Initializable{
         name.setText("name: "+product.getName());
         brand.setText("brand: "+product.getBrand());
         rate.setText("RATE: "+Double.toString(product.getRate()));
-        comment.setText("comment: "+product.getComment());
+        comment.setText("Description: "+product.getDescription());
         another.setText("more info: "+product.toString());
         totalPrice.setText(Double.toString(product.getFinalPrice()));
         person.setPickOnBounds(true);

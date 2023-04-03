@@ -1,9 +1,10 @@
 package com.example.digikala;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.*;
 
-public class Order {
+public class Order implements Serializable {
     private static Store store;
     private LocalDateTime date;
     private final UUID uuid;
@@ -13,7 +14,7 @@ public class Order {
     private UUID user;
     private String stage;
 
-    public Order(LocalDateTime date, HashMap<UUID,Integer> products, UUID user,Store store) {
+    public Order(LocalDateTime date, HashMap<UUID,Integer> products, UUID user) {
         this.date = date;
         this.uuid = UUID.randomUUID();
         this.products = products;
@@ -65,12 +66,9 @@ public class Order {
         {
             store.findProduct(product).setAmount(-1*products.get(product));
             store.findSeller(store.findProduct(product).getSellerID()).addWallet(store.findProduct(product).getFinalPrice()*products.get(product));
+            store.findSeller(store.findProduct(product).getSellerID()).addNotification(products.get(product)+" * " + product + " has been sold ");
         }
         isVerified=true;
-    }
-
-    public void setVerified(boolean verified) {
-        isVerified = verified;
     }
 
     public UUID getUser() {
