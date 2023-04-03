@@ -1,17 +1,13 @@
 package com.example.digikala;
 
-import javafx.collections.ObservableList;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 import java.io.IOException;
 import java.net.URL;
@@ -114,6 +110,12 @@ public class AdminPanel implements Initializable {
     private Label SellerVerifyStatusLabel;
     @FXML
     private ListView<String> banList;
+    @FXML
+    private TextField reasonRefundBar;
+    @FXML
+    private Label refundLabel;
+    @FXML
+    private Label refundStatusLabel;
     public static void setStatus(Store store, Admin admin) {
         AdminPanel.store = store;
         AdminPanel.admin = admin;
@@ -130,12 +132,58 @@ public class AdminPanel implements Initializable {
         WalletOrderLabel.setText(admin.walletRequest());
         SellerOrderLabel.setText(admin.sellerRequest());
         SubsOrderLabel.setText(admin.subscriptionRequest());
+        refundLabel.setText(admin.refundReq());
         profit.setText(store.getProfit() + "$ earned until now");
         userList.getItems().addAll(store.users());
+        userList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("check User");
+                alert.setHeaderText(userList.getSelectionModel().getSelectedItem()+"\n");
+                alert.show();
+            }
+        });
         sellerList.getItems().addAll(store.sellers());
+        sellerList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("check Seller");
+                alert.setHeaderText(sellerList.getSelectionModel().getSelectedItem()+"\n");
+                alert.show();
+            }
+        });
         orderList.getItems().addAll(store.orders());
+        orderList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("check order");
+                alert.setHeaderText(orderList.getSelectionModel().getSelectedItem()+"\n");
+                alert.show();
+            }
+        });
         productList.getItems().addAll(store.products());
+        productList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("check product");
+                alert.setHeaderText(productList.getSelectionModel().getSelectedItem()+"\n");
+                alert.show();
+            }
+        });
         banList.getItems().addAll(store.bans());
+        banList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("check banned person");
+                alert.setHeaderText(banList.getSelectionModel().getSelectedItem()+"\n");
+                alert.show();
+            }
+        });
         logList.getItems().addAll(store.log());
     }
 
@@ -304,12 +352,12 @@ public class AdminPanel implements Initializable {
         if(Objects.equals(SellerVerifyLabel.getText(),""))
         {
             SellerVerifyStatusLabel.setText("no more orders");
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
     public void acceptSellerConfirm(ActionEvent e) {
-        if(!nextSellerConfirm())
+        if(nextSellerConfirm())
             return;
         admin.sellerConfirmation(true, admin.sellerConfirmRequestUUID());
         SellerVerifyLabel.setText(admin.sellerConfirmRequest());
@@ -317,16 +365,40 @@ public class AdminPanel implements Initializable {
     }
 
     public void refuseSellerConfirm(ActionEvent e) {
-        if(!nextSellerConfirm())
+        if(nextSellerConfirm())
             return;
-        if(Objects.equals(reasonSubsBar.getText(), ""))
-        {
-            SubsOrderStatusLabel.setText("reason is necessary.");
-            return;
-        }
         admin.sellerConfirmation(false, admin.sellerConfirmRequestUUID());
         SellerVerifyLabel.setText(admin.sellerConfirmRequest());
         SellerVerifyStatusLabel.setText("refused");
+    }
+    private boolean nextRefund()
+    {
+        if(Objects.equals(refundLabel.getText(),""))
+        {
+            refundStatusLabel.setText("no more orders");
+            return true;
+        }
+        return false;
+    }
+    public void acceptRefund(ActionEvent e) {
+        if(nextRefund())
+            return;
+        admin.checkRefundReq(true, admin.refundReqUUID(),null);
+        refundLabel.setText(admin.refundReq());
+        refundStatusLabel.setText("accepted");
+    }
+
+    public void refuseRefund(ActionEvent e) {
+        if(nextRefund())
+            return;
+        if(Objects.equals(reasonRefundBar.getText(), ""))
+        {
+            refundStatusLabel.setText("reason is necessary.");
+            return;
+        }
+        admin.checkRefundReq(false, admin.refundReqUUID(),reasonRefundBar.getText());
+        refundLabel.setText(admin.refundReq());
+        refundStatusLabel.setText("refused");
     }
     public void ban(ActionEvent e) {
         UUID uuid = null;

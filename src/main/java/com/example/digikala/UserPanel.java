@@ -70,6 +70,10 @@ public class UserPanel implements Initializable {
     private Button sendOrder;
     @FXML
     private Button sendSubs;
+    @FXML
+    private Label totalPriceCart;
+    @FXML
+    private Label shippingCost;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
@@ -86,17 +90,34 @@ public class UserPanel implements Initializable {
         walletLabel.setText(user.getWallet()+"$ in your wallet");
         notifList.getItems().addAll(user.getOldNotification());
         notifLabel.setText(user.getNotification());
+        totalPriceCart.setText("total price:    "+user.getTotalPriceOfCart());
+        if(user.getSubscription())
+            shippingCost.setText("Shipping is free for you because of your subscription");
+        else
+            shippingCost.setText("Shipping cost :    "+ user.getShippingCost());
         if(Admin.isUserSendSubs(user.getUuid()))
         {
             sendSubs.setText("waiting for admin to accept");
             sendSubs.setDisable(true);
         }
         ArrayList<String> order = new ArrayList<>();
-        for(UUID temp :user.getOrders())
+        ArrayList<UUID> orderUUID = new ArrayList<>(user.getOrders());
+        for(UUID temp :orderUUID)
         {
             order.add(store.findOrder(temp).toString());
         }
         ordersList.getItems().addAll(order);
+        ordersList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Refund");
+                alert.setHeaderText("you are about to refund this order!!");
+                alert.setContentText("Do you sure to refund this order from your account?");
+                if(alert.showAndWait().get() == ButtonType.OK)
+                    store.addRefundReq(new Pair<>(user.getUuid(),orderUUID.get(ordersList.getSelectionModel().getSelectedIndex())));
+            }
+        });
         ArrayList<String> favorite = new ArrayList<>();
         for(UUID temp :user.getFavorite())
         {

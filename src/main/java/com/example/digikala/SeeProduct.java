@@ -1,5 +1,7 @@
 package com.example.digikala;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -9,15 +11,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
@@ -61,6 +62,12 @@ public class SeeProduct implements Initializable{
     private Label rateLabel;
     @FXML
     private TextField rateBar;
+    @FXML
+    private ImageView productImage;
+    @FXML
+    private ListView<String> commentList;
+    @FXML
+    private TextField commentBar;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         if(product.getAmount()<1)
@@ -79,6 +86,7 @@ public class SeeProduct implements Initializable{
         }
         if(user==null)
         {
+            commentBar.setVisible(false);
             favorite.setVisible(false);
             person.setVisible(false);
             person.setDisable(true);
@@ -100,6 +108,10 @@ public class SeeProduct implements Initializable{
                 addToCart.setTextFill(Color.GREEN);
                 addToCart.setDisable(true);
             }
+            if(product.didComment(user.getUuid()))
+            {
+                commentBar.setText(product.getComment(user.getUuid()));
+            }
             rateBar.setVisible(true);
             userLogIn.setText(user.getUsername());
             signButton.setDisable(true);
@@ -109,7 +121,7 @@ public class SeeProduct implements Initializable{
         brand.setText("brand: "+product.getBrand());
         rate.setText("RATE: "+Double.toString(product.getRate()));
         comment.setText("Description: "+product.getDescription());
-        another.setText("more info: "+product.toString());
+        another.setText("more info: "+product.toString()+ "\n\n seller level ="+Main.level[store.findSeller(product.getSellerID()).getSellerLevel()]);
         totalPrice.setText(Double.toString(product.getFinalPrice()));
         person.setPickOnBounds(true);
         person.setOnMouseClicked(new EventHandler() {
@@ -131,6 +143,23 @@ public class SeeProduct implements Initializable{
                 UserPanel.show();
             }
         });
+        commentList.getItems().addAll(product.getComment());
+        commentList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("check comment");
+                alert.setHeaderText(commentList.getSelectionModel().getSelectedItem()+"\n");
+                alert.show();
+            }
+        });
+        try
+        {
+            Image image = new Image(product.getImageAddress());
+            productImage.setImage(image);
+        }catch (Exception e)
+        {
+        }
     }
     public static void setUser(User user) {
         SeeProduct.user = user;
@@ -193,6 +222,12 @@ public class SeeProduct implements Initializable{
             rateLabel.setText("The score given by you: "+rate);
         }
         rateBar.setText("");
+    }
+    public void comment(ActionEvent e)
+    {
+        product.setComment(commentBar.getText(),user.getUuid());
+        commentBar.setText("your comment added.");
+        commentBar.setDisable(true);
     }
     public void back(ActionEvent e)
     {

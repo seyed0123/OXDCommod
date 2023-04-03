@@ -138,6 +138,22 @@
         </AnchorPane>
       </content>
     </Tab>
+      <Tab text="refund an Order">
+          <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <children>
+                      <Label fx:id="refundLabel" alignment="TOP_CENTER" layoutX="35.0" layoutY="45.0" prefHeight="113.0" prefWidth="936.0" wrapText="true">
+                          <font>
+                              <Font name="Arial Bold Italic" size="12.0" />
+                          </font></Label>
+                      <Button layoutX="383.0" layoutY="183.0" mnemonicParsing="false" onAction="#refuseSubsOrder" prefHeight="25.0" prefWidth="87.0" text="refuse" />
+                      <Button layoutX="549.0" layoutY="183.0" mnemonicParsing="false" onAction="#acceptSubsOrder" prefHeight="25.0" prefWidth="86.0" text="accept" />
+                      <Label fx:id="refundStatusLabel" layoutX="439.0" layoutY="230.0" prefHeight="17.0" prefWidth="151.0" />
+                      <TextField fx:id="reasonRefundBar" layoutX="206.0" layoutY="183.0" promptText="reason" />
+                  </children>
+              </AnchorPane>
+          </content>
+      </Tab>
     <Tab text="general status">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">

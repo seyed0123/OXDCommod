@@ -7,6 +7,7 @@ import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import static java.util.Arrays.asList;
+import org.bson.Document;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,13 @@ public class Connection {
                             new Document("type", "homework").append("score", rand.nextDouble() * 100),
                             new Document("type", "homework").append("score", rand.nextDouble() * 100)));
             gradesCollection.insertOne(student);
+        }
+        try (MongoClient mongoClient =MongoClients.create(connectionString)) {
+            MongoDatabase database = mongoClient.getDatabase("sample_training");
+            MongoCollection<Document> collection = database.getCollection("grades");
+            for (Document document : collection.find()) {
+                System.out.println(document.toJson());
+            }
         }
     }
 }

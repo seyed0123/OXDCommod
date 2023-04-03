@@ -8,43 +8,54 @@
 <AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.digikala.SeeProduct">
    <children>
       <Button fx:id="signButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#signButton" prefHeight="25.0" prefWidth="103.0" text="sign in | sign up" />
-      <Label fx:id="name" alignment="CENTER" layoutX="500.0" layoutY="39.0" prefHeight="69.0" prefWidth="400.0" text="name">
+      <Label fx:id="name" alignment="CENTER" layoutX="500.0" layoutY="39.0" prefHeight="69.0" prefWidth="400.0" text="name" wrapText="true">
          <font>
             <Font size="30.0" />
          </font>
       </Label>
-      <Label fx:id="brand" alignment="CENTER" layoutX="323.0" layoutY="140.0" prefHeight="50.0" prefWidth="400.0" text="brand">
+      <Label fx:id="brand" alignment="CENTER" layoutX="450.0" layoutY="140.0" prefHeight="50.0" prefWidth="348.0" text="brand" wrapText="true">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="rate" alignment="CENTER" layoutX="753.0" layoutY="140.0" prefHeight="50.0" prefWidth="193.0" text="rate">
+      <Label fx:id="rate" alignment="CENTER" layoutX="805.0" layoutY="140.0" prefHeight="50.0" prefWidth="193.0" text="rate" wrapText="true">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="comment" alignment="TOP_CENTER" layoutX="417.0" layoutY="239.0" prefHeight="61.0" prefWidth="566.0" text="comment" wrapText="true" />
-      <Label fx:id="another" alignment="TOP_CENTER" layoutX="417.0" layoutY="309.0" prefHeight="41.0" prefWidth="566.0" text="another" wrapText="true" />
-      <Label fx:id="totalPrice" alignment="CENTER_RIGHT" layoutX="159.0" layoutY="492.0" prefHeight="41.0" prefWidth="303.0" text="totalPrise">
+      <Label fx:id="comment" alignment="TOP_CENTER" layoutX="453.0" layoutY="231.0" prefHeight="69.0" prefWidth="530.0" text="comment" wrapText="true" />
+      <Label fx:id="another" alignment="TOP_CENTER" layoutX="439.0" layoutY="309.0" prefHeight="117.0" prefWidth="544.0" text="another" wrapText="true" />
+      <Label fx:id="totalPrice" alignment="CENTER_RIGHT" layoutX="285.0" layoutY="492.0" prefHeight="41.0" prefWidth="303.0" text="totalPrise" wrapText="true">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="dis" layoutX="619.0" layoutY="488.0" prefHeight="50.0" prefWidth="358.0" text="dis+prise" textFill="#fc0000">
+      <Label fx:id="dis" layoutX="619.0" layoutY="488.0" prefHeight="50.0" prefWidth="358.0" text="dis+prise" textFill="#fc0000" wrapText="true">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Button fx:id="addToCart" layoutX="80.0" layoutY="500.0" mnemonicParsing="false" onAction="#addToCart" text="add to cart" />
+      <Button fx:id="addToCart" layoutX="80.0" layoutY="481.0" mnemonicParsing="false" onAction="#addToCart" text="add to cart" />
       <ImageView fx:id="person" fitHeight="25.0" fitWidth="37.0" layoutX="146.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@person.png" />
          </image></ImageView>
       <Button fx:id="Backbutton" layoutX="14.0" layoutY="561.0" mnemonicParsing="false" onAction="#back" text="Back" />
       <Label fx:id="userLogIn" layoutX="188.0" layoutY="18.0" prefHeight="17.0" prefWidth="123.0" />
-      <Label fx:id="favoriteLabel" layoutX="200.0" layoutY="545.0" prefHeight="17.0" prefWidth="117.0" />
-      <Button fx:id="favorite" layoutX="70.0" layoutY="540.0" mnemonicParsing="false" onAction="#addFavorite" text="add to favorite" />
+      <Label fx:id="favoriteLabel" layoutX="200.0" layoutY="529.0" prefHeight="17.0" prefWidth="117.0" />
+      <Button fx:id="favorite" layoutX="70.0" layoutY="524.0" mnemonicParsing="false" onAction="#addFavorite" text="add to favorite" />
       <TextField fx:id="rateBar" alignment="CENTER" layoutX="42.0" layoutY="443.0" onAction="#rate" prefHeight="25.0" prefWidth="163.0" promptText="rate it 0-10" visible="false" />
       <Label fx:id="rateLabel" alignment="CENTER" layoutX="15.0" layoutY="412.0" prefHeight="17.0" prefWidth="226.0" />
+      <Separator layoutX="434.0" layoutY="8.0" orientation="VERTICAL" prefHeight="448.0" prefWidth="0.0" />
+      <Separator layoutX="434.0" layoutY="454.0" prefHeight="0.0" prefWidth="564.0" />
+      <Separator layoutX="2.0" layoutY="404.0" prefHeight="3.0" prefWidth="435.0" />
+      <Separator layoutY="44.0" prefHeight="3.0" prefWidth="435.0" />
+      <ImageView fx:id="productImage" fitHeight="176.0" fitWidth="226.0" layoutX="5.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@question.jpg" />
+         </image></ImageView>
+      <Separator layoutX="-2.0" layoutY="215.0" prefHeight="3.0" prefWidth="435.0" />
+      <ListView fx:id="commentList" layoutX="2.0" layoutY="218.0" prefHeight="184.0" prefWidth="429.0" />
+      <TextField fx:id="commentBar" layoutX="66.0" layoutY="561.0" onAction="#comment" promptText="comment it." />
    </children>
 </AnchorPane>

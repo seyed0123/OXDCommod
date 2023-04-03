@@ -22,11 +22,13 @@ public class Store implements Serializable {
     private int supportNumber;
     private final ArrayList<String> log;
     private String owner;
+    private Pair<Double,Double> location;
 
-    public Store(String webAddress, int supportNumber, String owner) {
+    public Store(String webAddress, int supportNumber, String owner,double lat,double lon) {
         this.webAddress = webAddress;
         this.supportNumber = supportNumber;
         this.owner = owner;
+        location= new Pair<>(lat,lon);
         this.users=new HashMap<>();
         this.admins=new HashMap<>();
         this.sellers= new HashMap<>();
@@ -36,6 +38,11 @@ public class Store implements Serializable {
         this.ban=new HashSet<>();
         this.log=new ArrayList<>();
     }
+
+    public Pair<Double, Double> getLocation() {
+        return location;
+    }
+
     public void setStore(Store store){this.store=store; Admin.setStatics(store); Seller.setStore(store);User.setStore(store);Order.setStore(store);}
     public void addUser(String username, String password , int phoneNumber , String address , String email)
     {
@@ -147,7 +154,6 @@ public class Store implements Serializable {
     public boolean isUserExist(UUID user){return users.containsKey(user);}
     public boolean isSellerExist(UUID seller){return sellers.containsKey(seller);}
     public boolean isProductExist(UUID product){return products.containsKey(product);}
-
     public double getProfit() {
         return profit;
     }
@@ -189,7 +195,7 @@ public class Store implements Serializable {
     public void sendOrder(UUID user)
     {
         User temp = users.get(user);
-        Order order= new Order(LocalDateTime.now(),temp.order(),user);
+        Order order= new Order(LocalDateTime.now(),temp.order(),user,temp.getTotalPriceOfCart());
         this.orders.put(order.getUuid(),order);
         Admin.addOrder(order.getUuid());
         Admin.addNotification("an Order were received from "+temp.getUsername()+". check it.");
@@ -275,6 +281,22 @@ public class Store implements Serializable {
     {
         log.add("admin reject "+store.findSeller(seller)+"in "+LocalDateTime.now()+".");
         sellers.remove(seller);
+    }
+    public void addRefundReq(Pair<UUID,UUID> request)
+    {
+        Admin.addRefundReq(request);
+        Admin.addNotification("an refund request received");
+        log.add("an request for refunding an order received in"+LocalDateTime.now()+".");
+    }
+    public void verifyRefund(Pair<UUID,UUID> request)
+    {
+        store.findOrder(request.getValue()).refund();
+        log.add(request.getValue()+"has been refunded in "+LocalDateTime.now()+".");
+    }
+    public void cancelRefund(Pair<UUID,UUID> request , String reason)
+    {
+        store.findUser(request.getKey()).addNotification("your request for refunding an order hasn't been approved");
+        log.add("a request for refunding"+store.findOrder(request.getValue())+" hasn't been approved in "+LocalDateTime.now()+".");
     }
     public void ban(UUID person)
     {

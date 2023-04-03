@@ -1,5 +1,7 @@
 package com.example.digikala;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,10 +17,7 @@ import javafx.stage.Window;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.ResourceBundle;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.Semaphore;
 
 public class SellerPanel implements Initializable {
@@ -80,6 +79,8 @@ public class SellerPanel implements Initializable {
     private Button cancelDiscountButton;
     @FXML
     private TextField DiscountUUIDBar;
+    @FXML
+    private Label levelLabel;
     public static void setStatus(Store store , Seller seller)
     {
         SellerPanel.store=store;
@@ -93,6 +94,7 @@ public class SellerPanel implements Initializable {
         notifList.getItems().addAll(seller.getOldNotification());
         notifLabel.setText(seller.getNotification());
         walletLabel.setText(seller.getWallet()+"$ in your wallet");
+        levelLabel.setText(Main.level[seller.getSellerLevel()]);
         TreeItem<String> rootItem = new TreeItem<>("Products");
 
         TreeItem<String> cat1= new TreeItem<>("Book");
@@ -158,38 +160,65 @@ public class SellerPanel implements Initializable {
         cat10.getChildren().addAll(subCat28,subCat29,subCat30);
 
         rootItem.getChildren().addAll(cat1,cat2,cat3,cat4,cat5,cat6,cat7,cat8,cat9,cat10);
-        price.setOnAction(e ->{
-            try {
-                int intValue = Integer.parseInt(price.getText());
-            } catch (NumberFormatException ex) {
-                price.setText("Please enter a valid integer");
-            }
-        });
-        amount.setOnAction(e ->{
-            try {
-                int intValue = Integer.parseInt(amount.getText());
-            } catch (NumberFormatException ex) {
-                amount.setText("Please enter a valid integer");
-            }
-        });
         newProductTree.setRoot(rootItem);
         newProductTree.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue!= null) {
             }
         });
         ArrayList<String> products = new ArrayList<>();
-        for(UUID temp :seller.getProduct())
+        ArrayList<UUID> productUUID = new ArrayList<>(seller.getProduct());
+        for(UUID temp :productUUID)
         {
             Product product = store.findProduct(temp);
             products.add(product.TOString()+product.toString());
         }
         ownProductList.getItems().addAll(products);
+        ownProductList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                UUID product = productUUID.get(ownProductList.getSelectionModel().getSelectedIndex());
+                EditProductPanel.setStatus(store,store.findProduct(product),false);
+                Stage EditProductPanel= new Stage();
+                Parent root = null;
+                try {
+                    root = FXMLLoader.load(getClass().getResource("EditProductPanel.fxml"));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                EditProductPanel.setTitle("OXDCommod!!");
+                Scene scene  =new Scene(root);
+                scene.getProperties().put("name","SeeProduct");
+                EditProductPanel.getIcons().add(new Image(Main.logoAddress));
+                EditProductPanel.setScene(scene);
+                EditProductPanel.show();
+            }
+        });
         ArrayList<String> waitProducts = new ArrayList<>();
-        for(Product product :seller.getWaitForConfirmComplete().values())
+        ArrayList<Product> waitProductsUUID = new ArrayList<>(seller.getWaitForConfirmComplete().values());
+        for(Product product :waitProductsUUID)
         {
             waitProducts.add(product.TOString()+product.toString());
         }
         waitForConfirmProductList.getItems().addAll(waitProducts);
+        waitForConfirmProductList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                EditProductPanel.setStatus(store,waitProductsUUID.get(waitForConfirmProductList.getSelectionModel().getSelectedIndex()),true);
+                Stage EditProductPanel= new Stage();
+                Parent root = null;
+                try {
+                    root = FXMLLoader.load(getClass().getResource("EditProductPanel.fxml"));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                EditProductPanel.setTitle("OXDCommod!!");
+                Scene scene  =new Scene(root);
+                scene.getProperties().put("name","SeeProduct");
+                EditProductPanel.getIcons().add(new Image(Main.logoAddress));
+                EditProductPanel.setScene(scene);
+                EditProductPanel.show();
+            }
+        });
     }
     public void add(ActionEvent e) throws IOException {
         if(!amount.getText().matches("\\d+") || Objects.equals(amount.getText(), ""))

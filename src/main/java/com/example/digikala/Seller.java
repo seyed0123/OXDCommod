@@ -19,6 +19,7 @@ public class Seller implements Serializable {
     private final HashMap<UUID ,Product> waitForConfirm;
     private boolean banned=false;
     private boolean verified = false;
+    private int sellerLevel=0;
     public Seller(String username, String password, String email, String companyName) {
         this.username = username;
         this.password = HashPassword(password);
@@ -70,6 +71,14 @@ public class Seller implements Serializable {
     {
         String genPass=HashPassword(password);
         return Objects.equals(this.password, genPass);
+    }
+
+    public int getSellerLevel() {
+        return sellerLevel;
+    }
+
+    public void setSellerLevel(int sellerLevel) {
+        this.sellerLevel = sellerLevel;
     }
 
     public boolean isVerified() {
@@ -153,8 +162,33 @@ public class Seller implements Serializable {
     public double getWallet() {
         return wallet;
     }
+    private void checkLevel()
+    {
+        if(this.wallet>400)
+            sellerLevel=1;
+        else if(this.wallet>2000)
+            sellerLevel=2;
+        else if(this.wallet>20000)
+            sellerLevel=3;
+        else if(this.wallet>200000)
+            sellerLevel=4;
+        else if(this.wallet>2000000)
+            sellerLevel=5;
+        else if(this.wallet>20000000)
+            sellerLevel=6;
+        else if(this.wallet>200000000)
+            sellerLevel=7;
+        else if(this.wallet>2000000000)
+            sellerLevel=8;
+    }
+    public void removeWallet(double wallet)
+    {
+        this.wallet-=wallet;
+        checkLevel();
+    }
     public void addWallet(double wallet) {
         this.wallet += wallet;
+        checkLevel();
     }
     public void makeDiscount(int discount,UUID product)
     {

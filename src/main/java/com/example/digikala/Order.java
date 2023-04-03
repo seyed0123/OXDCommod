@@ -1,5 +1,7 @@
 package com.example.digikala;
 
+import javafx.util.Pair;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -14,15 +16,12 @@ public class Order implements Serializable {
     private UUID user;
     private String stage;
 
-    public Order(LocalDateTime date, HashMap<UUID,Integer> products, UUID user) {
+    public Order(LocalDateTime date, HashMap<UUID,Integer> products, UUID user, int totalPrice) {
         this.date = date;
         this.uuid = UUID.randomUUID();
         this.products = products;
         this.user = user;
-        for(UUID product:products.keySet())
-        {
-            totalPrice+= store.findProduct(product).getFinalPrice() * products.get(product);
-        }
+        this.totalPrice=totalPrice;
     }
 
     public static void setStore(Store store) {
@@ -70,7 +69,19 @@ public class Order implements Serializable {
         }
         isVerified=true;
     }
-
+    public void refund()
+    {
+        for (UUID product:products.keySet())
+        {
+            store.findProduct(product).setAmount(+1*products.get(product));
+            store.findSeller(store.findProduct(product).getSellerID()).removeWallet(store.findProduct(product).getFinalPrice()*products.get(product));
+            store.findSeller(store.findProduct(product).getSellerID()).addNotification(products.get(product)+" * " + product + " has been refunded ");
+        }
+        store.findUser(user).addWallet(totalPrice);
+        store.findUser(user).removeOrder(uuid);
+        store.findUser(user).addNotification("your order has been refunded.Your money has been returned to your account. ");
+        isVerified=true;
+    }
     public UUID getUser() {
         return user;
     }

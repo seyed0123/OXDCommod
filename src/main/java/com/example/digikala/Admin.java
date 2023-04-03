@@ -23,6 +23,7 @@ public class Admin implements Serializable {
     private static ArrayList<Pair<UUID,Integer>> walletRequests;
     private static ArrayList<Pair<UUID,UUID>> sellerRequests;
     private static ArrayList<UUID> subscriptions;
+    private static ArrayList<Pair<UUID,UUID>> refunds;
 
     public Admin(String username, String password, String email) {
         this.username = username;
@@ -43,6 +44,7 @@ public class Admin implements Serializable {
         subscriptions=new ArrayList<>();
         sellerConfirm= new ArrayList<>();
         firstTime=false;
+        refunds= new ArrayList<>();
     }
     private String HashPassword(String passwordToHash)
     {
@@ -130,6 +132,13 @@ public class Admin implements Serializable {
             return "";
         return store.findSeller(sellerRequests.get(0).getKey()).getUsername()+"wants to add"+store.findSeller(sellerRequests.get(0).getKey()).getWaitProduct(sellerRequests.get(0).getValue()).TOString();
     }
+    public Pair<UUID,UUID> refundReqUUID(){return refunds.get(0);}
+    public String refundReq(){
+        if(refunds.size()==0)
+            return "";
+        else
+            return store.findUser(refunds.get(0).getKey()) + "wants to refund "+store.findOrder(refunds.get(0).getValue());
+    }
     public static boolean isUserSendSubs(UUID user){return subscriptions.contains(user);}
     public UUID subscriptionRequestUUID(){return subscriptions.get(0);}
     public String subscriptionRequest()
@@ -182,6 +191,14 @@ public class Admin implements Serializable {
             store.cancelSubscriptionReq(user,reason);
         }
     }
+    public void checkRefundReq(boolean response,Pair<UUID,UUID> request , String reason)
+    {
+        Admin.refunds.remove(request);
+        if(response)
+            store.verifyRefund(request);
+        else
+            store.cancelRefund(request,reason);
+    }
     public String sellerConfirmRequest(){
         return store.findSeller(sellerConfirm.get(0)).toString();
     }
@@ -219,6 +236,7 @@ public class Admin implements Serializable {
     {
         Admin.subscriptions.add(subscription);
     }
+    public static void addRefundReq(Pair<UUID,UUID> request){refunds.add(request);}
     public String checkUser(UUID user)
     {
         return store.findUser(user).toString();

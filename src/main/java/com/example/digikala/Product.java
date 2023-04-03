@@ -3,6 +3,7 @@ package com.example.digikala;
 import javafx.util.Pair;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -18,6 +19,8 @@ abstract class Product implements Serializable {
     private int discount;
     private String brand;
     private final HashMap<UUID,Double> ratedUser;
+    private String imageAddress;
+    private final HashMap<UUID,String> comment;
 
     public Product(String name, int price, int amount, String description,String brand,UUID sellerID) {
         this.name = name;
@@ -29,6 +32,7 @@ abstract class Product implements Serializable {
         this.finalPrice = price;
         this.sellerID=sellerID;
         this.ratedUser=new HashMap<>();
+        this.comment= new HashMap<>();
     }
 
     public UUID getSellerID() {
@@ -68,12 +72,17 @@ abstract class Product implements Serializable {
     public int getAmount() {
         return amount;
     }
+    public String getImageAddress() {
+        return imageAddress;
+    }
 
+    public void setImageAddress(String imageAddress) {
+        this.imageAddress = imageAddress;
+    }
     public void setAmount(int amount) {
         this.amount = this.amount+amount;
     }
     public boolean didRate(UUID user){return ratedUser.containsKey(user);}
-
     public double getRate() {
         if(rate == null)
             return 0;
@@ -94,7 +103,13 @@ abstract class Product implements Serializable {
         else
             this.rate=new Pair<>(rate , 1);
     }
-
+    public boolean didComment(UUID user){return comment.containsKey(user);}
+    public ArrayList<String> getComment(){return new ArrayList<>(comment.values());}
+    public String getComment(UUID user) {return comment.get(user);}
+    public void setComment(String comment,UUID user)
+    {
+        this.comment.put(user,comment);
+    }
     public String getDescription() {
         return description;
     }

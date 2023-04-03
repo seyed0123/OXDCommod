@@ -1,9 +1,16 @@
 package com.example.digikala;
 
+import javafx.util.Pair;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
+import org.json.JSONObject;
 
 public class User implements Serializable {
     private static Store store;
@@ -14,6 +21,7 @@ public class User implements Serializable {
     private int phoneNumber;
     private String address;
     private final HashMap<UUID, Integer> cart;
+    private int totalPriceOfCart;
     private final TreeSet<UUID> lastSeen;
     private double wallet = 0;
     private final ArrayList<String> notification;
@@ -23,6 +31,9 @@ public class User implements Serializable {
     private boolean subscription=false;
     private boolean banned=false;
     private boolean waitForVerify;
+    private Pair<Double,Double> location;
+
+    private int shippingCost;
 
     public User(String username, String password, int phoneNumber, String address,String email) {
         this.username = username;
@@ -30,6 +41,7 @@ public class User implements Serializable {
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.email=email;
+        findLocation();
         this.uuid= UUID.randomUUID();
         this.notification= new ArrayList<>();
         this.oldNotification= new ArrayList<>();
@@ -69,6 +81,10 @@ public class User implements Serializable {
         }
         //System.out.println(generatedPassword);
         return generatedPassword;
+    }
+
+    public int getShippingCost() {
+        return shippingCost;
     }
 
     public String getEmail() {
@@ -126,6 +142,7 @@ public class User implements Serializable {
     }
     public void setAddress(String address) {
         this.address = address;
+        findLocation();
     }
     public boolean getWait(){return waitForVerify;}
     public int cartExist(UUID product){
@@ -135,6 +152,7 @@ public class User implements Serializable {
         return cart;
     }
     public void addCart(UUID product) {
+        totalPriceOfCart+=store.findProduct(product).getFinalPrice();
         if(cartExist(product)!=0)
             this.cart.put(product,cart.get(product)+1);
         else
@@ -142,6 +160,7 @@ public class User implements Serializable {
     }
     public void reduceCart(UUID product)
     {
+        totalPriceOfCart-=store.findProduct(product).getFinalPrice();
         if(cartExist(product)==1)
             removeCart(product);
         else
@@ -173,6 +192,7 @@ public class User implements Serializable {
     public HashSet<UUID> getOrders() {
         return orders;
     }
+    public void removeOrder(UUID order){orders.remove(order);}
     public boolean favoriteExist(UUID product){return favorite.contains(product);}
     public HashSet<UUID> getFavorite() {
         return favorite;
@@ -200,6 +220,7 @@ public class User implements Serializable {
         }
         return ret.toString();
     }
+    public int getTotalPriceOfCart(){return totalPriceOfCart;}
     public HashMap<UUID,Integer> order()
     {
         waitForVerify=true;
@@ -210,11 +231,40 @@ public class User implements Serializable {
         this.waitForVerify=false;
         this.orders.add(order.getUuid());
         cart.clear();
+        totalPriceOfCart=0;
         wallet-=order.getTotalPrice()*1.1;
     }
     public void cancelOrder()
     {
         waitForVerify=false;
+    }
+    private void calShippingCost()
+    {
+        double dLat=Math.toRadians(store.getLocation().getKey() - location.getKey());
+        double dLon = Math.toRadians(store.getLocation().getValue() - location.getValue());
+        double a = Math.sin(dLat /2 ) * Math.sin(dLat/2) + Math.cos(Math.toRadians(store.getLocation().getKey())) * Math.cos(Math.toRadians(location.getKey())) * Math.sin(dLon/2) * Math.sin(dLon/2);
+        double c = 2* Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+        shippingCost = (int) Math.floor(c * 6371);
+    }
+    private void findLocation()
+    {
+        try {
+            URL url = new URL("http://api.weatherapi.com/v1/current.json?key=" + "4170999efb19400b9e921713232302" + "&q=" + address);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder stringBuilder = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                stringBuilder.append(line);
+            }
+            reader.close();
+            connection.disconnect();
+            JSONObject jsonObject = new JSONObject(stringBuilder.toString());
+            location = new Pair<>(jsonObject.getJSONObject("location").getDouble("lat"),jsonObject.getJSONObject("location").getDouble("lon"));
+            calShippingCost();
+        } catch (Exception e) {
+        }
     }
     @Override
     public String toString() {

@@ -24,15 +24,11 @@
                  <PasswordField fx:id="oldPasswordBar" layoutX="336.0" layoutY="82.0" prefHeight="25.0" prefWidth="249.0" promptText="old password" visible="false" />
                  <Label fx:id="walletLabel" layoutX="634.0" layoutY="98.0" prefHeight="17.0" prefWidth="253.0" />
                  <Button fx:id="walletButton" layoutX="565.0" layoutY="132.0" mnemonicParsing="false" onAction="#claim" prefHeight="25.0" prefWidth="392.0" text="claim the money" />
-                  <TextField fx:id="DiscountAmountBar" layoutX="572.0" layoutY="244.0" prefHeight="25.0" prefWidth="189.0" promptText="(0,100) (int)" />
-                  <Button fx:id="makeDiscountButton" layoutX="797.0" layoutY="244.0" mnemonicParsing="false" onAction="#makeDiscount" text="make discount" />
-                  <TextField fx:id="cancelDiscountUUID" layoutX="571.0" layoutY="375.0" prefHeight="25.0" prefWidth="187.0" promptText="product UUID" />
-                  <Button fx:id="cancelDiscountButton" layoutX="795.0" layoutY="375.0" mnemonicParsing="false" onAction="#cancelDiscount" text="cancel discount" />
-                  <TextField fx:id="DiscountUUIDBar" layoutX="571.0" layoutY="285.0" prefHeight="25.0" prefWidth="190.0" promptText="product UUID" />
                    <Button fx:id="logoutButton" layoutX="28.0" layoutY="522.0" mnemonicParsing="false" onAction="#logout" text="logout" />
                   <Separator layoutX="548.0" layoutY="-1.0" orientation="VERTICAL" prefHeight="573.0" prefWidth="6.0" />
                   <Separator layoutX="9.0" layoutY="309.0" prefHeight="4.0" prefWidth="541.0" />
                   <Separator layoutX="548.0" layoutY="168.0" prefHeight="0.0" prefWidth="452.0" />
+                  <Label fx:id="levelLabel" layoutX="584.0" layoutY="192.0" prefHeight="117.0" prefWidth="392.0" />
                </children></AnchorPane>
       </content>
     </Tab>
