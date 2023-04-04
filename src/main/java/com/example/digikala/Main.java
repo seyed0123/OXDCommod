@@ -25,8 +25,10 @@ import java.io.*;
 import java.util.Objects;
 
 public class Main extends Application {
+    public static int count=0;
     public static Store store;
-    public static final String fileName = "save.OXD";
+    public static final String storeFileName = "saveStr.txt";
+    public static final String adminFileName = "saveAdm.txt";
     public static final String logoAddress = "G:\\code\\java\\OXDCommod\\OXDCommod.png";
     public static final String[] level = {"no rank","POLLO Seller","noobSab seller","noob seller","NORO seller","PROB seller","pro seller","proSag seller","cheater seller"};
     @Override
@@ -68,33 +70,31 @@ public class Main extends Application {
             stage1.setScene(scene);
             stage1.show();
             stage1.setOnHiding(even ->{
-                event.consume();
                 try {
-                    save1(store,fileName);
+                    save1(store,storeFileName);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             });
         });
     }
-    public static void save1(Store store , String fileName) throws IOException {
+    public static void save1(Object obj , String fileName) throws IOException {
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(fileName);
             ObjectOutputStream outputStream = new ObjectOutputStream(fileOutputStream);
-            outputStream.writeObject(store);
+            outputStream.writeObject(obj);
             outputStream.close();
             fileOutputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public static Store load1(String fileName) throws IOException, ClassNotFoundException {
-        Store obj=null;
+    public static Object load1(String fileName) throws IOException, ClassNotFoundException {
+        Object obj=null;
         try {
             FileInputStream fileInputStream = new FileInputStream(fileName);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-            obj = (Store) objectInputStream.readObject();
-
+            obj = objectInputStream.readObject();
             objectInputStream.close();
             fileInputStream.close();
         } catch (IOException | ClassNotFoundException e) {
@@ -146,7 +146,9 @@ public class Main extends Application {
         //shop location : "name": "Souprosse",
         //        "region": "Aquitaine",
         //        "country": "France",
-        store = load1(fileName);
+        store = (Store) load1(storeFileName);
+        SaveAdmin temp = (SaveAdmin) load1(adminFileName);
+        Admin.loadAdmin(temp.getNotification(),temp.getOldNotification(),temp.isFirstTime(),temp.getSellerConfirm(),temp.getOrders(),temp.getWalletRequests(),temp.getSellerRequests(),temp.getSubscriptions(),temp.getRefunds());
         //Test();
         MainMenu.setStatus(null);
         launch(args);

@@ -31,6 +31,17 @@ public class Admin implements Serializable {
         this.email = email;
         uuid=UUID.randomUUID();
     }
+    public static void loadAdmin(ArrayList<String> notification, ArrayList<String> oldNotification, boolean firstTime, ArrayList<UUID> sellerConfirm, ArrayList<UUID> orders, ArrayList<Pair<UUID, Integer>> walletRequests, ArrayList<Pair<UUID, UUID>> sellerRequests, ArrayList<UUID> subscriptions, ArrayList<Pair<UUID, UUID>> refunds) {
+        Admin.notification = notification;
+        Admin.oldNotification = oldNotification;
+        Admin.firstTime = firstTime;
+        Admin.sellerConfirm = sellerConfirm;
+        Admin.orders = orders;
+        Admin.walletRequests = walletRequests;
+        Admin.sellerRequests = sellerRequests;
+        Admin.subscriptions = subscriptions;
+        Admin.refunds = refunds;
+    }
     public static void setStatics()
     {
         if(!firstTime)
@@ -45,6 +56,38 @@ public class Admin implements Serializable {
         firstTime=false;
         refunds= new ArrayList<>();
     }
+    public static ArrayList<String> getAllNotification()
+    {
+        return notification;
+    }
+    public static boolean isFirstTime() {
+        return firstTime;
+    }
+
+    public static ArrayList<UUID> getSellerConfirm() {
+        return sellerConfirm;
+    }
+
+    public static ArrayList<UUID> getOrders() {
+        return orders;
+    }
+
+    public static ArrayList<Pair<UUID, Integer>> getWalletRequests() {
+        return walletRequests;
+    }
+
+    public static ArrayList<Pair<UUID, UUID>> getSellerRequests() {
+        return sellerRequests;
+    }
+
+    public static ArrayList<UUID> getSubscriptions() {
+        return subscriptions;
+    }
+
+    public static ArrayList<Pair<UUID, UUID>> getRefunds() {
+        return refunds;
+    }
+
     private String HashPassword(String passwordToHash)
     {
         String generatedPassword = null;

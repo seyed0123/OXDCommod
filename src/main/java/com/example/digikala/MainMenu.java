@@ -130,4 +130,11 @@ public class MainMenu implements Initializable{
         SignPanel.setScene(scene);
         SignPanel.show();
     }
+    public void close(ActionEvent e) throws IOException {
+        Stage currentStage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+        currentStage.close();
+        SaveAdmin temp = new SaveAdmin(Admin.getAllNotification(),Admin.getOldNotification(),Admin.isFirstTime(),Admin.getSellerConfirm(),Admin.getOrders(),Admin.getWalletRequests(),Admin.getSellerRequests(),Admin.getSubscriptions(),Admin.getRefunds());
+        Main.save1(temp,Main.adminFileName);
+        Main.save1(store,Main.storeFileName);
+    }
 }

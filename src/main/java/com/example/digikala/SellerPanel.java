@@ -293,47 +293,6 @@ public class SellerPanel implements Initializable {
             }
         }
     }
-    public void makeDiscount(ActionEvent e)
-    {
-        UUID uuid = null;
-        try
-        {
-            uuid = UUID.fromString(DiscountUUIDBar.getText());
-        }catch (IllegalArgumentException p)
-        {
-            DiscountUUIDBar.setText("invalid UUID string");
-            return;
-        }
-        if(!seller.haveProduct(uuid))
-        {
-            DiscountUUIDBar.setText("you don't have permission to change this product");
-            return;
-        }else if(!DiscountAmountBar.getText().matches("\\d+") || Integer.parseInt(DiscountAmountBar.getText())>99)
-        {
-            DiscountAmountBar.setText("enter a valid integer");
-            return;
-        }
-        seller.makeDiscount(Integer.parseInt(DiscountAmountBar.getText()),uuid);
-        makeDiscountButton.setText("done!");
-    }
-    public void cancelDiscount(ActionEvent e)
-    {
-        UUID uuid = null;
-        try
-        {
-            uuid = UUID.fromString(cancelDiscountUUID.getText());
-        }catch (IllegalArgumentException p)
-        {
-            cancelDiscountUUID.setText("invalid UUID string");
-            return;
-        }
-        if(!seller.haveProduct(uuid)) {
-            cancelDiscountUUID.setText("you don't have permission to change this product");
-            return;
-        }
-        seller.cancelDiscount(uuid);
-        cancelDiscountButton.setText("done!");
-    }
     public void claim(ActionEvent e)
     {
         walletButton.setText("Please try again later due to technical problems");

@@ -96,6 +96,7 @@ abstract class Product implements Serializable {
     public void changeRate(double rate,UUID user)
     {
         this.rate=new Pair<>((this.rate.getKey()* this.rate.getValue()+rate-ratedUser.get(user))/this.rate.getValue(),this.rate.getValue());
+        ratedUser.put(user,rate);
     }
     public double getUserRate(UUID user)
     {
@@ -108,12 +109,23 @@ abstract class Product implements Serializable {
         else
             this.rate=new Pair<>(rate , 1);
     }
+    public void removeRate(UUID user) {
+        if(ratedUser.size()==0)
+            rate=null;
+        else {
+            rate=new Pair<>((this.rate.getKey()* this.rate.getValue()-ratedUser.get(user))/ (this.rate.getValue()-1), this.rate.getValue()-1);
+            ratedUser.remove(user);
+        }
+    }
     public boolean didComment(UUID user){return comment.containsKey(user);}
     public ArrayList<String> getComment(){return new ArrayList<>(comment.values());}
     public String getComment(UUID user) {return comment.get(user);}
     public void setComment(String comment,UUID user)
     {
         this.comment.put(user,comment);
+    }
+    public void removeComment(UUID user) {
+        comment.remove(user);
     }
     public String getDescription() {
         return description;

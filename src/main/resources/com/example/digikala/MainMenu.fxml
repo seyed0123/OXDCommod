@@ -78,5 +78,6 @@
             <Font name="System Bold Italic" size="24.0" />
          </font>
       </Label>
+      <Button layoutY="564.0" mnemonicParsing="false" onAction="#close" text="close" />
    </children>
 </AnchorPane>

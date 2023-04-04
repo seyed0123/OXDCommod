@@ -65,6 +65,10 @@ public class SeeProduct implements Initializable{
     private ListView<String> commentList;
     @FXML
     private TextField commentBar;
+    @FXML
+    private Button removeCommentButton;
+    @FXML
+    private Button removeRateButton;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         if(product.getAmount()<1)
@@ -83,6 +87,8 @@ public class SeeProduct implements Initializable{
         }
         if(user==null)
         {
+            removeRateButton.setVisible(false);
+            removeCommentButton.setVisible(false);
             commentBar.setVisible(false);
             favorite.setVisible(false);
             person.setVisible(false);
@@ -96,6 +102,7 @@ public class SeeProduct implements Initializable{
             }
             if(product.didRate(user.getUuid()))
             {
+                removeRateButton.setDisable(false);
                 rateLabel.setText("The score given by you: "+product.getUserRate(user.getUuid()));
             }
             user.addLastSeen(product.getUuid());
@@ -112,6 +119,7 @@ public class SeeProduct implements Initializable{
             }
             if(product.didComment(user.getUuid()))
             {
+                removeCommentButton.setDisable(false);
                 commentBar.setText(product.getComment(user.getUuid()));
             }
             rateBar.setVisible(true);
@@ -220,6 +228,8 @@ public class SeeProduct implements Initializable{
                 product.setRate(rate,user.getUuid());
             }
             rateLabel.setText("The score given by you: "+rate);
+            removeRateButton.setDisable(false);
+            removeRateButton.setText("remove rate");
         }
         rateBar.setText("");
     }
@@ -228,6 +238,23 @@ public class SeeProduct implements Initializable{
         product.setComment(commentBar.getText(),user.getUuid());
         commentBar.setText("your comment added.");
         commentBar.setDisable(true);
+        removeCommentButton.setDisable(false);
+        removeCommentButton.setText("remove comment");
+    }
+    public void removeRate(ActionEvent e)
+    {
+        product.removeRate(user.getUuid());
+        rateBar.setText("");
+        rateLabel.setText("");
+        removeRateButton.setText("removed");
+        removeRateButton.setDisable(true);
+    }
+    public void removeComment(ActionEvent e)
+    {
+        product.removeComment(user.getUuid());
+        commentBar.setText("");
+        removeCommentButton.setText("removed");
+        removeCommentButton.setDisable(true);
     }
     public void back(ActionEvent e)
     {

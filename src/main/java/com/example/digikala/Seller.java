@@ -78,11 +78,6 @@ public class Seller implements Serializable {
     public int getSellerLevel() {
         return sellerLevel;
     }
-
-    public void setSellerLevel(int sellerLevel) {
-        this.sellerLevel = sellerLevel;
-    }
-
     public boolean isVerified() {
         return verified;
     }
@@ -155,7 +150,7 @@ public class Seller implements Serializable {
     {
         waitForConfirm.put(product.getUuid(),product);
     }
-    public boolean haveProduct(UUID product){return this.products.contains(product); }
+    public boolean haveProduct(UUID product){return !this.products.contains(product); }
     public void removeProduct(UUID product) {
         this.products.remove(product);
     }
@@ -164,24 +159,24 @@ public class Seller implements Serializable {
     }
     private void checkLevel()
     {
-        if(this.wallet<=400)
-            sellerLevel=0;
-        else if(this.wallet>400)
-            sellerLevel=1;
-        else if(this.wallet>2000)
-            sellerLevel=2;
-        else if(this.wallet>20000)
-            sellerLevel=3;
-        else if(this.wallet>200000)
-            sellerLevel=4;
-        else if(this.wallet>2000000)
-            sellerLevel=5;
-        else if(this.wallet>20000000)
-            sellerLevel=6;
+        if(this.wallet>2000000000)
+            sellerLevel=8;
         else if(this.wallet>200000000)
             sellerLevel=7;
-        else if(this.wallet>2000000000)
-            sellerLevel=8;
+        else if(this.wallet>20000000)
+            sellerLevel=6;
+        else if(this.wallet>2000000)
+            sellerLevel=5;
+        else if(this.wallet>200000)
+            sellerLevel=4;
+        else if(this.wallet>20000)
+            sellerLevel=3;
+        else if(this.wallet>2000)
+            sellerLevel=2;
+        else if(this.wallet>400)
+            sellerLevel=1;
+        if(this.wallet<=400)
+            sellerLevel=0;
     }
     public void removeWallet(double wallet)
     {
@@ -195,10 +190,6 @@ public class Seller implements Serializable {
     public void makeDiscount(int discount,UUID product)
     {
         store.findProduct(product).setDiscount(discount);
-    }
-    public void cancelDiscount(UUID product)
-    {
-        store.findProduct(product).setDiscount(0);
     }
     @Override
     public String toString() {

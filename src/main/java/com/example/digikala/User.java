@@ -219,6 +219,7 @@ public class User implements Serializable {
         return ret.toString();
     }
     public boolean isHasLocation(){ return (location ==null); }
+    public int getTotalPriceOrder() { return totalPriceOfCart; }
     public int getTotalPriceOfCart(){
         if(!subscription)
             return totalPriceOfCart+shippingCost;
@@ -235,7 +236,7 @@ public class User implements Serializable {
         this.waitForVerify=false;
         this.orders.add(order.getUuid());
         cart.clear();
-        wallet-=totalPriceOfCart;
+        wallet-=getTotalPriceOfCart();
         totalPriceOfCart=0;
     }
     public void cancelOrder()

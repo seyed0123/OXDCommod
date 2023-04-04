@@ -57,5 +57,7 @@
       <Separator layoutX="-2.0" layoutY="215.0" prefHeight="3.0" prefWidth="435.0" />
       <ListView fx:id="commentList" layoutX="2.0" layoutY="218.0" prefHeight="184.0" prefWidth="429.0" />
       <TextField fx:id="commentBar" layoutX="66.0" layoutY="561.0" onAction="#comment" promptText="comment it." />
+      <Button fx:id="removeRateButton" disable="true" layoutX="224.0" layoutY="445.0" mnemonicParsing="false" onAction="#removeRate" text="remove rate" />
+      <Button fx:id="removeCommentButton" disable="true" layoutX="233.0" layoutY="561.0" mnemonicParsing="false" onAction="#removeComment" text="remove comment" />
    </children>
 </AnchorPane>

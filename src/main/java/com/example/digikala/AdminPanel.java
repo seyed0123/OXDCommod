@@ -116,6 +116,8 @@ public class AdminPanel implements Initializable {
     private Label refundLabel;
     @FXML
     private Label refundStatusLabel;
+    @FXML
+    private TextField findBar;
     public static void setStatus(Admin admin) {
         AdminPanel.admin = admin;
     }
@@ -494,6 +496,13 @@ public class AdminPanel implements Initializable {
         }
         store.addAdmin(username,passwordBarUser.getText(),emailBarUser.getText());
         signUp.setText("admin added.");
+    }
+    public void find(ActionEvent e)
+    {
+        if(!store.IsUsernameExist(findBar.getText()))
+            findBar.setText("this username doesn't exist.");
+        else
+            findBar.setText(""+store.findByInfo(findBar.getText()));
     }
     public void logout(ActionEvent e) throws IOException {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

@@ -6,6 +6,7 @@ module com.example.digikala {
     requires org.mongodb.driver.core;
     requires org.json;
     requires javafx.media;
+    requires org.testng;
 
 
     opens com.example.digikala to javafx.fxml;

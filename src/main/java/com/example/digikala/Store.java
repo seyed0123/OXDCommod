@@ -148,7 +148,7 @@ public class Store implements Serializable {
         }
         return ret;
     }
-    public ArrayList<String> log(){return log;}
+    public ArrayList<String> log(){ return log; }
     public boolean isUserExist(UUID user){return users.containsKey(user);}
     public boolean isSellerExist(UUID seller){return sellers.containsKey(seller);}
     public boolean isProductExist(UUID product){return products.containsKey(product);}
@@ -193,7 +193,7 @@ public class Store implements Serializable {
     public void sendOrder(UUID user)
     {
         User temp = users.get(user);
-        Order order= new Order(LocalDateTime.now(),temp.order(),user,temp.getTotalPriceOfCart());
+        Order order= new Order(LocalDateTime.now(),temp.order(),user,temp.getTotalPriceOrder());
         this.orders.put(order.getUuid(),order);
         Admin.addOrder(order.getUuid());
         Admin.addNotification("an Order were received from "+temp.getUsername()+". check it.");
@@ -202,7 +202,7 @@ public class Store implements Serializable {
     public void verifyOrderUser(UUID order)
     {
         Order temp =this.orders.get(order);
-        profit+=temp.getTotalPrice()*0.1;
+        profit+=(temp.getTotalPrice()/11.0);
         temp.verify();
         this.users.get(temp.getUser()).verifyOrder(temp);
         this.users.get(temp.getUser()).addNotification("Your order request was approved");
@@ -289,7 +289,7 @@ public class Store implements Serializable {
     public void verifyRefund(Pair<UUID,UUID> request)
     {
         findOrder(request.getValue()).refund();
-        profit-=findOrder(request.getValue()).getTotalPrice()*0.1;
+        profit-=findOrder(request.getValue()).getTotalPrice()/11.0;
         log.add(request.getValue()+"has been refunded in "+LocalDateTime.now()+".");
     }
     public void cancelRefund(Pair<UUID,UUID> request , String reason)
@@ -325,13 +325,9 @@ public class Store implements Serializable {
         ban.remove(person);
         log.add("The charges of "+person +" have been cleared.");
     }
-    public User findUserByInfo(String username)
+    public UUID findByInfo(String username)
     {
-        return findUser(usernames.get(username));
-    }
-    public Seller findSellerByInfo(String username)
-    {
-        return findSeller(usernames.get(username));
+        return (usernames.get(username));
     }
     private int numberOfMatch(ArrayList<String> substr,Product product)
     {
@@ -352,7 +348,6 @@ public class Store implements Serializable {
                 substr.add(str.substring(i,j));
             }
         }
-        int max1=Integer.MIN_VALUE,max2=Integer.MIN_VALUE,max3=Integer.MIN_VALUE;
         HashMap<UUID, Integer> nums = new HashMap<>();
         for(Product product: products.values())
         {
@@ -386,10 +381,5 @@ public class Store implements Serializable {
             }
         }
         return ret;
-    }
-    public void updateProduct(Product product)
-    {
-        products.put(product.getUuid(),product);
-        log.add(product.getUuid()+ " has been changed in"+LocalDateTime.now()+".");
     }
 }

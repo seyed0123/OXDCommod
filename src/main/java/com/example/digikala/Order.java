@@ -48,11 +48,6 @@ public class Order implements Serializable {
     public int getTotalPrice() {
         return totalPrice;
     }
-
-    public void setTotalPrice(int totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
     public boolean isVerified() {
         return isVerified;
     }
@@ -77,7 +72,7 @@ public class Order implements Serializable {
         store.findUser(user).addWallet(totalPrice);
         store.findUser(user).removeOrder(uuid);
         store.findUser(user).addNotification("your order has been refunded.Your money has been returned to your account. ");
-        isVerified=true;
+        isVerified=false;
     }
     public UUID getUser() {
         return user;
