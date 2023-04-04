@@ -8,12 +8,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
+import static com.example.digikala.Main.store;
 import java.util.Currency;
 import java.util.Objects;
 
 public class SignUpPanel {
-    private static Store store;
     @FXML
     private TextField usernameBarUser;
     @FXML
@@ -51,10 +50,6 @@ public class SignUpPanel {
     @FXML
     private Label numberLabelUser;
 
-    public static void setStore(Store store)
-    {
-     SignUpPanel.store=store;
-    }
     public void checkStatusUser(ActionEvent e)
     {
         checkNumber();

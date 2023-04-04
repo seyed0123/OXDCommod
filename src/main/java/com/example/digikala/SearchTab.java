@@ -25,9 +25,9 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.UUID;
+import static com.example.digikala.Main.store;
 
 public class SearchTab implements Initializable {
-    private static Store store;
     private static User user;
     private static String wasSearched;
     private Stage stage;
@@ -66,7 +66,7 @@ public class SearchTab implements Initializable {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
                 UUID product = offer.get(searched.getSelectionModel().getSelectedIndex());
-                SeeProduct.setStatus(store,store.findProduct(product),null);
+                SeeProduct.setStatus(store.findProduct(product),null);
                 Stage seeProductStage= new Stage();
                 Parent root = null;
                 try {
@@ -86,7 +86,7 @@ public class SearchTab implements Initializable {
         person.setOnMouseClicked(new EventHandler() {
             @Override
             public void handle(Event event) {
-                UserPanel.setStatus(store,user);
+                UserPanel.setStatus(user);
                 Stage UserPanel= new Stage();
                 Parent root = null;
                 try {
@@ -108,14 +108,12 @@ public class SearchTab implements Initializable {
         SearchTab.user = user;
     }
 
-    public static void setStatus(Store store, User inUser, String searched) {
-        SearchTab.store = store;
+    public static void setStatus(User inUser, String searched) {
         if(inUser!=null)
             SearchTab.user=inUser;
         SearchTab.wasSearched=searched;
     }
     public void singButton(ActionEvent e) throws IOException {
-        SignPanel.setStatus(store);
         Stage SignPanel= new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("SignPanel.fxml"));
         SignPanel.setTitle("OXDCommod!!");

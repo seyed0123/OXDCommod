@@ -11,9 +11,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import org.json.JSONObject;
+import static com.example.digikala.Main.store;
 
 public class User implements Serializable {
-    private static Store store;
     private final String username;
     private String password;
     private String email;
@@ -32,8 +32,7 @@ public class User implements Serializable {
     private boolean banned=false;
     private boolean waitForVerify;
     private Pair<Double,Double> location;
-
-    private int shippingCost;
+    private int shippingCost=10000;
 
     public User(String username, String password, int phoneNumber, String address,String email) {
         this.username = username;
@@ -49,9 +48,6 @@ public class User implements Serializable {
         this.favorite = new HashSet<>();
         this.cart= new HashMap<>();
         this.lastSeen=new TreeSet<>();
-    }
-    public static void setStore(Store store) {
-        User.store = store;
     }
 
     private String HashPassword(String passwordToHash)
@@ -145,6 +141,7 @@ public class User implements Serializable {
         findLocation();
     }
     public boolean getWait(){return waitForVerify;}
+    public void addTotalPrice(double totalPrice){this.totalPriceOfCart+= (int) (1.1*totalPrice);}
     public int cartExist(UUID product){
         return cart.getOrDefault(product, 0);
     }
@@ -152,7 +149,7 @@ public class User implements Serializable {
         return cart;
     }
     public void addCart(UUID product) {
-        totalPriceOfCart+=store.findProduct(product).getFinalPrice();
+        addTotalPrice(store.findProduct(product).getFinalPrice());
         if(cartExist(product)!=0)
             this.cart.put(product,cart.get(product)+1);
         else
@@ -160,13 +157,14 @@ public class User implements Serializable {
     }
     public void reduceCart(UUID product)
     {
-        totalPriceOfCart-=store.findProduct(product).getFinalPrice();
+        addTotalPrice(-1*store.findProduct(product).getFinalPrice());
         if(cartExist(product)==1)
             removeCart(product);
         else
             cart.put(product,cart.get(product)-1);
     }
     public void removeCart(UUID product) {
+        addTotalPrice(-1*store.findProduct(product).getFinalPrice()*cart.get(product));
         this.cart.remove(product);
     }
     public double getWallet() {
@@ -220,7 +218,13 @@ public class User implements Serializable {
         }
         return ret.toString();
     }
-    public int getTotalPriceOfCart(){return totalPriceOfCart;}
+    public boolean isHasLocation(){ return (location ==null); }
+    public int getTotalPriceOfCart(){
+        if(!subscription)
+            return totalPriceOfCart+shippingCost;
+        else
+            return totalPriceOfCart;
+    }
     public HashMap<UUID,Integer> order()
     {
         waitForVerify=true;
@@ -231,8 +235,8 @@ public class User implements Serializable {
         this.waitForVerify=false;
         this.orders.add(order.getUuid());
         cart.clear();
+        wallet-=totalPriceOfCart;
         totalPriceOfCart=0;
-        wallet-=order.getTotalPrice()*1.1;
     }
     public void cancelOrder()
     {
@@ -249,7 +253,7 @@ public class User implements Serializable {
     private void findLocation()
     {
         try {
-            URL url = new URL("http://api.weatherapi.com/v1/current.json?key=" + "4170999efb19400b9e921713232302" + "&q=" + address);
+            URL url = new URL("http://api.weatherapi.com/v1/current.json?key=" + "4170999efb19400b9e921713232302" + "&q=" + address +"&aqi=no");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));

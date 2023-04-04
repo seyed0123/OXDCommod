@@ -11,9 +11,9 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import static com.example.digikala.Main.store;
 
 public class EditProductPanel implements Initializable {
-    private static Store store;
     private static SubCategory product;
     private static boolean isProductWaiting;
     @FXML
@@ -32,9 +32,10 @@ public class EditProductPanel implements Initializable {
     private TextArea description;
     @FXML
     private TextField discountBar;
-    public static void setStatus(Store store,Product product,boolean isProductWaiting)
+    @FXML
+    private TextField imagePath;
+    public static void setStatus(Product product,boolean isProductWaiting)
     {
-        EditProductPanel.store=store;
         EditProductPanel.product= (SubCategory) product;
         EditProductPanel.isProductWaiting = isProductWaiting;
     }
@@ -48,6 +49,7 @@ public class EditProductPanel implements Initializable {
         subCategory.setText(product.getSubTitle());
         description.setText(product.getDescription());
         discountBar.setText(product.getDiscount()+"");
+        imagePath.setText(product.getImageAddress());
     }
     public void change(ActionEvent e)
     {
@@ -81,12 +83,13 @@ public class EditProductPanel implements Initializable {
         }
         product.setName(name.getText());
         product.setBrand(brand.getText());
-        product.setAmount(Integer.parseInt(amount.getText()));
+        product.setExactAmount(Integer.parseInt(amount.getText()));
         product.setPrice(Integer.parseInt(price.getText()));
         product.setDescription(description.getText());
         product.setTitle(category.getText());
         product.setSubTitle(subCategory.getText());
         product.setDiscount(Integer.parseInt(discountBar.getText()));
+        product.setImageAddress(imagePath.getText());
         if(isProductWaiting)
             store.sendSellerOrder(product.getSellerID(),product);
         Stage currentStage = (Stage) ((Node) e.getSource()).getScene().getWindow();

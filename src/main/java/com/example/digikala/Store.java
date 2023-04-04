@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 public class Store implements Serializable {
-    private Store store;
     private final HashMap<UUID,User> users;
     private final HashMap<UUID,Admin> admins;
     private final HashMap<UUID,Seller> sellers;
@@ -43,7 +42,6 @@ public class Store implements Serializable {
         return location;
     }
 
-    public void setStore(Store store){this.store=store; Admin.setStatics(store); Seller.setStore(store);User.setStore(store);Order.setStore(store);}
     public void addUser(String username, String password , int phoneNumber , String address , String email)
     {
         User temp = new User(username, password,phoneNumber,address,email);
@@ -273,13 +271,13 @@ public class Store implements Serializable {
     }
     public void verifySellerConfirm(UUID seller)
     {
-        store.findSeller(seller).setVerified(true);
-        store.findSeller(seller).addNotification("now you have permission to sell products.");
+        findSeller(seller).setVerified(true);
+        findSeller(seller).addNotification("now you have permission to sell products.");
         log.add("admin allows "+seller+" to sell product in "+LocalDateTime.now()+".");
     }
     public void cancelSellerConfirm(UUID seller)
     {
-        log.add("admin reject "+store.findSeller(seller)+"in "+LocalDateTime.now()+".");
+        log.add("admin reject "+findSeller(seller)+"in "+LocalDateTime.now()+".");
         sellers.remove(seller);
     }
     public void addRefundReq(Pair<UUID,UUID> request)
@@ -290,13 +288,14 @@ public class Store implements Serializable {
     }
     public void verifyRefund(Pair<UUID,UUID> request)
     {
-        store.findOrder(request.getValue()).refund();
+        findOrder(request.getValue()).refund();
+        profit-=findOrder(request.getValue()).getTotalPrice()*0.1;
         log.add(request.getValue()+"has been refunded in "+LocalDateTime.now()+".");
     }
     public void cancelRefund(Pair<UUID,UUID> request , String reason)
     {
-        store.findUser(request.getKey()).addNotification("your request for refunding an order hasn't been approved");
-        log.add("a request for refunding"+store.findOrder(request.getValue())+" hasn't been approved in "+LocalDateTime.now()+".");
+        findUser(request.getKey()).addNotification("your request for refunding an order hasn't been approved");
+        log.add("a request for refunding"+findOrder(request.getValue())+" hasn't been approved in "+LocalDateTime.now()+".");
     }
     public void ban(UUID person)
     {

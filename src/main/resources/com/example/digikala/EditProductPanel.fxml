@@ -16,5 +16,6 @@
       <Button layoutX="21.0" layoutY="361.0" mnemonicParsing="false" onAction="#back" text="Back" />
       <Button fx:id="remove" layoutX="145.0" layoutY="361.0" mnemonicParsing="false" onAction="#remove" text="remove" />
       <TextField fx:id="discountBar" layoutX="35.0" layoutY="148.0" promptText="discount" />
+      <TextField fx:id="imagePath" layoutX="213.0" layoutY="148.0" promptText="image path (optional)" />
    </children>
 </AnchorPane>

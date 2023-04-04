@@ -22,9 +22,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
+import static com.example.digikala.Main.store;
 
 public class MainMenu implements Initializable{
-    private static Store store;
     private static User user;
     @FXML
     private Button searchButton;
@@ -38,6 +38,7 @@ public class MainMenu implements Initializable{
     private ImageView person;
     @FXML
     private Label userLogIn;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         if(user==null)
@@ -61,7 +62,7 @@ public class MainMenu implements Initializable{
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
                 UUID product = offer.get(offers.getSelectionModel().getSelectedIndex());
-                SeeProduct.setStatus(store,store.findProduct(product),null);
+                SeeProduct.setStatus(store.findProduct(product),null);
                 Stage seeProductStage= new Stage();
                 Parent root = null;
                 try {
@@ -81,7 +82,7 @@ public class MainMenu implements Initializable{
         person.setOnMouseClicked(new EventHandler() {
             @Override
             public void handle(Event event) {
-                UserPanel.setStatus(store,user);
+                UserPanel.setStatus(user);
                 Stage UserPanel= new Stage();
                 Parent root = null;
                 try {
@@ -103,14 +104,13 @@ public class MainMenu implements Initializable{
         MainMenu.user = user;
     }
 
-    public static void setStatus(Store store, User inUser) {
-        MainMenu.store = store;
+    public static void setStatus( User inUser) {
         if(inUser!=null)
             MainMenu.user=inUser;
     }
     public void searchButton(ActionEvent e) throws IOException {
         String wasSearch = searchBar.getText();
-        SearchTab.setStatus(store,user,wasSearch);
+        SearchTab.setStatus(user,wasSearch);
         Stage SearchTab= new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("SearchTab.fxml"));
         SearchTab.setTitle("OXDCommod!!");
@@ -121,7 +121,6 @@ public class MainMenu implements Initializable{
         SearchTab.show();
     }
     public void singButton(ActionEvent e) throws IOException {
-        SignPanel.setStatus(store);
         Stage SignPanel= new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("SignPanel.fxml"));
         SignPanel.setTitle("OXDCommod!!");

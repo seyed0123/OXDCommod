@@ -18,10 +18,9 @@ import javafx.stage.Window;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
-import java.util.concurrent.Semaphore;
+import static com.example.digikala.Main.store;
 
 public class SellerPanel implements Initializable {
-    private static Store store;
     private static Seller seller;
     @FXML
     private TextField usernameBar;
@@ -81,9 +80,10 @@ public class SellerPanel implements Initializable {
     private TextField DiscountUUIDBar;
     @FXML
     private Label levelLabel;
-    public static void setStatus(Store store , Seller seller)
+    @FXML
+    private ListView<String> ledgerList;
+    public static void setStatus(Seller seller)
     {
-        SellerPanel.store=store;
         SellerPanel.seller= seller;
     }
     @Override
@@ -177,7 +177,7 @@ public class SellerPanel implements Initializable {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
                 UUID product = productUUID.get(ownProductList.getSelectionModel().getSelectedIndex());
-                EditProductPanel.setStatus(store,store.findProduct(product),false);
+                EditProductPanel.setStatus(store.findProduct(product),false);
                 Stage EditProductPanel= new Stage();
                 Parent root = null;
                 try {
@@ -203,7 +203,7 @@ public class SellerPanel implements Initializable {
         waitForConfirmProductList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                EditProductPanel.setStatus(store,waitProductsUUID.get(waitForConfirmProductList.getSelectionModel().getSelectedIndex()),true);
+                EditProductPanel.setStatus(waitProductsUUID.get(waitForConfirmProductList.getSelectionModel().getSelectedIndex()),true);
                 Stage EditProductPanel= new Stage();
                 Parent root = null;
                 try {
@@ -219,6 +219,7 @@ public class SellerPanel implements Initializable {
                 EditProductPanel.show();
             }
         });
+        ledgerList.getItems().addAll(seller.getLedger());
     }
     public void add(ActionEvent e) throws IOException {
         if(!amount.getText().matches("\\d+") || Objects.equals(amount.getText(), ""))

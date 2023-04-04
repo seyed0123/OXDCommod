@@ -5,9 +5,9 @@ import javafx.util.Pair;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.*;
+import static com.example.digikala.Main.store;
 
 public class Order implements Serializable {
-    private static Store store;
     private LocalDateTime date;
     private final UUID uuid;
     private int totalPrice=0;
@@ -24,9 +24,6 @@ public class Order implements Serializable {
         this.totalPrice=totalPrice;
     }
 
-    public static void setStore(Store store) {
-        Order.store = store;
-    }
 
     public String getStage() {
         return stage;
@@ -65,7 +62,7 @@ public class Order implements Serializable {
         {
             store.findProduct(product).setAmount(-1*products.get(product));
             store.findSeller(store.findProduct(product).getSellerID()).addWallet(store.findProduct(product).getFinalPrice()*products.get(product));
-            store.findSeller(store.findProduct(product).getSellerID()).addNotification(products.get(product)+" * " + product + " has been sold ");
+            store.findSeller(store.findProduct(product).getSellerID()).addLedger(products.get(product)+" * " + product + " has been sold ");
         }
         isVerified=true;
     }
@@ -73,9 +70,9 @@ public class Order implements Serializable {
     {
         for (UUID product:products.keySet())
         {
-            store.findProduct(product).setAmount(+1*products.get(product));
+            store.findProduct(product).setAmount(products.get(product));
             store.findSeller(store.findProduct(product).getSellerID()).removeWallet(store.findProduct(product).getFinalPrice()*products.get(product));
-            store.findSeller(store.findProduct(product).getSellerID()).addNotification(products.get(product)+" * " + product + " has been refunded ");
+            store.findSeller(store.findProduct(product).getSellerID()).addLedger(products.get(product)+" * " + product + " has been refunded ");
         }
         store.findUser(user).addWallet(totalPrice);
         store.findUser(user).removeOrder(uuid);

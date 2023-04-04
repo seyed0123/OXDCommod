@@ -4,9 +4,9 @@ import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
+import static com.example.digikala.Main.store;
 
 public class Seller implements Serializable {
-    private static Store store;
     private final String username;
     private String password;
     private String email;
@@ -17,6 +17,7 @@ public class Seller implements Serializable {
     private final ArrayList<String> notification;
     private final ArrayList<String> oldNotification;
     private final HashMap<UUID ,Product> waitForConfirm;
+    private final ArrayList<String> ledger;
     private boolean banned=false;
     private boolean verified = false;
     private int sellerLevel=0;
@@ -30,6 +31,7 @@ public class Seller implements Serializable {
         this.notification=new ArrayList<>();
         this.oldNotification=new ArrayList<>();
         this.waitForConfirm=new HashMap<>();
+        this.ledger= new ArrayList<>();
     }
 
     private String HashPassword(String passwordToHash)
@@ -97,10 +99,6 @@ public class Seller implements Serializable {
         this.banned = banned;
     }
 
-    public static void setStore(Store store) {
-        Seller.store = store;
-    }
-
     public UUID getUuid() {
         return uuid;
     }
@@ -133,6 +131,8 @@ public class Seller implements Serializable {
         this.oldNotification.add(ret);
         return ret;
     }
+    public void addLedger(String fact){ledger.add(fact);}
+    public ArrayList<String> getLedger(){return ledger;}
     public void addNotification(String notification) {
         this.notification.add(notification);
     }
@@ -164,7 +164,9 @@ public class Seller implements Serializable {
     }
     private void checkLevel()
     {
-        if(this.wallet>400)
+        if(this.wallet<=400)
+            sellerLevel=0;
+        else if(this.wallet>400)
             sellerLevel=1;
         else if(this.wallet>2000)
             sellerLevel=2;

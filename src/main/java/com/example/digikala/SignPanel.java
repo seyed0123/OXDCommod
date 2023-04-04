@@ -17,9 +17,9 @@ import javafx.util.Pair;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.UUID;
+import static com.example.digikala.Main.store;
 
 public class SignPanel {
-    private static Store store;
     @FXML
     private Button signIn;
     @FXML
@@ -32,10 +32,6 @@ public class SignPanel {
     private PasswordField passwordBar;
     @FXML
     private Label result;
-    public static void setStatus(Store store)
-    {
-        SignPanel.store=store;
-    }
     public void signIn(ActionEvent e) throws IOException, InterruptedException {
         String username = usernameBar.getText();
         String password = passwordBar.getText();
@@ -78,7 +74,7 @@ public class SignPanel {
                 stage.show();
             }else if(Objects.equals(result.getKey(),"seller"))
             {
-                SellerPanel.setStatus(store,store.findSeller(result.getValue()));
+                SellerPanel.setStatus(store.findSeller(result.getValue()));
                 Stage stage = new Stage();
                 Parent root = FXMLLoader.load(getClass().getResource("SellerPanel.fxml"));
                 Scene scene = new Scene(root);
@@ -118,7 +114,7 @@ public class SignPanel {
                 });
             }else
             {
-                AdminPanel.setStatus(store,store.findAdmin(result.getValue()));
+                AdminPanel.setStatus(store.findAdmin(result.getValue()));
                 Stage stage = new Stage();
                 Parent root = FXMLLoader.load(getClass().getResource("AdminPanel.fxml"));
                 Scene scene = new Scene(root);
@@ -165,7 +161,6 @@ public class SignPanel {
     }
     public void signUp(ActionEvent e) throws IOException {
         Stage currentStage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-        SignUpPanel.setStore(store);
         Parent root = FXMLLoader.load(getClass().getResource("SignUpPanel.fxml"));
         Scene scene = new Scene(root);
         currentStage.setScene(scene);

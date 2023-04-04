@@ -24,14 +24,11 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import static com.example.digikala.Main.store;
 
 public class SeeProduct implements Initializable{
     private static User user;
     private static Product product;
-    private static Store store;
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
     @FXML
     private Button addToCart;
     @FXML
@@ -92,6 +89,11 @@ public class SeeProduct implements Initializable{
             person.setDisable(true);
             addToCart.setDisable(true);
         }else {
+            if(user.getWait())
+            {
+                addToCart.setDisable(true);
+                addToCart.setText("waiting for admin to approval");
+            }
             if(product.didRate(user.getUuid()))
             {
                 rateLabel.setText("The score given by you: "+product.getUserRate(user.getUuid()));
@@ -127,7 +129,7 @@ public class SeeProduct implements Initializable{
         person.setOnMouseClicked(new EventHandler() {
             @Override
             public void handle(Event event) {
-                UserPanel.setStatus(store,user);
+                UserPanel.setStatus(user);
                 Stage UserPanel= new Stage();
                 Parent root = null;
                 try {
@@ -164,16 +166,14 @@ public class SeeProduct implements Initializable{
     public static void setUser(User user) {
         SeeProduct.user = user;
     }
-    public static void setStatus(Store store, Product product, User inUser)
+    public static void setStatus(Product product, User inUser)
     {
-        SeeProduct.store = store;
         if(inUser!=null)
             SeeProduct.user=inUser;
         SeeProduct.product=product;
 
     }
     public void signButton(ActionEvent e) throws IOException {
-        SignPanel.setStatus(store);
         Stage SignPanel= new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("SignPanel.fxml"));
         SignPanel.setTitle("OXDCommod!!");

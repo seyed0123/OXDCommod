@@ -146,8 +146,8 @@
                           <font>
                               <Font name="Arial Bold Italic" size="12.0" />
                           </font></Label>
-                      <Button layoutX="383.0" layoutY="183.0" mnemonicParsing="false" onAction="#refuseSubsOrder" prefHeight="25.0" prefWidth="87.0" text="refuse" />
-                      <Button layoutX="549.0" layoutY="183.0" mnemonicParsing="false" onAction="#acceptSubsOrder" prefHeight="25.0" prefWidth="86.0" text="accept" />
+                      <Button layoutX="383.0" layoutY="183.0" mnemonicParsing="false" onAction="#refuseRefund" prefHeight="25.0" prefWidth="87.0" text="refuse" />
+                      <Button layoutX="549.0" layoutY="183.0" mnemonicParsing="false" onAction="#acceptRefund" prefHeight="25.0" prefWidth="86.0" text="accept" />
                       <Label fx:id="refundStatusLabel" layoutX="439.0" layoutY="230.0" prefHeight="17.0" prefWidth="151.0" />
                       <TextField fx:id="reasonRefundBar" layoutX="206.0" layoutY="183.0" promptText="reason" />
                   </children>

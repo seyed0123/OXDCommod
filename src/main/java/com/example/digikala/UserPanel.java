@@ -18,9 +18,9 @@ import javafx.util.Pair;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
+import static com.example.digikala.Main.store;
 
 public class UserPanel implements Initializable {
-    private static Store store;
     private static User user;
     @FXML
     private TextField usernameBar;
@@ -91,8 +91,13 @@ public class UserPanel implements Initializable {
         notifList.getItems().addAll(user.getOldNotification());
         notifLabel.setText(user.getNotification());
         totalPriceCart.setText("total price:    "+user.getTotalPriceOfCart());
-        if(user.getSubscription())
+        if(user.getSubscription()) {
             shippingCost.setText("Shipping is free for you because of your subscription");
+            sendSubs.setText("you have subscription.");
+            sendSubs.setDisable(true);
+        }
+        else if(user.isHasLocation())
+            shippingCost.setText("you location isn't valid:default shipping cost : "+user.getShippingCost());
         else
             shippingCost.setText("Shipping cost :    "+ user.getShippingCost());
         if(Admin.isUserSendSubs(user.getUuid()))
@@ -137,7 +142,7 @@ public class UserPanel implements Initializable {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
                 UUID product = cartUser.get(cartList.getSelectionModel().getSelectedIndex());
-                CartSeeProduct.setStatus(store,user,store.findProduct(product));
+                CartSeeProduct.setStatus(user,store.findProduct(product));
                 Stage seeCartStage= new Stage();
                 Parent root = null;
                 try {
@@ -192,7 +197,7 @@ public class UserPanel implements Initializable {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
                 UUID product = userRecom.get(recommendList.getSelectionModel().getSelectedIndex());
-                SeeProduct.setStatus(store, store.findProduct(product), null);
+                SeeProduct.setStatus(store.findProduct(product), null);
                 Stage seeProductStage = new Stage();
                 Parent root = null;
                 try {
@@ -211,13 +216,16 @@ public class UserPanel implements Initializable {
     }
     public void sendOrder(ActionEvent e)
     {
+        if(user.getWallet()<user.getTotalPriceOfCart()) {
+            sendOrder.setText("need money");
+            return;
+        }
         store.sendOrder(user.getUuid());
         waitForAccept.setText("waiting for admin approval for cart");
         cartTab.setDisable(true);
         sendOrder.setDisable(true);
     }
-    public static void setStatus(Store store,User user) {
-        UserPanel.store = store;
+    public static void setStatus(User user) {
         UserPanel.user = user;
     }
     public void change(ActionEvent e)

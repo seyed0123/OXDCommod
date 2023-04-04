@@ -14,9 +14,9 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.UUID;
+import static com.example.digikala.Main.store;
 
 public class AdminPanel implements Initializable {
-    private static Store store;
     private static Admin admin;
     @FXML
     private TextField usernameBar;
@@ -116,8 +116,7 @@ public class AdminPanel implements Initializable {
     private Label refundLabel;
     @FXML
     private Label refundStatusLabel;
-    public static void setStatus(Store store, Admin admin) {
-        AdminPanel.store = store;
+    public static void setStatus(Admin admin) {
         AdminPanel.admin = admin;
     }
 
@@ -266,7 +265,7 @@ public class AdminPanel implements Initializable {
         {
             UserOrderStatusLabel.setText(problems);
             return;
-        }else if(store.findUser(store.findOrder(admin.orderRequestUUID()).getUser()).getWallet()<store.findOrder(admin.orderRequestUUID()).getTotalPrice()*1.1)
+        }else if(store.findUser(store.findOrder(admin.orderRequestUUID()).getUser()).getWallet()<store.findOrder(admin.orderRequestUUID()).getTotalPrice())
         {
             UserOrderStatusLabel.setText("this user doesn't have enough money to payment this order");
             return;

@@ -11,12 +11,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.stage.Stage;
+import static com.example.digikala.Main.store;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class CartSeeProduct implements Initializable {
-    private static Store store;
     private static User user;
     private static Product product;
     @FXML
@@ -27,9 +27,8 @@ public class CartSeeProduct implements Initializable {
     private Spinner<Integer> counter;
     @FXML
     private int currentAmount;
-    public static void setStatus(Store store, User user , Product product)
+    public static void setStatus(User user , Product product)
     {
-        CartSeeProduct.store = store;
         CartSeeProduct.user=user;
         CartSeeProduct.product=product;
     }

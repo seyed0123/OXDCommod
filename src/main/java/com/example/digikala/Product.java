@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
+import static com.example.digikala.Main.store;
+
 abstract class Product implements Serializable {
     private String name;
     private UUID uuid;
@@ -82,6 +84,9 @@ abstract class Product implements Serializable {
     public void setAmount(int amount) {
         this.amount = this.amount+amount;
     }
+    public void setExactAmount(int amount){
+        this.amount=amount;
+    }
     public boolean didRate(UUID user){return ratedUser.containsKey(user);}
     public double getRate() {
         if(rate == null)
@@ -137,6 +142,7 @@ abstract class Product implements Serializable {
                 ", description='" + description + '\'' +
                 ", discount=" + discount +
                 ", brand='" + brand + '\'' +
+                ", Seller=;"+store.findSeller(sellerID).getUsername()+'\''+
                 '}';
     }
 
@@ -152,6 +158,7 @@ abstract class Product implements Serializable {
                 ", description='" + description + '\'' +
                 ", discount=" + discount +
                 ", brand='" + brand + '\'' +
+                ", Seller=;"+store.findSeller(sellerID).getUsername()+'\''+
                 '}';
     }
 }

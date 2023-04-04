@@ -8,9 +8,9 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
+import static com.example.digikala.Main.store;
 
 public class Admin implements Serializable {
-    private static Store store;
     private final String  username;
     private String password;
     private String email;
@@ -31,11 +31,10 @@ public class Admin implements Serializable {
         this.email = email;
         uuid=UUID.randomUUID();
     }
-    public static void setStatics(Store store)
+    public static void setStatics()
     {
         if(!firstTime)
             return;
-        Admin.store = store;
         notification=new ArrayList<>();
         oldNotification=new ArrayList<>();
         orders=new ArrayList<>();
