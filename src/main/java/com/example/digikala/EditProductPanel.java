@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -34,6 +35,8 @@ public class EditProductPanel implements Initializable {
     private TextField discountBar;
     @FXML
     private TextField imagePath;
+    @FXML
+    private Button remove;
     public static void setStatus(Product product,boolean isProductWaiting)
     {
         EditProductPanel.product= (SubCategory) product;
@@ -92,15 +95,6 @@ public class EditProductPanel implements Initializable {
         product.setImageAddress(imagePath.getText());
         if(isProductWaiting)
             store.sendSellerOrder(product.getSellerID(),product);
-        Stage currentStage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-        currentStage.close();
-    }
-    public void remove (ActionEvent e)
-    {
-        if(!isProductWaiting)
-            store.removeProduct(product.getUuid());
-        else
-            store.findSeller(product.getSellerID()).removeWaitProduct(product.getUuid());
         Stage currentStage = (Stage) ((Node) e.getSource()).getScene().getWindow();
         currentStage.close();
     }

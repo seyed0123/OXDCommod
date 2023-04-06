@@ -295,7 +295,7 @@ public class SellerPanel implements Initializable {
     }
     public void claim(ActionEvent e)
     {
-        walletButton.setText("Please try again later due to technical problems");
+        walletButton.setText("Due to the high volume of demand, please visit the store office in person");
     }
     public void nextNotif(ActionEvent e)
     {

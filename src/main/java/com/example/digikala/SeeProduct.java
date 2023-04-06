@@ -167,7 +167,7 @@ public class SeeProduct implements Initializable{
         {
             Image image = new Image(product.getImageAddress());
             productImage.setImage(image);
-        }catch (Exception e)
+        }catch (Exception ignored)
         {
         }
     }

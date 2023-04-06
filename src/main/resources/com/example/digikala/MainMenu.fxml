@@ -79,5 +79,6 @@
          </font>
       </Label>
       <Button layoutY="564.0" mnemonicParsing="false" onAction="#close" text="close" />
+      <Label fx:id="storeInfo" layoutX="61.0" layoutY="568.0" prefHeight="17.0" prefWidth="907.0" />
    </children>
 </AnchorPane>

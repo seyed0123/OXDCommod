@@ -13,8 +13,7 @@
       <TextField fx:id="subCategory" layoutX="213.0" layoutY="111.0" promptText="subCategory" />
       <TextArea fx:id="description" layoutX="386.0" layoutY="11.0" prefHeight="200.0" prefWidth="200.0" promptText="description (optional)" />
       <Button layoutX="171.0" layoutY="199.0" mnemonicParsing="false" onAction="#change" text="submit" />
-      <Button layoutX="21.0" layoutY="361.0" mnemonicParsing="false" onAction="#back" text="Back" />
-      <Button fx:id="remove" layoutX="145.0" layoutY="361.0" mnemonicParsing="false" onAction="#remove" text="remove" />
+      <Button layoutX="15.0" layoutY="361.0" mnemonicParsing="false" onAction="#back" text="Back" />
       <TextField fx:id="discountBar" layoutX="35.0" layoutY="148.0" promptText="discount" />
       <TextField fx:id="imagePath" layoutX="213.0" layoutY="148.0" promptText="image path (optional)" />
    </children>

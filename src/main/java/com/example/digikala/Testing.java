@@ -86,6 +86,7 @@ public class Testing {
         assertEquals(500,(int)store.getProfit());
         assertEquals(0,cat.getAmount());
         assertEquals(2,seller.getSellerLevel());
+        assertEquals(1.1*5*10,user.getUserXp()*1.0);
     }
     @Test
     public void refunding()
@@ -139,6 +140,7 @@ public class Testing {
         assertEquals(0.0,seller.getWallet());
         assertEquals(0.0,store.getProfit());
         assertEquals(5,cat.getAmount());
+        assertEquals(0,user.getUserXp());
         store.removeProduct(cat.getUuid());
         assertFalse(store.isProductExist(cat.getUuid()));
     }
@@ -166,14 +168,18 @@ public class Testing {
         cat.changeRate(3,user1.getUuid());
         assertEquals(3.0,cat.getUserRate(user1.getUuid()));
         assertEquals(6.0,cat.getRate());
+        assertEquals(10,user1.getUserXp());
         cat.removeRate(user1.getUuid());
         assertEquals(9.0,cat.getRate());
+        assertEquals(0,user1.getUserXp());
         cat.setComment("good",user1.getUuid());
         assertEquals("good",cat.getComment(user1.getUuid()));
         assertTrue(cat.didComment(user1.getUuid()));
         cat.setComment("bad",user1.getUuid());
         assertEquals("bad",cat.getComment(user1.getUuid()));
+        assertEquals(10,user1.getUserXp());
         cat.removeComment(user1.getUuid());
         assertFalse(cat.didComment(user1.getUuid()));
+        assertEquals(0,user1.getUserXp());
     }
 }

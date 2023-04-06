@@ -3,12 +3,12 @@ package com.example.digikala;
 import javafx.util.Pair;
 
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.Map.Entry;
 import java.time.LocalDateTime;
 import java.util.*;
 
 public class Store implements Serializable {
+    public final String[] CAPTCHA= {"226md.png","22d5n.png","2356g.png","23mdg.png","23n88.png","243mm.png","244e2.png","245y5.png","24f6w.png","24pew.png","25257.png"};
     private final HashMap<UUID,User> users;
     private final HashMap<UUID,Admin> admins;
     private final HashMap<UUID,Seller> sellers;
@@ -17,13 +17,13 @@ public class Store implements Serializable {
     private final HashMap<String,UUID> usernames;
     private final HashSet<UUID> ban;
     private double profit;
-    private String webAddress;
-    private int supportNumber;
+    private final String webAddress;
+    private final long supportNumber;
     private final ArrayList<String> log;
-    private String owner;
-    private Pair<Double,Double> location;
+    private final String owner;
+    private final Pair<Double,Double> location;
 
-    public Store(String webAddress, int supportNumber, String owner,double lat,double lon) {
+    public Store(String webAddress, long supportNumber, String owner,double lat,double lon) {
         this.webAddress = webAddress;
         this.supportNumber = supportNumber;
         this.owner = owner;
@@ -36,6 +36,18 @@ public class Store implements Serializable {
         this.usernames=new HashMap<>();
         this.ban=new HashSet<>();
         this.log=new ArrayList<>();
+    }
+
+    public String getWebAddress() {
+        return webAddress;
+    }
+
+    public long getSupportNumber() {
+        return supportNumber;
+    }
+
+    public String getOwner() {
+        return owner;
     }
 
     public Pair<Double, Double> getLocation() {
@@ -150,7 +162,7 @@ public class Store implements Serializable {
     }
     public ArrayList<String> log(){ return log; }
     public boolean isUserExist(UUID user){return users.containsKey(user);}
-    public boolean isSellerExist(UUID seller){return sellers.containsKey(seller);}
+    public boolean isSellerExist(UUID seller){return !sellers.containsKey(seller);}
     public boolean isProductExist(UUID product){return products.containsKey(product);}
     public double getProfit() {
         return profit;
@@ -177,18 +189,20 @@ public class Store implements Serializable {
     }
     public void removeProduct(UUID product)
     {
-        sellers.get(products.get(product).getSellerID()).removeProduct(product);
-        sellers.get(products.get(product).getSellerID()).addNotification(product +"has been removed successfully.");
+        UUID temp = products.get(product).getSellerID();
+        sellers.get(temp).removeProduct(product);
+        sellers.get(temp).addNotification(product +"has been removed successfully.");
         products.remove(product);
         log.add(product +"has been removed successfully in "+LocalDateTime.now()+".");
 
     }
     public void sendSellerOrder(UUID seller ,Product product)
     {
-        sellers.get(seller).addWait(product);
+        Seller temp = sellers.get(seller);
+        temp.addWait(product);
         Admin.addSellerRequests(new Pair<UUID,UUID>(seller,product.getUuid()));
-        Admin.addNotification(sellers.get(seller).getUuid()+" wants to add "+ sellers.get(seller).getWaitProduct(product.getUuid()));
-        log.add(sellers.get(seller).getUuid()+" wants to add "+ sellers.get(seller).getWaitProduct(product.getUuid())+" in "+LocalDateTime.now()+".");
+        Admin.addNotification(temp.getUuid()+" wants to add "+ temp.getWaitProduct(product.getUuid()));
+        log.add(temp.getUuid()+" wants to add "+ temp.getWaitProduct(product.getUuid())+" in "+LocalDateTime.now()+".");
     }
     public void sendOrder(UUID user)
     {
@@ -210,9 +224,10 @@ public class Store implements Serializable {
     }
     public void cancelOrderUser(UUID order,String reason)
     {
-        this.users.get(orders.get(order).getUser()).cancelOrder();
-        this.log.add("order "+orders.get(order)+" was canceled in "+LocalDateTime.now()+".");
-        this.users.get(orders.get(order).getUser()).addNotification("Your order request was not approved due to"+ reason);
+        Order temp = orders.get(order);
+        this.users.get(temp.getUser()).cancelOrder();
+        this.log.add("order "+temp+" was canceled in "+LocalDateTime.now()+".");
+        this.users.get(temp.getUser()).addNotification("Your order request was not approved due to"+ reason);
         this.orders.remove(order);
     }
     public void addWallet(Pair<UUID,Integer> request)
@@ -234,28 +249,32 @@ public class Store implements Serializable {
     }
     public void verifySellerReq(Pair<UUID,UUID> request)
     {
-        this.sellers.get(request.getKey()).addProduct(request.getValue());
-        this.products.put(sellers.get(request.getKey()).getWaitProduct(request.getValue()).getUuid(),sellers.get(request.getKey()).getWaitProduct(request.getValue()));
-        this.sellers.get(request.getKey()).addNotification("Your order request for add " +sellers.get(request.getKey()).getWaitProduct(request.getValue()).getUuid() +" was approved");
-        log.add("the order request for add " +sellers.get(request.getKey()).getWaitProduct(request.getValue()).getUuid() +" was approved in "+LocalDateTime.now()+".");
-        this.sellers.get(request.getKey()).removeWaitProduct(request.getValue());
+        Seller temp = sellers.get(request.getKey());
+        temp.addProduct(request.getValue());
+        this.products.put(temp.getWaitProduct(request.getValue()).getUuid(),temp.getWaitProduct(request.getValue()));
+        temp.addNotification("Your order request for add " +temp.getWaitProduct(request.getValue()).getUuid() +" was approved");
+        log.add("the order request for add " +temp.getWaitProduct(request.getValue()).getUuid() +" was approved in "+LocalDateTime.now()+".");
+        temp.removeWaitProduct(request.getValue());
     }
     public void cancelSellerReq(Pair<UUID,UUID> request,String reason)
     {
-        this.sellers.get(request.getKey()).addNotification("Your order request for add " +sellers.get(request.getKey()).getWaitProduct(request.getValue()).getUuid() +" wasn't approved due to "+reason);
-        log.add("the order request for add " +sellers.get(request.getKey()).getWaitProduct(request.getValue()).getUuid() +" wasn't approved");
+        Seller temp = sellers.get(request.getKey());
+        temp.addNotification("Your order request for add " +temp.getWaitProduct(request.getValue()).getUuid() +" wasn't approved due to "+reason);
+        log.add("the order request for add " +temp.getWaitProduct(request.getValue()).getUuid() +" wasn't approved");
         //this.sellers.get(request.getKey()).removeWaitProduct(request.getValue());
     }
     public void verifySubscriptionReq(UUID user)
     {
-        this.users.get(user).setSubscription(true);
-        this.users.get(user).addNotification("Your request for subscription has been approved.");
-        log.add("the request for subscription from"+this.users.get(user).getUuid() +" has been approved in "+LocalDateTime.now()+".");
+        User temp = users.get(user);
+        temp.setSubscription(true);
+        temp.addNotification("Your request for subscription has been approved.");
+        log.add("the request for subscription from"+temp.getUuid() +" has been approved in "+LocalDateTime.now()+".");
     }
     public void cancelSubscriptionReq(UUID user,String reason)
     {
-        this.users.get(user).addNotification("Your request for subscription hasn't been approved due to "+reason);
-        log.add("the request for subscription from"+this.users.get(user).getUuid() +" hasn't been approved in "+LocalDateTime.now()+".");
+        User temp = users.get(user);
+        temp.addNotification("Your request for subscription hasn't been approved due to "+reason);
+        log.add("the request for subscription from"+temp.getUuid() +" hasn't been approved in "+LocalDateTime.now()+".");
     }
     public void addSubscriptions(UUID user)
     {
@@ -294,8 +313,8 @@ public class Store implements Serializable {
     }
     public void cancelRefund(Pair<UUID,UUID> request , String reason)
     {
-        findUser(request.getKey()).addNotification("your request for refunding an order hasn't been approved");
-        log.add("a request for refunding"+findOrder(request.getValue())+" hasn't been approved in "+LocalDateTime.now()+".");
+        findUser(request.getKey()).addNotification("your request for refunding an order hasn't been approved due to"+reason);
+        log.add("a request for refunding"+findOrder(request.getValue())+" hasn't been approved due to "+reason+"in "+LocalDateTime.now()+".");
     }
     public void ban(UUID person)
     {

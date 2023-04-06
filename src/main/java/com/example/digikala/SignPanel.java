@@ -4,22 +4,27 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Pair;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.Objects;
+import java.util.Random;
+import java.util.ResourceBundle;
 import java.util.UUID;
-import static com.example.digikala.Main.store;
+import static com.example.digikala.Main.store ;
 
-public class SignPanel {
+public class SignPanel implements Initializable {
     @FXML
     private Button signIn;
     @FXML
@@ -32,9 +37,26 @@ public class SignPanel {
     private PasswordField passwordBar;
     @FXML
     private Label result;
+    @FXML
+    private TextField CAPTCHABar;
+    @FXML
+    private ImageView CAPTCHAImage;
+    @FXML
+    private Button CAPTCHAButton;
+    private String CAPTCHA;
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        loadCAPTCHA();
+    }
     public void signIn(ActionEvent e) throws IOException, InterruptedException {
         String username = usernameBar.getText();
         String password = passwordBar.getText();
+        if(!Objects.equals(CAPTCHABar.getText(), CAPTCHA) && !Objects.equals(CAPTCHA, ""))
+        {
+            result.setText("sorry you are a robot.");
+            result.setTextFill(Color.BROWN);
+            return;
+        }
         Pair <String , UUID> result = store.login(username,password);
         if(result!=null)
         {
@@ -158,6 +180,29 @@ public class SignPanel {
             this.result.setText("OOPS!! Your username or password isn't correct.");
             this.result.setTextFill(Color.RED);
         }
+    }
+    private void loadCAPTCHA()
+    {
+        Random random = new Random();
+        int randomInt = random.nextInt(store.CAPTCHA.length);
+        try
+        {
+            Image image = new Image("G:\\code\\java\\OXDCommod\\CAPTCHA\\"+store.CAPTCHA[randomInt]);
+            CAPTCHA=store.CAPTCHA[randomInt].substring(0,5);
+            CAPTCHAImage.setImage(image);
+            CAPTCHAImage.setVisible(true);
+            CAPTCHABar.setVisible(true);
+            CAPTCHAButton.setVisible(true);
+        }catch (Exception e) {
+            CAPTCHA="";
+            CAPTCHAImage.setVisible(false);
+            CAPTCHABar.setVisible(false);
+            CAPTCHAButton.setVisible(false);
+        }
+    }
+    public void refresh(ActionEvent e)
+    {
+        loadCAPTCHA();
     }
     public void signUp(ActionEvent e) throws IOException {
         Stage currentStage = (Stage) ((Node) e.getSource()).getScene().getWindow();

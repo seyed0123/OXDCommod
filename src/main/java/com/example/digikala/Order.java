@@ -69,9 +69,11 @@ public class Order implements Serializable {
             store.findSeller(store.findProduct(product).getSellerID()).removeWallet(store.findProduct(product).getFinalPrice()*products.get(product));
             store.findSeller(store.findProduct(product).getSellerID()).addLedger(products.get(product)+" * " + product + " has been refunded ");
         }
-        store.findUser(user).addWallet(totalPrice);
-        store.findUser(user).removeOrder(uuid);
-        store.findUser(user).addNotification("your order has been refunded.Your money has been returned to your account. ");
+        User temp = store.findUser(user);
+        temp.removeUserXp(totalPrice/100);
+        temp.addWallet(totalPrice);
+        temp.removeOrder(uuid);
+        temp.addNotification("your order has been refunded.Your money has been returned to your account. ");
         isVerified=false;
     }
     public UUID getUser() {

@@ -45,7 +45,7 @@
                   <Separator layoutX="155.0" layoutY="268.0" orientation="VERTICAL" prefHeight="302.0" prefWidth="1.0" />
                   <Separator layoutX="686.0" layoutY="7.0" orientation="VERTICAL" prefHeight="566.0" prefWidth="0.0" />
                   <Separator layoutY="266.0" prefHeight="1.0" prefWidth="687.0" />
-                  <TextField fx:id="findBar" layoutX="710.0" layoutY="479.0" promptText="find person by name" />
+                  <TextField fx:id="findBar" layoutX="710.0" layoutY="479.0" onAction="#find" promptText="find person by name" />
           </children>
         </AnchorPane>
       </content>

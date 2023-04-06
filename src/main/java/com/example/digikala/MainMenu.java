@@ -27,8 +27,6 @@ import static com.example.digikala.Main.store;
 public class MainMenu implements Initializable{
     private static User user;
     @FXML
-    private Button searchButton;
-    @FXML
     private TextField searchBar;
     @FXML
     private Button signButton;
@@ -38,9 +36,12 @@ public class MainMenu implements Initializable{
     private ImageView person;
     @FXML
     private Label userLogIn;
+    @FXML
+    private Label storeInfo;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        storeInfo.setText("!!OXDCommodity!!  Owner:"+store.getOwner()+" supportNumber:"+store.getSupportNumber()+" webAddress:"+store.getWebAddress()+" location: name: Souprosse region: Aquitaine country: France");
         if(user==null)
         {
             person.setVisible(false);

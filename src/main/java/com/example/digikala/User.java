@@ -14,7 +14,7 @@ import org.json.JSONObject;
 import static com.example.digikala.Main.store;
 
 public class User implements Serializable {
-    private final String username;
+    private  final String username;
     private String password;
     private String email;
     private final UUID uuid;
@@ -22,7 +22,7 @@ public class User implements Serializable {
     private String address;
     private final HashMap<UUID, Integer> cart;
     private int totalPriceOfCart;
-    private final TreeSet<UUID> lastSeen;
+    private  final TreeSet<UUID> lastSeen;
     private double wallet = 0;
     private final ArrayList<String> notification;
     private final ArrayList<String> oldNotification;
@@ -33,7 +33,7 @@ public class User implements Serializable {
     private boolean waitForVerify;
     private Pair<Double,Double> location;
     private int shippingCost=10000;
-
+    private int userXp=0;
     public User(String username, String password, int phoneNumber, String address,String email) {
         this.username = username;
         this.password = HashPassword(password);
@@ -77,10 +77,6 @@ public class User implements Serializable {
         }
         //System.out.println(generatedPassword);
         return generatedPassword;
-    }
-
-    public int getShippingCost() {
-        return shippingCost;
     }
 
     public String getEmail() {
@@ -140,6 +136,16 @@ public class User implements Serializable {
         this.address = address;
         findLocation();
     }
+
+    public int getUserXp() {
+        return userXp;
+    }
+
+    public void addUserXp(int userXp) {
+        this.userXp += userXp;
+    }
+    public void removeUserXp(int xp) {
+        this.userXp-=xp; }
     public boolean getWait(){return waitForVerify;}
     public void addTotalPrice(double totalPrice){this.totalPriceOfCart+= (int) (1.1*totalPrice);}
     public int cartExist(UUID product){
@@ -201,13 +207,17 @@ public class User implements Serializable {
     public void removeFavorite(UUID product) {
         this.favorite.remove(product);
     }
-    public boolean isInFavorite(UUID product){return this.favorite.contains(product);}
     public boolean getSubscription() {
         return subscription;
     }
     public void setSubscription(boolean subscription) {
         this.subscription = subscription;
     }
+
+    public int getShippingCost() {
+        return shippingCost;
+    }
+
     public String isOrderOK()
     {
         StringBuilder ret = new StringBuilder();
@@ -237,6 +247,7 @@ public class User implements Serializable {
         this.orders.add(order.getUuid());
         cart.clear();
         wallet-=getTotalPriceOfCart();
+        userXp+=totalPriceOfCart/100;
         totalPriceOfCart=0;
     }
     public void cancelOrder()
@@ -268,13 +279,14 @@ public class User implements Serializable {
             JSONObject jsonObject = new JSONObject(stringBuilder.toString());
             location = new Pair<>(jsonObject.getJSONObject("location").getDouble("lat"),jsonObject.getJSONObject("location").getDouble("lon"));
             calShippingCost();
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
     }
     @Override
     public String toString() {
         StringBuilder ret= new StringBuilder("User{" +
                 "username='" + username + '\'' +
+                ", XP="+userXp+
                 ", email='" + email + '\'' +
                 ", uuid=" + uuid +
                 ", phoneNumber=" + phoneNumber +
@@ -285,7 +297,7 @@ public class User implements Serializable {
                 ret.append("}, lastSeen=").append(lastSeen).append(", wallet=").append(wallet).append(", orders={");
                 for(UUID order:orders)
                     ret.append(store.findOrder(order).toString()).append("\n");
-                ret.append("{, favorite={");
+                ret.append("}, favorite={");
                 for(UUID favorite:this.favorite)
                     ret.append(store.findProduct(favorite).toString()).append("\n");
                 ret.append("}, subscription=").append(subscription).append('}');

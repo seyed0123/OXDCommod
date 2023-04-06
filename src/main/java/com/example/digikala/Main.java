@@ -1,15 +1,11 @@
 package com.example.digikala;
 
-import static java.util.Arrays.asList;
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -22,15 +18,13 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 
 import java.io.*;
-import java.util.Objects;
 
 public class Main extends Application {
-    public static int count=0;
     public static Store store;
     public static final String storeFileName = "saveStr.txt";
     public static final String adminFileName = "saveAdm.txt";
     public static final String logoAddress = "G:\\code\\java\\OXDCommod\\OXDCommod.png";
-    public static final String[] level = {"no rank","POLLO Seller","noobSab seller","noob seller","NORO seller","PROB seller","pro seller","proSag seller","cheater seller"};
+    public static final String[] level = {"no rank","POLLO Seller","noobBag seller","noob seller","NORO seller","PROB seller","proBag seller","pro seller","cheater seller"};
     @Override
     public void start(Stage stage) throws Exception
     {
@@ -104,7 +98,7 @@ public class Main extends Application {
     }
     public static void Test()
     {
-        store = new Store("www.OXDCommod.com",123123,"OXD-Seyed",43.78,-0.7);
+        store = new Store("www.OXDCommod.com",33655523258L,"OXD-Seyed",43.78,-0.7);
         Admin.setStatics();
         store.addUser("u3","123",1234,"washington","@");
         store.addUser("u2","123",123,"jiroft","@");
@@ -144,8 +138,8 @@ public class Main extends Application {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         //OXDCommodity;
         //shop location : "name": "Souprosse",
-        //        "region": "Aquitaine",
-        //        "country": "France",
+        //                "region": "Aquitaine",
+        //                "country": "France",
         store = (Store) load1(storeFileName);
         SaveAdmin temp = (SaveAdmin) load1(adminFileName);
         Admin.loadAdmin(temp.getNotification(),temp.getOldNotification(),temp.isFirstTime(),temp.getSellerConfirm(),temp.getOrders(),temp.getWalletRequests(),temp.getSellerRequests(),temp.getSubscriptions(),temp.getRefunds());

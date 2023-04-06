@@ -409,7 +409,7 @@ public class AdminPanel implements Initializable {
             banBar.setText("invalid UUID string");
             return;
         }
-        if (!store.isUserExist(uuid) || !store.isSellerExist(uuid)) {
+        if (!store.isUserExist(uuid) || store.isSellerExist(uuid)) {
             banBar.setText("this person doesn't exist");
         } else {
             store.ban(uuid);
@@ -425,7 +425,7 @@ public class AdminPanel implements Initializable {
             permitBar.setText("invalid UUID string");
             return;
         }
-        if (!store.isUserExist(uuid) || !store.isSellerExist(uuid)) {
+        if (!store.isUserExist(uuid) || store.isSellerExist(uuid)) {
             permitBar.setText("this person doesn't exist");
         } else {
             store.permit(uuid);
@@ -441,7 +441,7 @@ public class AdminPanel implements Initializable {
             removeProductBar.setText("invalid UUID string");
             return;
         }
-        if (!store.isUserExist(uuid) || !store.isSellerExist(uuid)) {
+        if (!store.isUserExist(uuid) || store.isSellerExist(uuid)) {
             removeProductBar.setText("this person doesn't exist");
         } else {
             store.removeProduct(uuid);
@@ -464,7 +464,7 @@ public class AdminPanel implements Initializable {
         } else {
             content = admin.checkUser(uuid);
         }
-        if (!store.isSellerExist(uuid)) {
+        if (store.isSellerExist(uuid)) {
             checkBar.setText("this person doesn't exist");
             return;
         } else {
