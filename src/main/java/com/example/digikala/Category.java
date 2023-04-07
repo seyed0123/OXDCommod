@@ -11,7 +11,7 @@ abstract class Category extends Product{
     }
 
     @Override
-    public String toString() {
+        public String toString() {
         return super.toString()+
                 " Category{" +
                 "title='" + title + '\'' +

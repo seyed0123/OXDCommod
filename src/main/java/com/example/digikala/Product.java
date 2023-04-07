@@ -23,6 +23,7 @@ abstract class Product implements Serializable {
     private final HashMap<UUID,Double> ratedUser;
     private String imageAddress;
     private final HashMap<UUID,String> comment;
+    private boolean remove=false;
 
     public Product(String name, int price, int amount, String description,String brand,UUID sellerID) {
         this.name = name;
@@ -35,6 +36,14 @@ abstract class Product implements Serializable {
         this.sellerID=sellerID;
         this.ratedUser=new HashMap<>();
         this.comment= new HashMap<>();
+    }
+
+    public boolean isRemove() {
+        return remove;
+    }
+
+    public void setRemove(boolean remove) {
+        this.remove = remove;
     }
 
     public UUID getSellerID() {

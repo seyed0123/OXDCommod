@@ -156,7 +156,8 @@ public class Store implements Serializable {
         ArrayList<String> ret = new ArrayList<>();
         for(Product product : products.values())
         {
-            ret.add(product.TOString());
+            if(!product.isRemove())
+                ret.add(product.TOString());
         }
         return ret;
     }
@@ -192,7 +193,7 @@ public class Store implements Serializable {
         UUID temp = products.get(product).getSellerID();
         sellers.get(temp).removeProduct(product);
         sellers.get(temp).addNotification(product +"has been removed successfully.");
-        products.remove(product);
+        findProduct(product).setRemove(true);
         log.add(product +"has been removed successfully in "+LocalDateTime.now()+".");
 
     }
@@ -370,8 +371,10 @@ public class Store implements Serializable {
         HashMap<UUID, Integer> nums = new HashMap<>();
         for(Product product: products.values())
         {
-            int num=numberOfMatch(substr,product);
-            nums.put(product.getUuid(),num);
+            if(!product.isRemove()) {
+                int num = numberOfMatch(substr, product);
+                nums.put(product.getUuid(), num);
+            }
         }
         List<Entry<UUID,Integer>> list = new ArrayList<>(nums.entrySet());
         Collections.sort(list, new Comparator<Entry<UUID,Integer>>(){
@@ -393,7 +396,7 @@ public class Store implements Serializable {
         {
             if(counter>=10)
                 break;
-            if(product.getDiscount()>0)
+            if(product.getDiscount()>0 && !product.isRemove())
             {
                 counter++;
                 ret.add(product.getUuid());

@@ -25,6 +25,7 @@ import java.util.UUID;
 import static com.example.digikala.Main.store ;
 
 public class SignPanel implements Initializable {
+    private int CAPTCHACounter=0;
     @FXML
     private Button signIn;
     @FXML
@@ -51,10 +52,17 @@ public class SignPanel implements Initializable {
     public void signIn(ActionEvent e) throws IOException, InterruptedException {
         String username = usernameBar.getText();
         String password = passwordBar.getText();
+        if(CAPTCHACounter>10)
+        {
+            result.setText("you are definitely a robot.don't try again");
+            result.setTextFill(Color.HOTPINK);
+            return;
+        }
         if(!Objects.equals(CAPTCHABar.getText(), CAPTCHA) && !Objects.equals(CAPTCHA, ""))
         {
+            CAPTCHACounter++;
             result.setText("sorry you are a robot.");
-            result.setTextFill(Color.BROWN);
+            result.setTextFill(Color.BLUE);
             return;
         }
         Pair <String , UUID> result = store.login(username,password);

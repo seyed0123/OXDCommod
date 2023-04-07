@@ -291,4 +291,14 @@ public class Admin implements Serializable {
     {
         return store.findProduct(product).TOString();
     }
+
+    @Override
+    public String toString() {
+        return "Admin{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", uuid=" + uuid +
+                '}';
+    }
 }

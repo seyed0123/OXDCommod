@@ -30,9 +30,6 @@ import static com.example.digikala.Main.store;
 public class SearchTab implements Initializable {
     private static User user;
     private static String wasSearched;
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
     @FXML
     private Button back;
     @FXML

@@ -140,10 +140,10 @@ public class Main extends Application {
         //shop location : "name": "Souprosse",
         //                "region": "Aquitaine",
         //                "country": "France",
-        store = (Store) load1(storeFileName);
-        SaveAdmin temp = (SaveAdmin) load1(adminFileName);
-        Admin.loadAdmin(temp.getNotification(),temp.getOldNotification(),temp.isFirstTime(),temp.getSellerConfirm(),temp.getOrders(),temp.getWalletRequests(),temp.getSellerRequests(),temp.getSubscriptions(),temp.getRefunds());
-        //Test();
+        //store = (Store) load1(storeFileName);
+        //SaveAdmin temp = (SaveAdmin) load1(adminFileName);
+        //Admin.loadAdmin(temp.getNotification(),temp.getOldNotification(),temp.isFirstTime(),temp.getSellerConfirm(),temp.getOrders(),temp.getWalletRequests(),temp.getSellerRequests(),temp.getSubscriptions(),temp.getRefunds());
+        Test();
         MainMenu.setStatus(null);
         launch(args);
     }

@@ -441,9 +441,8 @@ public class AdminPanel implements Initializable {
             removeProductBar.setText("invalid UUID string");
             return;
         }
-        if (!store.isUserExist(uuid) || store.isSellerExist(uuid)) {
-            removeProductBar.setText("this person doesn't exist");
-        } else {
+        if (store.isProductExist(uuid))
+        {
             store.removeProduct(uuid);
             removeProductButton.setText("done!");
         }
@@ -460,24 +459,24 @@ public class AdminPanel implements Initializable {
         }
         if (!store.isUserExist(uuid)) {
             checkBar.setText("this person doesn't exist");
+            if (store.isSellerExist(uuid)) {
+                checkBar.setText("this person doesn't exist");
+                if (!store.isProductExist(uuid)) {
+                    checkBar.setText("this person doesn't exist");
+                } else {
+                    content = admin.checkProduct(uuid);
+                }
+                return;
+            } else {
+                content = admin.checkSeller(uuid);
+            }
             return;
         } else {
             content = admin.checkUser(uuid);
         }
-        if (store.isSellerExist(uuid)) {
-            checkBar.setText("this person doesn't exist");
-            return;
-        } else {
-            content = admin.checkSeller(uuid);
-        }
-        if (!store.isProductExist(uuid)) {
-            checkBar.setText("this person doesn't exist");
-        } else {
-            content = admin.checkProduct(uuid);
-        }
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("check person");
-        alert.setContentText(content);
+        alert.setHeaderText(content);
         alert.show();
     }
 

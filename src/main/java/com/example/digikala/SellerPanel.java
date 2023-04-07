@@ -69,16 +69,6 @@ public class SellerPanel implements Initializable {
     @FXML
     private ListView<String> waitForConfirmProductList;
     @FXML
-    private TextField DiscountAmountBar;
-    @FXML
-    private Button makeDiscountButton;
-    @FXML
-    private TextField cancelDiscountUUID;
-    @FXML
-    private Button cancelDiscountButton;
-    @FXML
-    private TextField DiscountUUIDBar;
-    @FXML
     private Label levelLabel;
     @FXML
     private ListView<String> ledgerList;
