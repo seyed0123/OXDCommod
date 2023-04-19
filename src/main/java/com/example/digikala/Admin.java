@@ -10,11 +10,7 @@ import java.util.Objects;
 import java.util.UUID;
 import static com.example.digikala.Main.store;
 
-public class Admin implements Serializable {
-    private final String  username;
-    private String password;
-    private String email;
-    private final UUID uuid;
+public class Admin extends Account implements Serializable {
     private static ArrayList<String> notification;
     private static ArrayList<String> oldNotification;
     private static boolean firstTime=true;
@@ -26,10 +22,7 @@ public class Admin implements Serializable {
     private static ArrayList<Pair<UUID,UUID>> refunds;
 
     public Admin(String username, String password, String email) {
-        this.username = username;
-        this.password = HashPassword(password);
-        this.email = email;
-        uuid=UUID.randomUUID();
+        super(username,password,email);
     }
     public static void loadAdmin(ArrayList<String> notification, ArrayList<String> oldNotification, boolean firstTime, ArrayList<UUID> sellerConfirm, ArrayList<UUID> orders, ArrayList<Pair<UUID, Integer>> walletRequests, ArrayList<Pair<UUID, UUID>> sellerRequests, ArrayList<UUID> subscriptions, ArrayList<Pair<UUID, UUID>> refunds) {
         Admin.notification = notification;
@@ -88,52 +81,6 @@ public class Admin implements Serializable {
         return refunds;
     }
 
-    private String HashPassword(String passwordToHash)
-    {
-        String generatedPassword = null;
-        try
-        {
-            // Create MessageDigest instance for MD5
-            MessageDigest md = MessageDigest.getInstance("MD5");
-
-            // Add password bytes to digest
-            md.update(passwordToHash.getBytes());
-
-            // Get the hash's bytes
-            byte[] bytes = md.digest();
-
-            // This bytes[] has bytes in decimal format. Convert it to hexadecimal format
-            StringBuilder sb = new StringBuilder();
-            for (byte aByte : bytes) {
-                sb.append(Integer.toString((aByte & 0xff) + 0x100, 16).substring(1));
-            }
-
-            // Get complete hashed password in hex format
-            generatedPassword = sb.toString();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        //System.out.println(generatedPassword);
-        return generatedPassword;
-    }
-    public boolean setPassword(String password , String oldPassword)
-    {
-        if(!Objects.equals(HashPassword(oldPassword),this.password))
-            return false;
-        this.password=HashPassword(password);
-        return true;
-    }
-    public boolean checkPassword(String password)
-    {
-        String genPass=HashPassword(password);
-        return Objects.equals(this.password, genPass);
-    }
-    public String getUsername() {
-        return username;
-    }
-    public UUID getUuid() {
-        return uuid;
-    }
     public static String getNotification() {
         if(notification.size()==0)
             return "";
@@ -147,12 +94,6 @@ public class Admin implements Serializable {
     }
     public static ArrayList<String> getOldNotification() {
         return Admin.oldNotification;
-    }
-    public String getEmail() {
-        return email;
-    }
-    public void setEmail(String email) {
-        this.email = email;
     }
     public UUID orderRequestUUID(){return orders.get(0);}
     public String orderRequest()
@@ -242,6 +183,8 @@ public class Admin implements Serializable {
             store.cancelRefund(request,reason);
     }
     public String sellerConfirmRequest(){
+        if(sellerConfirm.size()==0)
+            return "";
         return store.findSeller(sellerConfirm.get(0)).toString();
     }
     public UUID sellerConfirmRequestUUID()
@@ -290,15 +233,5 @@ public class Admin implements Serializable {
     public String checkProduct(UUID product)
     {
         return store.findProduct(product).TOString();
-    }
-
-    @Override
-    public String toString() {
-        return "Admin{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", uuid=" + uuid +
-                '}';
     }
 }

@@ -13,11 +13,7 @@ import java.util.*;
 import org.json.JSONObject;
 import static com.example.digikala.Main.store;
 
-public class User implements Serializable {
-    private  final String username;
-    private String password;
-    private String email;
-    private final UUID uuid;
+public class User extends Account implements Serializable {
     private int phoneNumber;
     private String address;
     private final HashMap<UUID, Integer> cart;
@@ -35,13 +31,10 @@ public class User implements Serializable {
     private int shippingCost=10000;
     private int userXp=0;
     public User(String username, String password, int phoneNumber, String address,String email) {
-        this.username = username;
-        this.password = HashPassword(password);
+        super(username,password,email);
         this.phoneNumber = phoneNumber;
         this.address = address;
-        this.email=email;
         findLocation();
-        this.uuid= UUID.randomUUID();
         this.notification= new ArrayList<>();
         this.oldNotification= new ArrayList<>();
         this.orders = new HashSet<>();
@@ -50,42 +43,6 @@ public class User implements Serializable {
         this.lastSeen=new TreeSet<>();
     }
 
-    private String HashPassword(String passwordToHash)
-    {
-        String generatedPassword = null;
-        try
-        {
-            // Create MessageDigest instance for MD5
-            MessageDigest md = MessageDigest.getInstance("MD5");
-
-            // Add password bytes to digest
-            md.update(passwordToHash.getBytes());
-
-            // Get the hash's bytes
-            byte[] bytes = md.digest();
-
-            // This bytes[] has bytes in decimal format. Convert it to hexadecimal format
-            StringBuilder sb = new StringBuilder();
-            for (byte aByte : bytes) {
-                sb.append(Integer.toString((aByte & 0xff) + 0x100, 16).substring(1));
-            }
-
-            // Get complete hashed password in hex format
-            generatedPassword = sb.toString();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        //System.out.println(generatedPassword);
-        return generatedPassword;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public boolean isBanned() {
         return banned;
@@ -95,18 +52,6 @@ public class User implements Serializable {
         this.banned = banned;
     }
 
-    public boolean setPassword(String password , String oldPassword)
-    {
-        if(!Objects.equals(HashPassword(oldPassword),this.password))
-            return false;
-        this.password=HashPassword(password);
-        return true;
-    }
-    public boolean checkPassword(String password)
-    {
-        String genPass=HashPassword(password);
-        return Objects.equals(this.password, genPass);
-    }
     public TreeSet<UUID> getLastSeen() {
         return lastSeen;
     }
@@ -116,12 +61,6 @@ public class User implements Serializable {
             this.lastSeen.pollLast();
         }
         this.lastSeen.add(lastSeen);
-    }
-    public String getUsername() {
-        return username;
-    }
-    public UUID getUuid() {
-        return uuid;
     }
     public int getPhoneNumber() {
         return phoneNumber;
@@ -285,10 +224,8 @@ public class User implements Serializable {
     @Override
     public String toString() {
         StringBuilder ret= new StringBuilder("User{" +
-                "username='" + username + '\'' +
+                super.toString()+
                 ", XP="+userXp+
-                ", email='" + email + '\'' +
-                ", uuid=" + uuid +
                 ", phoneNumber=" + phoneNumber +
                 ", address='" + address + '\'' +
                 ", cart={");
