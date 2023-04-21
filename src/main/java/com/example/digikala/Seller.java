@@ -1,8 +1,6 @@
 package com.example.digikala;
 
 import java.io.Serializable;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import static com.example.digikala.Main.store;
 

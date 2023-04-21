@@ -10,7 +10,7 @@ For optimal storage of information, a store class was defined and all the inform
 For easy access to information for each object, a UUID is assigned during construction, so that during the program, when needed, the desired object can be accessed with that key.
 This point of view has been followed for the rest of the classes to avoid re-saving the information.
 ## Class diagrams and functions that need further explanation
-  [Store diagram](diagrams/Store.png)
+  ![Store diagram](diagrams/Store.png)
 - `add(User/Seller/Admin)`: these functions get the required information to add new objects of that classes and constructs them.
 - `login`: This function takes a username and password and checks that the entered information is correct for a person and outputs accordingly, it outputs `null` if it does not match.The output consists of two parts, the first part specifies the user's access level and the second part specifies the unique ID.
 - `find(user/admin/seller/product/order)`:These functions return the object itself by getting UUID so that its information can be used.
@@ -20,7 +20,7 @@ This point of view has been followed for the rest of the classes to avoid re-sav
 - `permit`:It removes the effect of ban and returns everything to the previous state 
 - `findProductByInfo`:This function performs an approximate search for a product. For this purpose, it first separates all the sub-strings of the input string and then looks for the maximum matching of these strings with the names of the goods in all the products, and then sorts the goods based on the degree of matching and outputs.
   
-[Accounts diagram](diagrams/Acoount.png)
+![Accounts diagram](diagrams/Acoount.png)
 - `hash password`:uses the **MD5** algorithm to hash passwords that is  a secure way to save passwords in the database.when the program wants to check the password, hashes an input password and then compares it with the hash string that was stored before.
 - `lastseen`:It saves the user's past visits to different products to use for making suggestions later.
 - `is order OK`:During the final confirmation of the order, it checks the absence of problems in the inventory of the purchased goods and outputs the problems.
@@ -30,17 +30,17 @@ This point of view has been followed for the rest of the classes to avoid re-sav
 
 - `check level`:Based on the amount of sales, this function assigns a level to each seller that is effective on the user's trust
 
-[Product diagrams](diagrams/Product.png)
+![Product diagrams](diagrams/Product.png)
 - `(set/change/remove)Rate`:These functions perform calculations related to the score of a product
 - `(set/get/remove)comment`:These functions perform operations related to the comments of a product
 - `toString() & TOString()`:TOString gives more information about a product that is shown to admins but toString is prepared for users.
   
-[Order diagram](diagrams/Order.png)
+![Order diagram](diagrams/Order.png)
 -`verify`:This function is called after the admin's approval and reduces the number of purchased goods and deposits the money into the seller's account.
 -`refund`:On the contrary, it does all the work done in verify
 
 - These two classes do not have special functions and only specify the product category.
-### [javafx controllers](diagrams/Javafx.png)
+### ![javafx controllers](diagrams/Javafx.png)
 
 
 # bonus tasks
