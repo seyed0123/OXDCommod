@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.digikala.SignUpPanel">
+  <tabs>
+    <Tab text="User Sign Up">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TextField fx:id="usernameBarUser" layoutX="38.0" layoutY="45.0" onAction="#checkStatusUser" prefHeight="25.0" prefWidth="266.0" promptText="username" />
+                  <PasswordField fx:id="passwordBarUser" layoutX="38.0" layoutY="82.0" onAction="#checkStatusUser" prefHeight="25.0" prefWidth="264.0" promptText="password" />
+                  <PasswordField fx:id="conPasswordBarUser" layoutX="38.0" layoutY="124.0" onAction="#checkStatusUser" prefHeight="25.0" prefWidth="264.0" promptText="confirm password" />
+                  <TextField fx:id="emailBarUser" layoutX="38.0" layoutY="162.0" onAction="#checkStatusUser" prefHeight="25.0" prefWidth="265.0" promptText="email" />
+                  <TextField fx:id="addressBarUser" layoutX="38.0" layoutY="200.0" onAction="#checkStatusUser" prefHeight="25.0" prefWidth="264.0" promptText="address" />
+                  <TextField fx:id="numberBarUser" layoutX="38.0" layoutY="242.0" onAction="#checkStatusUser" prefHeight="25.0" prefWidth="263.0" promptText="phone number" />
+                  <Button fx:id="signUpUser" cancelButton="true" disable="true" layoutX="133.0" layoutY="301.0" mnemonicParsing="false" onAction="#singUpUser" text="sign up">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Button>
+                  <Label fx:id="usernameLabelUser" layoutX="336.0" layoutY="49.0" prefHeight="17.0" prefWidth="252.0"  />
+                  <Label fx:id="conPassLabelUser" layoutX="336.0" layoutY="128.0" prefHeight="17.0" prefWidth="253.0"  />
+                  <Label fx:id="numberLabelUser" layoutX="329.0" layoutY="246.0" prefHeight="17.0" prefWidth="263.0" />
+               </children>
+        </AnchorPane>
+      </content>
+    </Tab>
+    <Tab text="Seller Sign Up">
+           <content>
+               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                   <children>
+                       <TextField fx:id="usernameBarSeller" layoutX="38.0" layoutY="45.0" onAction="#checkStatusSeller" prefHeight="25.0" prefWidth="266.0" promptText="username" />
+                       <PasswordField fx:id="passwordBarSeller" layoutX="38.0" layoutY="82.0" onAction="#checkStatusSeller" prefHeight="25.0" prefWidth="264.0" promptText="password" />
+                       <PasswordField fx:id="conPasswordBarSeller" layoutX="38.0" layoutY="124.0" onAction="#checkStatusSeller" prefHeight="25.0" prefWidth="264.0" promptText="confirm password" />
+                       <TextField fx:id="emailBarSeller" layoutX="38.0" layoutY="162.0" onAction="#checkStatusSeller" prefHeight="25.0" prefWidth="265.0" promptText="email" />
+                       <TextField fx:id="companyBarSeller" layoutX="38.0" layoutY="200.0" onAction="#checkStatusSeller" prefHeight="25.0" prefWidth="264.0" promptText="company name" />
+                       <Button fx:id="signUpSeller" cancelButton="true" disable="true" layoutX="133.0" layoutY="267.0" mnemonicParsing="false" onAction="#signUPSeller" text="sign up">
+                           <font>
+                               <Font name="System Bold" size="16.0" />
+                           </font>
+                       </Button>
+                       <Label fx:id="usernameLabelSeller" layoutX="336.0" layoutY="49.0" prefHeight="17.0" prefWidth="255.0"  />
+                       <Label fx:id="conPassLabelSeller" layoutX="336.0" layoutY="128.0" prefHeight="17.0" prefWidth="262.0"  />
+                   </children>
+               </AnchorPane>
+           </content>
+    </Tab>
+  </tabs>
+</TabPane>

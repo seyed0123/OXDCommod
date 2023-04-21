@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.digikala.EditProductPanel">
+   <children>
+      <TextField fx:id="name" layoutX="35.0" layoutY="25.0" promptText="name" />
+      <TextField fx:id="brand" layoutX="213.0" layoutY="25.0" promptText="brand" />
+      <TextField fx:id="price" layoutX="35.0" layoutY="70.0" promptText="price" />
+      <TextField fx:id="amount" layoutX="213.0" layoutY="70.0" promptText="amount" />
+      <TextField fx:id="category" layoutX="35.0" layoutY="111.0" promptText="Category" />
+      <TextField fx:id="subCategory" layoutX="213.0" layoutY="111.0" promptText="subCategory" />
+      <TextArea fx:id="description" layoutX="386.0" layoutY="11.0" prefHeight="200.0" prefWidth="200.0" promptText="description (optional)" />
+      <Button layoutX="171.0" layoutY="199.0" mnemonicParsing="false" onAction="#change" text="submit" />
+      <Button layoutX="15.0" layoutY="361.0" mnemonicParsing="false" onAction="#back" text="Back" />
+      <TextField fx:id="discountBar" layoutX="35.0" layoutY="148.0" promptText="discount" />
+      <TextField fx:id="imagePath" layoutX="213.0" layoutY="148.0" promptText="image path (optional)" />
+   </children>
+</AnchorPane>
