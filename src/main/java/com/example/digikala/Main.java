@@ -23,7 +23,7 @@ public class Main extends Application {
     public static Store store;
     public static final String storeFileName = "saveStr.txt";
     public static final String adminFileName = "saveAdm.txt";
-    public static final String logoAddress = "G:\\code\\java\\OXDCommod\\OXDCommod.png";
+    public static final String logoAddress = Admin.class.getResource("OXDCommod.png").toExternalForm();
     public static final String[] level = {"no rank","POLLO Seller","noobBag seller","noob seller","NORO seller","PROB seller","proBag seller","pro seller","cheater seller"};
     @Override
     public void start(Stage stage) throws Exception

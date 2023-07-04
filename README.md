@@ -79,3 +79,23 @@ Two methods were used to test the program.
 # Conclusion
 In conclusion, the development and implementation of our online store has been a resounding success. Through careful planning and attention to detail, we have created a seamless and user-friendly shopping experience for our customers. Our online store offers a range of features and functionality that make it easy for customers to browse and purchase products, including a comprehensive product catalog, user accounts, a shopping cart and a secure checkout process.
 Despite the success of our online store, we understand the importance of continuous improvement and innovation. We will continue to collect feedback from customers and analyze data to identify areas for improvement and growth. This includes exploring new technologies, expanding our product offerings and enhancing the overall customer experience.
+
+# Shots of the app
+## Main menu:
+![1](diagrams/1.png)
+![1](diagrams/2.png)
+![1](diagrams/3.png)
+![1](diagrams/4.png)
+## User panel:
+![1](diagrams/5.png)
+![1](diagrams/6.png)
+![1](diagrams/13.png)
+## Seller panel:
+![1](diagrams/8.png)
+![1](diagrams/7.png)
+## Admin panel:
+![1](diagrams/9.png)
+![1](diagrams/10.png)
+![1](diagrams/11.png)
+![1](diagrams/12.png)
+![1](diagrams/14.png)
